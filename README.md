@@ -4,8 +4,8 @@ Short- and Long-Terms Goals and an intermediate Roadmap to follow.
 
 ## Background
 Writing web-bassed applications is great with Blazor and made better when incorporating component libraries. This
-project uses the SyncFusion Blazor library. Why SyncFusion? Good capabilities, great support and a generous community
-license policy. 
+project uses the SyncFusion Blazor library. Why [SyncFusion](https://www.syncfusion.com/blazor-components)? Good capabilities, great support and a [generous community
+license policy](https://www.syncfusion.com/products/communitylicense). 
 
 One of the down sides of using a component library is that you remain entangled with having to learn HTLM and CSS to
 a greater degree than other Blazor packages that are more framework-based (they hide these complexities to the maximum)
