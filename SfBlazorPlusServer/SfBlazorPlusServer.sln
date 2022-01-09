@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SfBlazorPlus", "SfBlazorPlus\SfBlazorPlus.csproj", "{8EDA283B-8A85-42C9-B3CA-8C5BFC8C0C7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8EDA283B-8A85-42C9-B3CA-8C5BFC8C0C7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDA283B-8A85-42C9-B3CA-8C5BFC8C0C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDA283B-8A85-42C9-B3CA-8C5BFC8C0C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDA283B-8A85-42C9-B3CA-8C5BFC8C0C7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB83DE51-8577-4D02-BF52-92E0BBEAC88A}
+	EndGlobalSection
+EndGlobal
