@@ -1,13 +1,17 @@
+using Code420.SfBlazorPlus.Code;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using SfBlazorPlus.Data;
+using Code420.SfBlazorPlus.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. --- OOB Dependencies
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+// Our Dependencies
+builder.Services.AddTransient<ICssUtilities, CssUtilities>();
 
 var app = builder.Build();
 

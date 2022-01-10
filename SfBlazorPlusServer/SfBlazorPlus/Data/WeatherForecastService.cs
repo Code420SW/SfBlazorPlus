@@ -1,4 +1,4 @@
-namespace SfBlazorPlus.Data
+namespace Code420.SfBlazorPlus.Data
 {
     public class WeatherForecastService
     {
