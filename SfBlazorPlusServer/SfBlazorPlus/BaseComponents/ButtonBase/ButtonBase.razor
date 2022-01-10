@@ -1,0 +1,136 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.ButtonBase
+
+@using Code420.SfBlazorPlus.Code.Extensions
+@using Syncfusion.Blazor.Buttons
+
+<SfButton   @ref=@sfButton
+            IconPosition=@IconPosition
+            IsPrimary=@IsPrimary
+            IsToggle=@IsToggle
+            Disabled=@IsDisabled
+            EnableRtl=@EnableRtl
+
+            CssClass=@($"{ CssClass } { ButtonStyle.ToCssString() }")
+            HtmlAttributes=@HtmlAttributes
+            IconCss=@IconCss
+
+            Created=@Created
+            OnClick="@Click"
+            >
+
+    <ChildContent>
+        @ContentFragment
+    </ChildContent>
+
+</SfButton>
+
+@*
+    (1) Button:     e-control 
+                    e-btn 
+                    e-lib
+                    e-primary           <== When IsPrimary=true OR ButtonStyle=ButtonStyle.Primary
+                    e-success           <== When ButtonStyle=ButtonStyle.Success
+                    e-secondary         <== When ButtonStyle=ButtonStyle.Secondary
+
+    Styling Defaults:
+        Primary     color: #fff
+                    background-color: #007bff
+                    border-color: #007bff
+                    border: 1px solid currentColor
+                    border-radius: 4px
+                    padding: 4px 8px
+                    margin: 0px
+                    box-shadow: none; hover: none; active: 0 0 0 0.25em rgba(0,92,191,0.5)
+        Success     color: #fff
+                    background-color: #28a745; hover: #218838
+                    border-color: #28a745; hover: #1e7e34
+                    border: 1px solid currentColor
+                    border-radius: 4px
+                    padding: 4px 8px
+                    margin: 0px
+                    box-shadow: none; hover: none; active: 0 0 0 0.25em rgba(28,116,48,0.5)
+        Secondary   color: #fff
+                    background-color: #6c757d; hover: #5a6268; active: #545b62
+                    border-color: #6c757d; hover: #545b62; active: #4e555b
+                    border: 1px solid currentColor
+                    border-radius: 4px
+                    padding: 4px 8px
+                    margin: 0px
+                    box-shadow: none; hover: none; active: 0 0 0 0.25em rgba(79,85,91,0.5)
+                    outline: none; hover: none; active: #6c757d 0 solid
+        Information color: #fff
+                    background-color: #17a2b8; hover: #138496; active: #117a8b
+                    border-color: #17a2b8; hover: #117a8b; active: #10707f
+                    border: 1px solid currentColor
+                    border-radius: 4px
+                    padding: 4px 8px
+                    margin: 0px
+                    box-shadow: none; hover: none; active: 0 0 0 0.25em rgba(16,112,128,0.5)
+                    outline: none; hover: none; active: #6c757d 0 solid
+        Danger      color: #fff
+                    background-color: #dc3545; hover: #c82333; active: #bd2130
+                    border-color: #dc3545; hover: #bd2130; active: #b21f2d
+                    border: 1px solid currentColor
+                    border-radius: 4px
+                    padding: 4px 8px
+                    margin: 0px
+                    box-shadow: none; hover: none; active: 0 0 0 0.25em rgba(178,31,45,0.5)
+                    outline: none; hover: none; active: #6c757d 0 solid
+        Outline     color: #fff
+                    background-color: transparent; hover: #6c757d; active: #6c757d
+                    border-color: #6c757d; hover: #545b62; active: transparent
+                    border: 1px solid currentColor
+                    border-radius: 4px
+                    padding: 4px 8px
+                    margin: 0px
+                    box-shadow: none; hover: none; active: 0 0 0 0.25em rgba(79,85,91,0.5)
+                    outline: none; hover: none; active: #6c757d 0 solid
+                    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)
+*@
+
+<style>
+
+    /*
+        To ensure isolation of styling between multiple  buttons on a page, prepend the CssClass
+        to each selector using masterCssClass (assuming the CssClass is not String.Empty).
+
+        masterCssClass = CssClass.e-btn
+    */
+
+    /* To customize the button. */
+    @(masterCssSelector) {
+        @((ButtonHeight != String.Empty) ? $"height: { ButtonHeight };" : "")
+        @((ButtonWidth != String.Empty) ? $"width: { ButtonWidth };" : "")
+        color: @TextFontColor;
+        font-size: @TextFontSize;
+        font-weight: @TextFontWeight;
+        text-align: @TextHorizontalAlignment;
+        vertical-align: @TextVerticalAlignment;
+        line-height: @ButtonLineHeight;
+        @((ButtonNormalBackgroundColor != String.Empty) ? $"background-color: { ButtonNormalBackgroundColor };" : "")
+        @((HoverScale != 1.0m) ? "transition: transform 125ms ease-in-out;" : "")
+        margin: @Margin;
+        padding: @Padding;
+    }
+
+    /* To customize the icon for standard buttons */
+    @(masterCssSelector) .e-btn-icon {
+        font-size: @IconFontSize;
+    }
+
+    /* To customize the button on hover */
+    @(masterCssSelector):hover,
+    @(masterCssSelector):focus-visible {
+        @((HoverScale != 1.0m) ? $"transform: scale({ HoverScale });" : "")
+        @(
+        (ButtonHoverBackgroundColor != String.Empty) ? $"background-color: { ButtonHoverBackgroundColor };" : 
+            ((IsPrimary) ? "" : "filter: hue-rotate(180deg);")
+        )
+    }
+
+    /* To customize the button on active. */
+    @(masterCssSelector):active {
+        @((ButtonActiveBackgroundColor != String.Empty) ? $"background-color: { ButtonActiveBackgroundColor };" : $"background-color: { ButtonNormalBackgroundColor };")
+    }
+
+</style>

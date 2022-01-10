@@ -8,8 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BaseComponents\" />
+    <Folder Include="BaseComponents\IconButtonBase\" />
     <Folder Include="CompositeComponents\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor" Version="19.4.0.41" />
   </ItemGroup>
 
 </Project>

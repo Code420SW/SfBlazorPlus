@@ -2,6 +2,7 @@ using Code420.SfBlazorPlus.Code;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Code420.SfBlazorPlus.Data;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +11,15 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
+
+// Add SyncFusion
+builder.Services.AddSyncfusionBlazor();
+
+
 // Our Dependencies
 builder.Services.AddTransient<ICssUtilities, CssUtilities>();
+
+
 
 var app = builder.Build();
 
