@@ -1,0 +1,178 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.IconButtonBase
+
+@using Syncfusion.Blazor.Buttons
+@using Code420.SfBlazorPlus.Code.Enums
+@using Code420.SfBlazorPlus.Code.Extensions
+
+
+@*
+    Since this is an icon button, neither of the following SfButton parameters are used.
+    ChildContent -- Sets content for button element including HTML and its customizations.
+    Content -- Defines the text content of the button element and it will support only string type.
+*@
+<SfButton @ref=@sfButton
+          Disabled=@IsDisabled
+          IsPrimary=@IsPrimary
+          IconPosition=@IconPosition
+          IsToggle=@IsToggle
+
+          OnClick=@Click
+          Created=@Created
+
+          CssClass=@($"{ CssClass } { IconButtonStyle.ToCssString() }")
+          IconCss=@IconCss
+          />
+
+
+@*
+    (1) Button:     e-control
+                    e-btn
+                    inherit  e-lib
+                    <injected CssClass> <== The CssClass is combined with the IconButtonStyle and injected through SfButton's CssClass property
+                    e-icon-only         <== When IconButtonStyle = Default--^   ^
+                    e-round             <== When IconButtonStyle = Round--------|
+                    e-primary           <== When IsPrimary = true
+                    e-icon-btn
+
+        (2) Span:   e-btn-icon
+                    <injected IconCss>
+*@
+
+<style>
+
+    /*
+        To ensure isolation of styling between multiple icon buttons on a page, prepend the CssClass
+        to each selector using masterCssClass (assuming the CssClass is not String.Empty).
+
+        masterCssClass = CssClass.e-btn
+    */
+
+
+    /*
+        Applies to all icon buttons
+
+        Center the icon horizontally and vertically in the button
+        Set the line spacing
+        Set the opacity
+        Set the transition if needed
+    */
+    @(masterCssSelector)
+    {
+        text-align: center;
+        /*vertical-align: middle;*/ /* https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align */
+        margin: @Margin;
+        padding: @Padding;
+        line-height: 1.0;
+        opacity: 1;
+        border: @ButtonNormalBorder;
+        @((HoverScale != 1.0m) ? "transition: transform 125ms ease-in-out;" : "")
+        @((ButtonNormalBackgroundColor != String.Empty) ? $"background-color: { ButtonNormalBackgroundColor };" : "")
+
+        @((ButtonHeight != String.Empty) ? $"height: { ButtonHeight };" : "")
+
+        @(
+        (IconButtonStyle == IconButtonStyle.Round) ? $"width: { ButtonHeight };" :
+            ((ButtonWidth != String.Empty) ? $"width: { ButtonWidth };" : "")
+        )
+    }
+
+
+    /*
+        To customize the button on focus
+
+        Inject the ButtonHoverBackgroundColor if defined
+        Otherwise, if the IsPrimary parameter is false, inject
+            a simple 180 deg hue rotation (use complementary color)
+        If the HoverScale parameter is not the default value, inject
+            the transform scale() transition definition.
+    */
+    @(masterCssSelector).e-icon-only:focus,
+    @(masterCssSelector).e-round:focus {
+        @(
+        (ButtonHoverBackgroundColor != String.Empty) ? $"background-color: { ButtonNormalBackgroundColor };" : 
+            ((IsPrimary) ? "" : "filter: hue-rotate(180deg);")
+        )
+    }
+
+
+    /*
+        To customize the button on hover and focus-visible
+
+        Inject the ButtonHoverBackgroundColor if defined
+        Otherwise, if the IsPrimary parameter is false, inject
+            a simple 180 deg hue rotation (use complementary color)
+        If the HoverScale parameter is not the default value, inject
+            the transform scale() transition definition.
+    */
+    @(masterCssSelector).e-icon-only:hover,
+    @(masterCssSelector).e-icon-only:focus-visible,
+    @(masterCssSelector).e-round:hover,
+    @(masterCssSelector).e-round:focus-visible {
+        border: @ButtonHoverBorder;
+        @((HoverScale != 1.0m) ? $"transform: scale({ HoverScale });" : "")
+        @(
+        (ButtonHoverBackgroundColor != String.Empty) ? $"background-color: { ButtonHoverBackgroundColor };" : 
+            ((IsPrimary) ? "" : "filter: hue-rotate(180deg);")
+        )
+    }
+
+
+    /*
+        To customize the button on active
+
+        If the ButtonActiveBackgroundColor parameter is set, inject it.
+        Otherwise, default to the normal background color
+    */
+    @(masterCssSelector).e-icon-only:active,
+    @(masterCssSelector).e-round:active {
+        border-color: @ButtonActiveBorderColor;
+        box-shadow: 0 0 0 .25rem @boxShadowRgba;
+        @((ButtonActiveBackgroundColor != String.Empty) ? $"background-color: { ButtonActiveBackgroundColor };" : $"background-color: { ButtonNormalBackgroundColor };")
+    }
+
+
+    /*
+        To customize the button when disabled
+
+        If the ButtonNormalBackgroundColor parameter is set, inject it.
+        Lower the opacity
+        Disable any active filters
+    */
+    @(masterCssSelector).e-icon-only:disabled,
+    @(masterCssSelector).e-icon-only:disabled:hover,
+    @(masterCssSelector).e-round:disabled,
+    @(masterCssSelector).e-round:disabled:hover {
+        opacity: @ButtonDisabledOpacity;
+        filter: none;
+        border: @ButtonNormalBorder;
+        @((ButtonNormalBackgroundColor != String.Empty) ? $"background-color: { ButtonNormalBackgroundColor };" : "")
+    }
+
+
+    /*
+        Applies to the span in all icon button types (square and round)
+
+        Center the icon horizontally and vertically in the button
+        Set the size of the icon
+        Set the line spacing
+    */
+    @(masterCssSelector).e-round .e-btn-icon,
+    @(masterCssSelector).e-icon-only .e-btn-icon {
+        text-align: @IconFontTextAlign;
+        vertical-align: @IconFontVerticalAlign;
+        font-size: @IconFontSize;
+        color: @IconFontColor;
+        line-height: @IconFontLineHeight;
+    }
+
+
+    /*
+        Applies to the span in all round icon buttons
+
+        Remove the top styling injected by .oi for round buttons for better vertical centering
+    */
+    @(masterCssSelector).e-round .e-btn-icon {
+        top: 0;
+    }
+
+</style>

@@ -1,0 +1,213 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.DialogBoxBase
+
+@using Syncfusion.Blazor.Popups
+@using Code420.SfBlazorPlus.Code.Extensions
+
+<SfDialog   @ref=@sfDialog
+            AllowDragging=@AllowDragging
+            AllowPrerender=@AllowPrerender
+            CloseOnEscape=@CloseOnEscape
+            EnableResize=@EnableResize
+            Height=@Height
+            HtmlAttributes=@HtmlAttributes
+            IsModal=@IsModal
+            ResizeHandles=@ResizeHandles
+            ShowCloseIcon=@ShowCloseIcon
+            Target=@Target
+            Visible=@Visible
+            Width=@Width
+
+            ID=@CssId
+            CssClass=@CssClass
+            MinHeight=@MinHeight
+            >
+
+    <DialogPositionData X=@PositionX.ToCssString()
+                        Y=@PositionY.ToCssString()>
+    </DialogPositionData>
+
+    <DialogEvents   Closed=@Closed
+                    Created=@Created
+                    Destroyed=@Destroyed
+                    OnClose=@OnClose
+                    OnDrag=@OnDrag
+                    OnDragStart=@OnDragStart
+                    OnDragStop=@OnDragStop
+                    OnOpen=@OnOpen
+                    OnOverlayClick=@OnOverlayClick
+                    OnOverlayModalClick=@OnOverlayModalClick
+                    OnResizeStart=@OnResizeStart
+                    OnResizeStop=@OnResizeStop
+                    Opened=@Opened
+                    Resizing=@Resizing>
+    </DialogEvents>
+
+    <DialogAnimationSettings Effect=@AnimationEffect
+                             Duration=@AnimationDuration
+                             Delay=@AnimationDelay>
+    </DialogAnimationSettings>
+
+
+
+    <DialogTemplates>
+        <Header>
+            @HeaderFragment
+        </Header>
+        <Content>
+            @ContentFragment
+        </Content>
+        <FooterTemplate>
+            @FooterFragment
+        </FooterTemplate>
+    </DialogTemplates>
+
+
+</SfDialog>
+
+
+@*
+    (1) Dialog Container div:   id = "modal-"
+                                e-dlg-container
+                                e-dlg-center-center
+
+        (2) Dialog Box div:     id = ""
+                                e-dialog
+                                e-lib
+                                e-fixed         <== Injected above when MaintainPositionOnScroll = true
+                                e-dlg-modal
+                                e-draggable
+                                e-popup
+                                e-control
+                                e-popup-open
+
+            (3) Dialog Header div:      id = "_dialog-header"
+                                        e-dlg-header-content
+
+                (4) Close Button:       e-control
+                                        e-btn
+                                        e-lib
+                                        e-dlg-closeicon-btn
+                                        e-flat
+                                        e-icon-btn
+
+                    (5) Close Button Icon span:     e-icon-dlg-close
+                                                    e-icons
+                                                    e-btn-icon
+
+                (4) Dialog Header Content div:      id = "_title"
+                                                    e-dlg-header
+                                                    Everything defined in the <HeaderTemplate> RenderFragment
+
+            (3) Dialog Content div:     id = "_dialog-content"
+                                        e-dlg-content
+
+                (4) Dialog Content div:        Everything defined in the <ContentFragment> RenderFragment
+
+            (3) Dialog Footer div:      e-footer-content
+
+                (4) Dialog Footer div:        Everything defined in the <FooterTemplate> RenderFragment
+
+
+*@
+
+
+<style>
+
+    /*
+        To ensure isolation of styling between multiple dialog boxes on a page, append the CssClass
+        to each selector (assuming the CssClass is not String.Empty).
+
+        masterCssSelector = CssId.e-dialog
+
+    */
+
+
+    /*
+        Customize modal dialog overlay
+
+        Set the background color and opacity of the modal overlay
+    */
+    .e-dlg-overlay {
+        background-color: @OverlayBackgroundColor;
+        opacity: @OverlayOpacity;
+    }
+
+
+    /*
+        Customize the Dialog Container
+    */
+    @(masterCssSelector) {
+        border: @DialogBorder;
+        border-radius: @DialogBorderRadius;
+        box-shadow: @DialogBoxShadow;
+        font-size: @DialogBaseFontSize;
+        position: @dialogPositionValue;
+    }
+
+    /*
+        Customize the dialog header background
+
+        Set the background color for the entire Header div
+    */
+    @(masterCssSelector) .e-dlg-header-content {
+        background-color: @HeaderBackgroundColor;
+        padding: @HeaderPadding;
+        border-bottom: @HeaderBottomBorder;
+        border-radius: @HeaderBorderRadius;
+    }
+
+
+    /*
+        Customize the dialog close button (SF)
+
+    */
+    @(masterCssSelector) .e-btn .e-btn-icon.e-icon-dlg-close {
+        font-size: @CloseButtonFontSize;
+        color: @CloseButtonColor;
+        opacity: 1.0;
+    }
+
+
+    /*
+        Customize the dialog header
+
+        Set the font color, size and weight that will be applied to
+        all fonts in the HeaderTemplate RenderFragment
+    */
+    @(masterCssSelector) .e-dlg-header {
+        color: @HeaderFontColor;
+        font-size: @HeaderFontSize;
+        font-weight: @HeaderFontWeight;
+    }
+
+
+    /*
+        Customize the dialog content
+
+        Set the font color, size and weight that will be applied to
+        all fonts in the ContentTemplate RenderFragment
+    */
+    @(masterCssSelector) .e-dlg-content {
+        color: @ContentFontColor;
+        font-size: @ContentFontSize;
+        font-weight: @ContentFontWeight;
+        line-height: @ContentFontWeight;
+        background-color: @ContentBackgroundColor;
+        padding: @ContentPadding;
+    }
+
+
+    /* 
+        Customize the dialog footer background 
+
+    */
+    @(masterCssSelector) .e-footer-content {
+        background-color: @FooterBackgroundColor;
+        opacity: 1.0;
+        padding: @FooterPadding;
+        border-top: @FooterTopBorder;
+        border-radius: @FooterBorderRadius;
+    }
+
+</style>
+
