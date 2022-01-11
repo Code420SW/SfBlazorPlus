@@ -1,0 +1,269 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.ToolTipBase
+
+@using Syncfusion.Blazor.Popups
+
+<SfTooltip  @ref=@sfTooltip
+            Animation=@Animation
+            CloseDelay=@CloseDelay
+            Height=@Height
+            IsSticky=@IsSticky
+            MouseTrail=@MouseTrail
+            OffsetX=@OffsetX
+            OffsetY=@OffsetY
+            OpenDelay=@OpenDelay
+            OpensOn=@OpensOn
+            Position=@Position
+            ShowTipPointer=@ShowTipPointer
+            Target=@Target
+            TipPointerPosition=@TipPointerPosition
+            Width=@Width
+            WindowCollision=@WindowCollision
+
+            Closed=@Closed
+            Created=@Created
+            Destroyed=@Destroyed
+            OnClose=@OnClose
+            OnCollision=@OnCollision
+            OnOpen=@OnOpen
+            OnRender=@OnRender
+            Opened=@Opened
+
+            ID=@CssId
+            CssClass=@CssClass
+            HtmlAttributes=@HtmlAttributes
+            >
+
+            <TooltipTemplates>
+                <Content>
+                    @ContentFragment
+                </Content>
+            </TooltipTemplates>
+</SfTooltip>
+
+@*
+    (1) Tooltip div:                    id=tooltip-<BlazorId>
+                                        <CssClass>
+                                        e-tooltip-wrap 
+                                        e-popup 
+                                        e-lib 
+                                        e-control 
+                                        e-popup-open
+
+        (2) Tooltip content div:        e-tip-content
+
+        (2) Tip arrow                   e-arrow-tip 
+                                        e-tip-top || e-tip-bottom || e-tip-left || e-tip-right
+
+            (3) Outer tip arrow         e-arrow-tip-outer 
+                                        e-tip-top || e-tip-bottom || e-tip-left || e-tip-right
+
+            (3) Inner tip arrow         e-arrow-tip-inner 
+                                        e-tip-top || e-tip-bottom || e-tip-left || e-tip-right
+
+        (2) Close icon div              e-icons 
+                                        e-tooltip-close(:hover)
+
+
+*@
+
+<style>
+
+    /*
+        To ensure isolation of styling between multiple sliders on a page, append the CssClass
+        to each selector (assuming the CssClass is not String.Empty).
+        Need to use CssClass to directly address.
+
+        masterCssSelector = .CssClass.e-tooltip-wrap
+
+    */
+
+    /*
+        Set the styling for the Tooltip div
+        
+        Defaults:
+            position = absolute
+            height = Height
+            width = Width
+            max-width = Width
+            left = calculated
+            top = calculated
+            z-index = 1002
+            background-color = rgba(0,0,0,0.9)  -- TooltipBackgroundColor
+            border = 1px solid #000             -- TooltipBorder
+            border-radius = 4px                 -- TooltipBorderRadius
+            filter = none
+            opacity = 1
+            min-width = 30px
+            padding = 0 0 0 0
+            font-size = 12px
+            fiont-weight = normal
+    */
+    @(masterCssSelector) {
+        background-color: @TooltipBackgroundColor;
+        border: @TooltipBorder;
+        border-radius: @TooltipBorderRadius;
+        filter: @TooltipFilter;
+    }
+
+
+    /*
+        Set the styling for the Tooltip content div
+
+        Defaults:
+            color = #fff                        -- ContentFontColor
+            font-size = 12px                    -- ContentFontSize
+            line-height = 1.5                   -- ContentLineHeight
+            background-color = inherit
+            height = 100%
+            overflow-wrap = break-word
+            overflow-x = hidden
+            padding = 4px 8px 4px 8px           -- ContentPadding
+            position = relative
+            white-space = normal
+            width = 100%
+            word-break = break-word
+            z-index = 1
+            border-radius = inherit
+    */
+    @(masterCssSelector) .e-tip-content {
+        color: @ContentFontColor;
+        font-size: @ContentFontSize;
+        line-height: @ContentLineHeight;
+        padding: @ContentPadding;
+    }
+
+
+   /*
+        Set the styling for the Tooltip close icon div
+
+        Defaults:
+            background-color = #fff             -- CloseButtonBackgroundColor
+            border-radius = 8px                 -- calc( CloseButtonIconSize / 2 ) OR 50%
+            color = rgba(0,0,0,0.9)             -- CloseButtonIconColor
+            border = 1px solid #fff             -- CloseButtonBorder
+            cursor = pointer
+            float = right
+            position = absolute
+            right = -9px                        -- CloseRightPosition OR calc( ((CloseButtonIconSize / 2) + 1) * -1px )
+            top = -9px                          -- CloseTopPosition OR calc( ((CloseIButtonconSize / 2) + 1) * -1px )
+            z-index = inherit
+
+    */
+    @(masterCssSelector).e-tooltip-close {
+        background-color: @CloseButtonBackgroundColor;
+        border-radius: 50%;
+        color: @CloseButtonIconColor;
+        border: @CloseButtonBorder;
+        right: calc( ((@CloseButtonIconSize / 2) + 1) * -1px );
+        top: calc( ((@CloseButtonIconSize / 2) + 1) * -1px );
+    }
+
+
+    /*
+    Set the styling for the Tooltip close icon font
+
+    Defaults:
+        font-size = 16px                        -- CloseButtonIconSize
+        border-radius = 8px                     -- calc( CloseButtonIconSize / 2 ) OR 50%
+        border = 1px solid #fff                 -- CloseButtonIconBorder
+
+    */
+    @(masterCssSelector).e-tooltip-close::before {
+        font-size: @CloseButtonIconSize;
+        border-radius: 50%;
+        border: @CloseButtonIconBorder;
+    }
+
+
+    /*
+        Set the styling for the Tooltip close icon div when hovered
+
+        Defaults:
+            background-color = #fff             -- CloseButtonHovereBackgroundColor
+            color = rgba(0,0,0,0.85)            -- CloseButtonHoverIconColor
+
+    */
+    @(masterCssSelector).e-tooltip-close:hover {
+        background-color: @CloseButtonHoverBackgroundColor;
+        color: @CloseButtonHoverIconColor;
+    }
+
+
+     /*
+        Set the styling for the Tip arrow
+        e-tip-top and e-tip-bottom use the height/width settings below
+        e-tip-left and e-tip-right reverse the settings
+
+        Defaults:
+            top = calculated
+            left = calculated
+            height = 8px                        -- TipHeight NO
+            width = 16px                        -- TipWidth NO
+            overflow = hidden
+            position = absolute
+
+    */
+    @(masterCssSelector) .e-arrow-tip.e-tip-top,
+    @(masterCssSelector) .e-arrow-tip.e-tip-bottom {
+        height: 8px;
+        width: 16px;
+    }
+
+    @(masterCssSelector) .e-arrow-tip.e-tip-left,
+    @(masterCssSelector) .e-arrow-tip.e-tip-right {
+        width: 8px;
+        height: 16px;
+    }
+    
+
+    /*
+        Set the styling for the Inner tip arrow
+
+        Defaults:
+            top = -2
+            color = rgba(0,0,0,0.9)             -- TipColor
+            font-size = 16px -- leave this alone
+
+    */
+    @(masterCssSelector) .e-arrow-tip-inner {
+        color: @TipColor;
+    }
+
+
+    /*
+        Set the styling for the Outer tip arrow
+
+        Defaults:
+            border-bottom (e-tip-top) = 8px solid #000 || (e-tip-right, e-tip-left) = 8px solid transparent
+            border-top (e-tip-bottom) = 8px solid #000 || (e-tip-right, e-tip-left) = 8px solid transparent
+            border-left (e-tip-top, e-tip-bottom) = 8px solid transparent || (e-tip-right) = 8px solid #000
+            border-right(e-tip-top, e-tip-bottom) = 8px solid transparent || (e-tip-left) = 8px solid #000
+
+    */
+    @(masterCssSelector) .e-arrow-tip-outer.e-tip-top {
+        border-bottom: 8px solid @TipColor;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+    }
+
+    @(masterCssSelector) .e-arrow-tip-outer.e-tip-bottom {
+        border-top: 8px solid @TipColor;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+    }
+
+    @(masterCssSelector) .e-arrow-tip-outer.e-tip-left {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-right: 8px solid @TipColor;
+    }
+
+    @(masterCssSelector) .e-arrow-tip-outer.e-tip-right {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 8px solid @TipColor;
+    }
+
+</style>
+
+

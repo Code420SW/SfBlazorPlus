@@ -1,0 +1,82 @@
+﻿@namespace Code420.SfBlazorPlus.CompositeComponents.HelpButtonComponent
+
+@using Code420.SfBlazorPlus.BaseComponents.IconButtonBase
+@using Code420.SfBlazorPlus.BaseComponents.ToolTipBase
+@using Code420.SfBlazorPlus.Code.Enums
+@using Syncfusion.Blazor.Popups
+
+<!--
+    This is a round icon button with a question mark icon used to invoke
+    the underlying tooltip.
+
+    User Parameters:
+    1.  HelpButtonDisable in case the user wants to disable the help button--don't know why
+    2.  Margin: Sets space ouside outside the help button
+    3.  Padding: Sets space inside the help button
+-->
+<IconButtonBase @ref=helpIconButtonBase
+                IsDisabled=@HelpButtonDisabled
+                IconButtonStyle=IconButtonStyle.Round
+
+                OnClick=@(async () => await OnHelpButtonClickAsync())
+
+                CssClass="button__help"
+                IconCss="oi oi-question-mark"
+
+                ButtonHeight="24px"
+                ButtonNormalBackgroundColor="whitesmoke"
+                ButtonNormalBorder="2px solid var(--mydarkbrown)"
+                ButtonHoverBackgroundColor="whitesmoke"
+                ButtonHoverBorder="3px solid var(--mydarkbrown)"
+                ButtonActiveBackgroundColor="whitesmoke"
+                ButtonActiveBorderColor="var(--mydarkbrown)"
+                ButtonDisabledOpacity="1.0"
+                HoverScale=1.1m
+
+                IconFontSize=".75em"
+                IconFontColor="var(--mydarkgreen)"
+                IconFontTextAlign="center"
+                IconFontVerticalAlign="top"
+                IconFontLineHeight="1.0"
+
+                Margin=@Margin
+                Padding=@Padding
+                >
+</IconButtonBase>
+
+<!--
+    Tooltip
+
+    UserParameters:
+    1.  IsSticky: Determines if the tooltip will stay dispalyed until its close button is clicked.
+    2.  ContentFontSize: Sets the base font-size (=1em) for the tooltip contents
+    3.  ContentPadding: Sets the space inside the tooltip
+    4.  TooltipFilter: Apply any special effects (e.g., box shadow)
+    5.  TooltipBorderRadius: Set the border radius
+    6.  TooltipBorder: Set the border around the tooltip
+
+    The user must provide the TooltipContent
+-->
+<ToolTipBase    @ref=@tooltipBase
+                IsSticky=@IsSticky
+                OpensOn="Hover"
+                CloseDelay=0.0
+                OpenDelay=500.0
+                Position=Position.BottomCenter
+
+                CssClass="tooltip__help-button"
+                Target=".button__help"
+                
+                ContentFontSize=@ContentFontSize
+                ContentPadding=@ContentPadding
+
+                TooltipFilter=@TooltipFilter
+                TooltipBorderRadius=@TooltipBorderRadius
+                TooltipBorder=@TooltipBorder
+                >
+                <ContentFragment>
+                    @TooltipContent
+                </ContentFragment>
+
+</ToolTipBase>
+

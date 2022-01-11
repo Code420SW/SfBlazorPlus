@@ -9,9 +9,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+
+    @*Syncfusion*@
+    <link href="_content/Syncfusion.Blazor/styles/bootstrap4.css" rel="stylesheet" />
+
     <link href="css/site.css" rel="stylesheet" />
     <link href="SfBlazorPlus.styles.css" rel="stylesheet" />
+
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+
+    <style>
+        :root {
+            --mylightgreen: #5CAA51;
+            --mydarkgreen: #008D77;
+            --mylightbrown: #AA9F51;
+            --mydarkbrown: #8D7700;
+            --mydarkbrown65: #8D770065;
+            --myblue: #515CAA;
+            --mylightred: #AA515C; /*rgb(170, 159, 81)*/
+            --mydarkred: #8D0016;
+            --mybeige: #ece9d6;
+            --mylightgrey: #adb5bd;
+            --mytextcolor: white;
+            --mydialogbackground: var(--mybeige); /*rgb(236, 233, 214)*/
+            --myheaderbackgroundcolor: var(--mylightbrown);
+            --myheadercolor: var(--mytextcolor);
+            --myheaderselectedcolor: var(--myblue);
+            --myheaderbordercolor: var(--mylightgreen);
+            --mysidebarbackgroundcolor: var(--mydarkbrown);
+            --mysidebarcolor: var(--mytextcolor);
+            --mysidebarselectedcolor: var(--myblue);
+            --mysidebarbordercolor: var(--mylightgreen);
+            --button_normal_background_color: var(--mydarkbrown);
+            --button_hover_background_color: var(--mydarkgreen);
+            --button_active_background_color: var(--mydarkgreen);
+            --dialog_normal_header_background_color: var(--mydarkbrown);
+            --dialog_normal_content_background_color: var(--mybeige);
+            --dialog_normal_footer_background_color: var(--mydarkbrown);
+            --dialog_normal_header_font_color: whitesmoke;
+            --dialog__dropshadow-color: var(--mydarkbrown65);
+            --control_handle_normal_background_color: var(--mydarkbrown);
+            --control_handle_hover_background_color: var(--mylightbrown);
+        }
+    </style>
+
 </head>
 <body>
     @RenderBody()
@@ -28,5 +69,12 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+    <script src="~/scripts/Code420Interop.js"></script>
+
+    <script>
+        window.getCssVariable = function (variable) {
+            return getComputedStyle(document.documentElement).getPropertyValue(variable);
+        }
+    </script>
 </body>
 </html>
