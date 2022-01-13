@@ -1,49 +1,23 @@
 ﻿using Code420.SfBlazorPlus.BaseComponents.ButtonBase;
-using Code420.SfBlazorPlus.BaseComponents.DialogBoxBase;
+using Code420.SfBlazorPlus.BaseComponents.LabelBase;
+using Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp;
 using Microsoft.AspNetCore.Components;
 
-namespace Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp
+namespace Code420.SfBlazorPlus.Pages.Counter
 {
     /// <summary>
-    /// Composite component instatiated from the HelpButtonComponent and provides
-    /// the complete help system for the Counter page. This component
-    /// provides the base help icon, customized tooltip contents and modal dialog
-    /// which is displayed when the Learn More button in the tooltip is clicked. 
+    /// This SPA is a revised version of the Blazor OOB SPA that has been
+    /// customized to conform to the preferred structure and demonstrate
+    /// use of the Help System component CounterHelp as well as the
+    /// LabelBase and ButtonBase components.
     /// </summary>
-    public partial class CounterHelp : ComponentBase
+    public partial class Counter : ComponentBase
     {
 
         #region Component Parameters
-
-        // ==================================================
-        // Base Parameters
-        // ==================================================
-
-        /// <summary>
-        /// Boolean value indicating if the help icon button is disabled.
-        /// The default value is false.
-        /// </summary>
-        [Parameter]
-        public bool HelpButtonDisabled { get; set; } = false;
-
-        /// <summary>
-        /// String value containing the CSS Id of the dialog box's parent. 
-        /// The dialog box will be rendered completely within the HTML element associated with the CSS Id.
-        /// The Taget parameter should be a proper CSS Id selector (e.g., #target-id).
-        /// Default value is null indicating the target element is the HTML body element.
-        /// </summary>
-        [Parameter]
-        public string Target { get; set; }
-
-
-        // ==================================================
-        // Event Callback Parameters
-        // ==================================================
-
-
-        // ==================================================
-        // CSS Styling Parameters
-        // ==================================================
+        //
+        // Parameters
+        //
 
         #endregion
 
@@ -71,9 +45,12 @@ namespace Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp
         // Instance variables
         // ==================================================
 
-        private HelpButtonComponent.HelpButtonComponent helpButtonComponent;
-        private ButtonBase buttonLearnMore;
-        private DialogBoxBase dialogLearnMore;
+        private int currentCount = 0;
+        private CounterHelp helpCounter;
+        private LabelBase labelPageHeader;
+        private LabelBase labelCounterDisplay;
+        private LabelBase labelCurrentCount;
+        private ButtonBase buttonCounter;
 
         #endregion
 
@@ -89,7 +66,6 @@ namespace Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp
 
 
         #endregion
-
 
 
         #region Constructors
@@ -124,6 +100,7 @@ namespace Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
+
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -156,13 +133,11 @@ namespace Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp
         #endregion
 
 
-
         #region Public Methods Providing Access to the Underlying Components to the Consumer
 
         // ==================================================
         // Public Methods providing access to the underlying component to the consumer
         // ==================================================
-
 
         #endregion
 
@@ -170,13 +145,11 @@ namespace Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp
 
         #region Private Methods for Internal Use Only
 
-        private async Task LearnMoreButtonClickAsync()
+        private void IncrementCount()
         {
-            await helpButtonComponent.CloseTooltipAsync();
-            await dialogLearnMore.ShowAsync();
+            currentCount++;
+            this.labelCurrentCount.SetLabelText(currentCount.ToString());
         }
-
-        private async Task OnDialogCloseAsync() => await dialogLearnMore.SetVisibilityAsync(false); //await dialogLearnMore.HideAsync(); Seems to crash application
 
         #endregion
 

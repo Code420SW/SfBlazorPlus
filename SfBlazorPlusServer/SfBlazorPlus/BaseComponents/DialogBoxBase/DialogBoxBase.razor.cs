@@ -157,15 +157,9 @@ namespace Code420.SfBlazorPlus.BaseComponents.DialogBoxBase
         [Parameter]
         public bool ShowCloseIcon { get; set; } = true;
 
-        /// <summary>
-        /// String value containing the CSS Id of the dialog box's parent. 
-        /// The target must exist on the page.
-        /// The dialog box will be rendered completely within the HTML element associated with the CSS Id.
-        /// The Taget parameter should be a proper CSS Id selector (e.g., #target-id).
-        /// Default value is String.Empty.
-        /// </summary>
+        
         [Parameter]
-        public string Target { get; set; } = String.Empty;
+        public string Target { get; set; }
 
 
         /// <summary>

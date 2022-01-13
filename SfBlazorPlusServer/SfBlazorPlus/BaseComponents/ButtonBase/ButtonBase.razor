@@ -119,8 +119,7 @@
     }
 
     /* To customize the button on hover */
-    @(masterCssSelector):hover,
-    @(masterCssSelector):focus-visible {
+    @(masterCssSelector):is(:hover, :focus-visible) {
         @((HoverScale != 1.0m) ? $"transform: scale({ HoverScale });" : "")
         @(
         (ButtonHoverBackgroundColor != String.Empty) ? $"background-color: { ButtonHoverBackgroundColor };" : 
@@ -130,7 +129,17 @@
 
     /* To customize the button on active. */
     @(masterCssSelector):active {
+        box-shadow: 0 0 0 .25em @boxShadowRgba;
         @((ButtonActiveBackgroundColor != String.Empty) ? $"background-color: { ButtonActiveBackgroundColor };" : $"background-color: { ButtonNormalBackgroundColor };")
+    }
+
+    /* To customize the button on focus. */
+    @(masterCssSelector):focus {
+        box-shadow: 0 0 0 .25em @boxShadowRgba;
+        @(
+        (ButtonHoverBackgroundColor != String.Empty) ? $"background-color: { ButtonHoverBackgroundColor };" : 
+            ((IsPrimary) ? "" : "filter: hue-rotate(180deg);")
+        )
     }
 
 </style>
