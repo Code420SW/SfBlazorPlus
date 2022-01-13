@@ -1,0 +1,326 @@
+﻿@namespace Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp
+
+@using Code420.SfBlazorPlus.CompositeComponents.HelpButtonComponent
+@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
+@using Code420.SfBlazorPlus.BaseComponents.DialogBoxBase
+
+
+<!--
+    The CounterHelp component in the HelpSystem encapsulats the components needed to
+    render the help system for the Counter SPA. It provides a help icon button and
+    an associated tooltip. The tooltip exposes access to a Learn More dialog box.
+-->
+
+
+
+<!--
+    The HelpButtonComponent encapsulates the help IconButtonBase and TooltipBase components.
+    The TooltipContent render fragment is customized for the help system.
+    The ContentFontSize parameter sets the base font-size (=1em) on which all subordinates CSS styling is based.
+    The TooltipBorderRadius parameter should match the CSS border-radius <style /> below.
+    The ContentPadding parameter is normally set to 0px.
+    The Margin and Padding parameters are used to position the icon button on the page.
+    IsSticky is false by default but is included below for debugging purposes
+-->
+<HelpButtonComponent    @ref=helpButtonComponent
+                        HelpButtonDisabled=@HelpButtonDisabled
+                        IsSticky=false
+
+                        Margin=".35rem 0px 0px 0px"
+                        Padding="0px"
+
+                        TooltipBorder="none"
+                        TooltipBorderRadius="4px"
+                        ContentFontSize="12px"
+                        ContentPadding="0px"
+                        TooltipFilter="drop-shadow(5px 5px 7px var(--dialog__dropshadow-color))"
+                        >
+    <TooltipContent>
+        <!--
+            The tooltip HTML is comprised of:
+                1:  A container class encapsulating the tooltip content.
+                    The ContentFontSize parameter is applied to this class and serves as the
+                    base font-size (=1em) used by child elements.
+                    The CSS width <style /> dictates the size of the tooltip.
+                2:  Three standard divs are defined in the container which encapsulate the
+                    header, content and footer sections of the tooltip.
+                3:  The header sections contains a title and subtitle.
+                4:  The content section contains one or more card elements: one for each topic.
+                5:  The footer section contains the Learn More button.
+        -->
+        <div class="container__tooltip-counter">
+            <div class="header__tooltip-counter">
+                <p class="header-title__tooltip-counter">Count the Ways You Love Blazor</p>
+                <p class="header-subtitle__tooltip-counter">Allows the user to count the number of ways they love Blazor</p>
+            </div>
+
+            <div class="content__tooltip-counter">
+                <article class="card__tooltip-counter">
+                    <h3 class="content-title__tooltip-counter">Counter Display</h3>
+                    <p>Display the ways you love Blazor.</p>
+                </article>
+                <article class="card__tooltip-counter">
+                    <h3 class="content-title__tooltip-counter">Counter Button</h3>
+                    <p>Click the button each time you think of a Blazor feature you love.</p>
+                </article>
+            </div>
+            <div class="footer__tooltip-counter">
+                <ButtonBase @ref=buttonLearnMore
+                            IsPrimary=true
+                            TextFontSize="1em"
+
+                            OnClick=@(async () => await LearnMoreButtonClickAsync())
+                                
+                            CssClass="button__tooltip-counter"
+                            Padding="4px 8px"
+                            >
+
+                    <ContentFragment>Learn More</ContentFragment>
+                </ButtonBase>
+            </div>
+        </div>
+
+    </TooltipContent>
+
+</HelpButtonComponent>
+
+<!--
+    The DialogBoxBase component is shown when the user clicks the Learn More button in the
+    tooltip. The HeaderFragment, FooterFragment and ContentFragment are customized for the help system.
+
+    1:  The Target parameter must match the CSS Id of an HTML element (usually a div) on the page and
+        the dialog box will be sized to fit in the element.
+    2:  Display of the dialog is controlled by the LearnMoreButtonClick() event handler and the 
+        OnDialogClose() event handler. Each will invoke the dialog box's SetVisibility() method to
+        show/hide the dialog box.
+    3.  This is a modal dialog box using the default OverlayBackgroundColor and OverlayOpacity
+    4.  Suppress the default DialogBorder and override the DialogBorderRadius
+    5.  Set the header, footer and content styling to match the CodePen
+-->
+<DialogBoxBase  @ref=dialogLearnMore
+                    
+                IsModal=true
+                Target="#maintext"
+
+                OnClose=@(async () => await OnDialogCloseAsync())
+
+                CssClass="dialog-counter"
+                Height="auto"
+                Width="500px"
+
+                DialogBaseFontSize="12px"
+                DialogBorder="none"
+                DialogBorderRadius="4px"
+
+                HeaderFontSize="1.25em"
+                HeaderFontWeight="bold"
+                HeaderLineHeight="1.25"
+                HeaderFontColor="var(--dialog_normal_header_font_color)"
+                HeaderPadding="0.5em 1em"
+                HeaderBackgroundColor="var(--dialog_normal_header_background_color)"
+                HeaderBottomBorder="none"
+                HeaderBorderRadius="4px 4px 0px 0px"
+
+                ContentFontSize="1em"
+                ContentPadding="0px"
+
+                FooterPadding=".5em"
+                FooterBackgroundColor="var(--dialog_normal_footer_background_color)"
+                FooterTopBorder="none"
+                FooterBorderRadius="0px 0px 4px 4px"
+                >
+    <HeaderFragment>
+        Count the Ways You Love Blazor
+    </HeaderFragment>
+    <ContentFragment>
+        <!--
+            The dialog content section HTML is comprised of:
+                1:  A container class encapsulating the content.
+                    The ContentFontSize parameter is relative to the DialogBaseFontSize parameter and is used by child elements.
+                2:  A series of articles are defined that encapsulate the the main content sections.
+                    The sections are: Overview, Best Practices and Details
+                    Each article contains a title and paragraph.
+                3.  Some Details article contain child elements subsections providing information for discete topics
+                4.  All articles are styled by the <style /> section below
+        -->
+        <div class="container__dialog-counter">
+            <div class="content__dialog-counter">
+                <article class="card__dialog-counter">
+                    <h3 class="content-title__dialog-counter">Overview</h3>
+                    <p>
+                        Sample SPA from out-of-the-box Blazor Server project. Allows you to press a button
+                        lots of times until you find the maximum value for an integer.
+                    </p>
+                </article>
+                <article class="card__dialog-counter">
+                    <h3 class="content-title__dialog-counter">Best Practice</h3>
+                    <p>
+                        Don't try to find the maximum value. Spend more time coding.
+                    </p>
+                </article>
+                <article class="card__dialog-counter">
+                    <h3 class="content-title__dialog-counter">Details</h3>
+                    <article class="card-section__dialog-counter">
+                        <h3 class="content-section-title__dialog-counter">Counter Display</h3>
+                        <p>
+                            Press the button and watch this number increase.
+                        </p>
+                    </article>
+                    <article class="card-section__dialog-counter">
+                        <h3 class="content-section-title__dialog-counter">Counter Button</h3>
+                        <p>
+                            Click the button to make the counter grow.
+                        </p>
+                    </article>
+                </article>
+            </div>
+        </div>
+    </ContentFragment>
+    <FooterFragment>
+        <!--
+            The footer is a simple div that is styled by the <style /> below
+        -->
+        <div class="footer__dialog-counter"></div>
+    </FooterFragment>
+
+</DialogBoxBase>
+
+
+<style>
+
+    /* 
+        Styling for the tooltip render fragments.
+        Use em units in styling so that font sizes are controlled by the
+            HelpButtonComponent's ContentFontSize parameter which is applied
+            to the container__tooltip-counter class.
+        Use the container__tooltip-counter width to set the width of the tooltip.
+
+    */
+
+    p {
+        line-height: 1.1;
+        color: black;
+        margin-bottom: 0;
+    }
+
+    .container__tooltip-counter {
+        width: 300px;           /* dictates size of the tooltip */
+        overflow: hidden;
+    }
+
+    .header__tooltip-counter {
+        padding: 0.5em 1em;
+        background-color: var(--dialog_normal_header_background_color);
+        border-radius: 4px 4px 0px 0px;
+    }
+
+    .header-title__tooltip-counter {
+        font-size: 1.25em;
+        font-weight: bold;
+        line-height: 1.25;
+        color: var(--dialog_normal_header_font_color);
+        margin-bottom: .5em;
+    }
+
+    .header-subtitle__tooltip-counter {
+        font-size: 1em;
+        line-height: 1.25;
+        color: var(--dialog_normal_header_font_color);
+    }
+
+    .card__tooltip-counter {
+        padding: 0.75em 1em;
+        background-color: var(--dialog_normal_content_background_color);
+        border-bottom: 1px solid var(--mylightbrown);
+    }
+
+    .card__tooltip-counter:last-child {
+        border-bottom: none;
+    }
+
+    .content-title__tooltip-counter {
+        font-size: 1.25em;
+        font-weight: 600;
+        color: var(--mydarkgreen);
+        margin-bottom: 0.5em;
+    }
+
+    .card__tooltip-counter p {
+        font-size: 1em;
+    }
+
+    .footer__tooltip-counter {
+        display: flex;
+        justify-content: center;
+        padding: .75em;
+        background-color: var(--dialog_normal_footer_background_color);
+        border-radius: 0px 0px 4px 4px;
+    }
+
+
+    /* 
+        Styling for the dialog box render fragments.
+
+    */
+
+
+    .card__dialog-counter {
+        padding: 0.75em 1em;
+        background-color: var(--dialog_normal_content_background_color);
+    }
+
+    .content-title__dialog-counter {
+        display: flex;
+        align-items: flex-start;
+        text-align: left;
+        font-size: 1.25em;
+        font-weight: 600;
+        color: var(--mydarkgreen);
+        margin-bottom: 0.5em;
+    }
+
+    .content-title__dialog-counter::after {
+        content: "";
+        flex-grow: 1;
+        height: 2px;
+        background: var(--mydarkgreen);
+        min-width: 20px;
+        margin: auto auto auto 0.5em;
+    }
+
+    .card__dialog-counter p {
+        font-size: 1em;
+    }
+
+    .card-section__dialog-counter {
+        padding: 0em 1em 0.75em 1em;
+        background-color: var(--dialog_normal_content_background_color);
+    }
+
+    .content-section-title__dialog-counter {
+        display: flex;
+        align-items: flex-start;
+        text-align: left;
+        font-size: 1.1em;
+        font-weight: 600;
+        color: var(--dialog_normal_header_background_color);
+    }
+
+    .content-section-title__dialog-counter::after {
+        content: "";
+        flex-grow: 1;
+        height: 1px;
+        background: var(--dialog_normal_header_background_color);
+        min-width: 20px;
+        margin: auto auto auto 0.5em;
+    }
+
+    .card-section__dialog-counter p {
+        font-size: 1em;
+    }
+
+    .footer__dialog-counter {
+        height: 1em;
+    }
+
+</style>

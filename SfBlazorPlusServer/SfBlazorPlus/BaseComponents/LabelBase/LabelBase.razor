@@ -1,0 +1,24 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.LabelBase
+
+<label class = "@elementClass">@LabelText</label>
+
+<style>
+    @(masterCssSelector) {
+        font-size: @FontSize;
+        color: @FontColor;
+        font-weight: @FontWeight;
+        font-style: @FontStyle;
+
+        text-align: @TextAlign;
+        text-decoration: @TextDecoration;
+        text-transform: @TextTransform;
+
+        background-color: @LabelBackgroundColor;
+
+        border: @LabelBorder;
+        border-radius: @LabelBorderRadius;
+
+        margin: @LabelMargin;
+        padding: @LabelPadding;
+    }
+</style>
