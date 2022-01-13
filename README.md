@@ -30,19 +30,4 @@ components are the way to go, in my opinion.
 ## Short-Term Project Goals
 Don't try to boil the ocean. Use a staged, task-based approach to acheiving the long-term goals.
 
-### Stage 1
-Develop a componentized help system that can be deployed on a target Razor page as a single composite component. A core help system component will
-consist of an icon that, when hovered, will display a curated tooltip providing basic guidance for the page elements. The tooltip may contain a 
-Learn More button that, when clicked, will dispatch the tooltip and present a modal dialog box with detailed information.
-
-#### Task List
-At the completion of Stage 1, the following components will be developed:
-1. A base button component (optional Learn More button)
-2. A base icon button component (the help icon)
-3. A base tooltip component
-4. A base dialog box component
-5. A composite base help system component composed of the icon button and tooltip components incorporating application thematic styling
-6. A composite curated help system component composed of the base help system component and, optionally, the base dialog box component.
-
-#### What Done Looks Like
-Apply a curated help system component to the Counter page in a OOB Blazor project.
+### [Stage 1](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-1): Complete
