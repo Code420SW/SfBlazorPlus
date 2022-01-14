@@ -15,4 +15,8 @@
     <PackageReference Include="Syncfusion.Blazor" Version="19.4.0.41" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CustomComponents\PageStateMachine\PageStateManager\" />
+  </ItemGroup>
+
 </Project>
