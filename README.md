@@ -30,5 +30,10 @@ components are the way to go, in my opinion.
 ## Short-Term Project Goals
 Don't try to boil the ocean. Use a staged, task-based approach to acheiving the long-term goals.
 
-### [Stage 1](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-1): Complete
-### [Stage 2](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-2): In Progress
+#### [Stage 1](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-1): Complete
+#### [Stage 2](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-2): In Progress
+
+## Project Issues
+The following chronicals issues opened for the project and their status.
+
+#### [X](https://github.com/Code420SW/SfBlazorPlus/issues/2): Open
