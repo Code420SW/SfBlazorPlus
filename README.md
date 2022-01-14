@@ -36,6 +36,6 @@ Don't try to boil the ocean. Use a staged, task-based approach to acheiving the 
 
 
 ## Project Issues
-The following chronicals issues opened for the project and their status.
+The following chronicles issues opened for the project and their status.
 
 #### [Rationalize styling of the ButtonBase component](https://github.com/Code420SW/SfBlazorPlus/issues/2): Open
