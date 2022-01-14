@@ -32,6 +32,8 @@ Don't try to boil the ocean. Use a staged, task-based approach to acheiving the 
 
 #### [Stage 1](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-1): Complete
 #### [Stage 2](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-2): In Progress
+#### [Stage 3](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-3): Pending
+
 
 ## Project Issues
 The following chronicals issues opened for the project and their status.
