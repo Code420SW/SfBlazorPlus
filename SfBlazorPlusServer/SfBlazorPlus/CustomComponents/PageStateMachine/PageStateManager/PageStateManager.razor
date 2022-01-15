@@ -1,0 +1,26 @@
+﻿@namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManager
+
+@using Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateContainer
+
+<!--
+    This is the State Manager Component that is placed on the
+    target Razor page and is referenced by a page instance variable.
+
+    The component exposes the PageState parameter (required) and the
+    PageStateChanged callback. It accepts one RenderFragment for each
+    of the page states which are passed into the PageStateContainer component below.
+
+    Remember, the only thing produced by the PageStateManager is a single
+    RenderFragment--the one associated with the current page state.
+-->
+<PageStateContainer  State=PageState>
+    <LoadingFragment>
+        @Loading
+    </LoadingFragment>
+    <ContentFragment>
+        @Operating
+    </ContentFragment>
+    <ErrorFragment>
+        @Error
+    </ErrorFragment>
+</PageStateContainer>

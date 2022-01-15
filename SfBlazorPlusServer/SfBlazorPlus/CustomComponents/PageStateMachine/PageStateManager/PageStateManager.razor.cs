@@ -1,19 +1,38 @@
 ﻿using Code420.SfBlazorPlus.Code.Enums;
 using Microsoft.AspNetCore.Components;
 
-namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateContainer
+namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManager
 {
+    // 
+    // This can be confusing--picture may help.
+    //      Your Razor page:    <PageStateManager   @ref=@pageStateManager
+    //                                              PageState=PageState.Loading>
     //
-    // This is a simple component that is part of the Page State Machine system.
-    // The component should be instantiated only by the PageStateManager component.
+    //                              <Loading> Your Loading RenderFragmant </Loading>
+    //                              <Operating> Your Operating RenderFragmant </Operating>
+    //                              <Error> Your Error RenderFragmant </Error>
     //
-    // This component simply encapsulates RenderFragments that are tied to a PageState enum.
-    // Based on the State parameter (which are set within the PageStateManager component), when asked to re-render, the RenderFragment associated with the State is rendered.
+    //                          </PageStateManager>
     //
-    // There is no reason to add a bunch of intelligence to this component. Any "smarts" should be added to the PageStateManager component.
     //
+    // The component is responsible for containerizing multiple RenderFragments that are associated (one to one) with the PageState parameter.
+    //
+    // The PageState parameter is passed in but should only updated through calls to this component's SetPageState() method by your Razor page.
+    //
+    // The current value of the PageState parameter is a parameter to the PageStateContainer component.
+    //
+    // The SetPageState() method forces a StateHasChanged() call which causes the PageStateContainer component te re-render itself which will return the correct ReanderFragment.
+    //
+    // The PageStateManager component can be extended to handle different rendering situations.
+    //  The states handled by the component can be extended by ensuring:
+    //      1.  A corresponding PageState is defined in the PageState enum
+    //      2.  A corresponding RenderFragment is accepted as a parameter in this component--define a RenderFragment parameter below
+    //      3.  A corresponding RenderFragment parameter is defined in the PageStateContainer component
+    //      4.  The GetCurrentStateRenderFragment() method in the PageStateContainer component is updated to handle all valid page states
+    //
+    // If there is a desire to add more intelligence to the "container" system, this is the place to do it, not the PageStateContainer component.
 
-    public partial class PageStateContainer : ComponentBase
+    public partial class PageStateManager : ComponentBase
     {
 
         #region Component Parameters
@@ -23,40 +42,48 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateContai
         // ==================================================
 
         /// <summary>
-        /// Specifies the current state of the component. Value is one of <see cref="PageState"/>.
-        /// A default value should never be used since it should be passing in by the PageStateManager. Regardless, the default value is Operating.
+        /// Specifies the current state of the component. Value is one of <see cref="ComponentState"/>.
+        /// The default value is Content.
         /// </summary>
         [Parameter]
-        public PageState State { get; set; } = PageState.Operating;
+        public PageState PageState { get; set; } = PageState.Operating;
 
 
         /// <summary>
-        /// Contains the <see cref="RenderFragment" /> composing the Loading state. 
-        /// The default value is null.
+        /// Contains the <see cref="RenderFragment" /> composing the content portion of the
+        /// container. The default value is null.
         /// </summary>
         [Parameter]
-        public RenderFragment LoadingFragment { get; set; } = null;
+        public RenderFragment Operating { get; set; } = null;
 
 
         /// <summary>
-        /// Contains the <see cref="RenderFragment" /> composing the Operating state 
-        /// The default value is null.
+        /// Contains the <see cref="RenderFragment" /> composing the loading portion of the
+        /// container. The default value is null.
         /// </summary>
         [Parameter]
-        public RenderFragment ContentFragment { get; set; } = null;
+        public RenderFragment Loading { get; set; } = null;
 
 
         /// <summary>
-        /// Contains the <see cref="RenderFragment" /> composing the Error state. 
-        /// The default value is null.
+        /// Contains the <see cref="RenderFragment" /> composing the errpr portion of the
+        /// container. The default value is null.
         /// </summary>
         [Parameter]
-        public RenderFragment ErrorFragment { get; set; } = null;
+        public RenderFragment Error { get; set; } = null;
+
 
 
         // ==================================================
         // Event Callback Parameters
         // ==================================================
+
+        /// <summary>
+        /// Callback function <see cref="EventCallback"/> that is invoked when the state of the
+        /// container changes.
+        /// </summary>
+        [Parameter]
+        public EventCallback<PageState> PageStateChanged { get; set; }
 
 
         // ==================================================
@@ -176,26 +203,23 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateContai
         // Public Methods providing access to the underlying component to the consumer
         // ==================================================
 
+        /// <summary>
+        /// Method exposing the container's State parameter. Can be invoked to change the state instead
+        /// of using the parameter.
+        /// </summary>
+        /// <param name="state">The new <see cref="PageState"/> of the state machine.</param>
+        public void SetPageState(PageState state)
+        {
+            this.PageState = state;
+            InvokeAsync(StateHasChanged);
+        }
+
         #endregion
 
 
 
         #region Private Methods for Internal Use Only
 
-        // Invoked when the component is asked to render itself.
-        // Will return the RenderFragment associated with the current State.
-        private RenderFragment GetCurrentStateRenderFragment()
-        {
-            return State switch
-            {
-                PageState.Loading => LoadingFragment,
-                PageState.Operating => ContentFragment,
-                PageState.Error => ErrorFragment,
-                _ => ErrorFragment
-            };
-        }
-
         #endregion
-
     }
 }
