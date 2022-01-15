@@ -11,6 +11,16 @@
 
 <!--
     Demonstrate use of the Page State Machine
+
+    This implementation has a limitation:
+    Control of the PageState must remain within the PageStateManager component as shown.
+    This can be overcome by using a Cascading Parameter to allow child component to update the
+        PageState but all child components would have to accept the Cascading Parameter.
+
+    Another approach is to use the Dynamic Component. This would simplify things dramatically
+        by eliminating the need for the PageStateContainer. 
+    The limitation is the need to define the Dynamic Component's Parameters dictionary for every
+        child component.
 -->
 
 <PageStateManager   @ref=@pageStateManager
