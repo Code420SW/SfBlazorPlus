@@ -39,4 +39,4 @@ Don't try to boil the ocean. Use a staged, task-based approach to acheiving the 
 The following chronicles issues opened for the project and their status.
 
 #### [Rationalize styling of the ButtonBase component](https://github.com/Code420SW/SfBlazorPlus/issues/2): Open
-#### [Create better mechnism for setting PageState in the PageStateMachine component](): Open
+#### [Create better mechnism for setting PageState in the PageStateMachine component](https://github.com/Code420SW/SfBlazorPlus/issues/4): Open
