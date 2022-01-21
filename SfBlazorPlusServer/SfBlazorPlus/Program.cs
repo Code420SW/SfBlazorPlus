@@ -1,4 +1,5 @@
 using Code420.SfBlazorPlus.Code;
+using Code420.SfBlazorPlus.Code.Stores;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Code420.SfBlazorPlus.Data;
@@ -18,6 +19,8 @@ builder.Services.AddSyncfusionBlazor();
 
 // Our Dependencies
 builder.Services.AddTransient<ICssUtilities, CssUtilities>();
+builder.Services.AddScoped<PageStateStore>();
+
 
 
 

@@ -7,6 +7,8 @@
 @using Code420.SfBlazorPlus.Code.Enums
 @using Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManager
 
+@inject PageStateStore _pageStateStore
+
 <PageTitle>Counter State Machine</PageTitle>
 
 <!--
@@ -23,14 +25,12 @@
         child component.
 -->
 
-<PageStateManager   @ref=@pageStateManager
-                    PageState=PageState.Loading>
-
+<PageStateManager   @ref=@pageStateManager>
     <Loading>
         Loading State...
         <ButtonBase @ref=buttonLoadingState
                     IsPrimary=true
-                    OnClick=@(() => pageStateManager.SetPageState(PageState.Operating))
+                    OnClick=@(() => _pageStateStore.UpdatePageState(PageState.Operating))
                     CssClass="button__loading"
                     Margin="0px 0px 0px 10px"
                     Padding="4px 8px"
@@ -43,7 +43,7 @@
         <Counter></Counter>
         <ButtonBase @ref=buttonOperatingState
                     IsPrimary=true
-                    OnClick=@(() => pageStateManager.SetPageState(PageState.Error))
+                    OnClick=@(() => _pageStateStore.UpdatePageState(PageState.Error))
                     CssClass="button__operating"
                     Margin="6px 0px 0px 0px 0px"
                     Padding="4px 8px"
@@ -56,7 +56,7 @@
         Error State...
         <ButtonBase @ref=buttonErrorState
                     IsPrimary=true
-                    OnClick=@(() => pageStateManager.SetPageState(PageState.Loading))
+                    OnClick=@(() => _pageStateStore.UpdatePageState(PageState.Loading))
                     CssClass="button__error"
                     Margin="0px 0px 0px 10px"
                     Padding="4px 8px"

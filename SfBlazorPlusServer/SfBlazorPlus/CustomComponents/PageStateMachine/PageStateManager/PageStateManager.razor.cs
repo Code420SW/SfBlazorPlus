@@ -42,14 +42,6 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManage
         // ==================================================
 
         /// <summary>
-        /// Specifies the current state of the component. Value is one of <see cref="ComponentState"/>.
-        /// The default value is Content.
-        /// </summary>
-        [Parameter]
-        public PageState PageState { get; set; } = PageState.Operating;
-
-
-        /// <summary>
         /// Contains the <see cref="RenderFragment" /> composing the content portion of the
         /// container. The default value is null.
         /// </summary>
@@ -116,6 +108,11 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManage
         // Instance variables
         // ==================================================
 
+        /// <summary>
+        /// Specifies the current state of the component. Value is one of <see cref="ComponentState"/>.
+        /// The default value is Content.
+        /// </summary>
+        public PageState PageState { get; set; } = PageState.Operating;
 
         #endregion
 
@@ -131,7 +128,6 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManage
 
 
         #endregion
-
 
 
         #region Constructors
@@ -163,7 +159,10 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManage
         //  nor does it execute its OnInitialized method again.
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
+            _pageStateStore.AddStateChangeListeners(() => {
+                PageState = _pageStateStore.GetState().State;
+                StateHasChanged();
+            });
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -219,6 +218,17 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManage
 
 
         #region Private Methods for Internal Use Only
+
+        private RenderFragment GetCurrentStateRenderFragment()
+        {
+            return PageState switch
+            {
+                PageState.Loading => Loading,
+                PageState.Operating => Operating,
+                PageState.Error => Error,
+                _ => Error
+            };
+        }
 
         #endregion
     }
