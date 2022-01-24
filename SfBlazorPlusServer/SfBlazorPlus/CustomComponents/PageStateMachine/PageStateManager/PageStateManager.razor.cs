@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManager
 {
     // 
-    // This can be confusing--picture may help.
+    // This can be confusing--a picture may help.
     //      Your Razor page:    <PageStateManager   @ref=@pageStateManager
     //                                              PageState=PageState.Loading>
     //
@@ -15,7 +15,7 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManage
     //                          </PageStateManager>
     //
     //
-    // The component is responsible for containerizing multiple RenderFragments that are associated (one to one) with the PageState parameter.
+    // The component is responsible for containerizing multiple RenderFragments associated (one to one) with the PageState parameter.
     //
     // The PageState parameter is passed in but should only updated through calls to this component's SetPageState() method by your Razor page.
     //
@@ -42,32 +42,32 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManage
         // ==================================================
 
         /// <summary>
-        /// Specifies the current state of the component. Value is one of <see cref="ComponentState"/>.
-        /// The default value is Content.
+        /// Specifies the current state of the component. Value is one of <see cref="Code420.SfBlazorPlus.Code.Enums.PageState"/>.
+        /// The default value is Operating.
         /// </summary>
         [Parameter]
         public PageState PageState { get; set; } = PageState.Operating;
 
 
         /// <summary>
-        /// Contains the <see cref="RenderFragment" /> composing the content portion of the
-        /// container. The default value is null.
-        /// </summary>
-        [Parameter]
-        public RenderFragment Operating { get; set; } = null;
-
-
-        /// <summary>
-        /// Contains the <see cref="RenderFragment" /> composing the loading portion of the
-        /// container. The default value is null.
+        /// Contains the <see cref="RenderFragment" /> composing the loading portion of the container. 
+        /// The default value is null.
         /// </summary>
         [Parameter]
         public RenderFragment Loading { get; set; } = null;
 
 
         /// <summary>
-        /// Contains the <see cref="RenderFragment" /> composing the errpr portion of the
-        /// container. The default value is null.
+        /// Contains the <see cref="RenderFragment" /> composing the content portion of the container. 
+        /// The default value is null.
+        /// </summary>
+        [Parameter]
+        public RenderFragment Operating { get; set; } = null;
+
+
+        /// <summary>
+        /// Contains the <see cref="RenderFragment" /> composing the errpr portion of the container. 
+        /// The default value is null.
         /// </summary>
         [Parameter]
         public RenderFragment Error { get; set; } = null;
@@ -79,11 +79,11 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManage
         // ==================================================
 
         /// <summary>
-        /// Callback function <see cref="EventCallback"/> that is invoked when the state of the
-        /// container changes.
+        /// Callback function <see cref="EventCallback"/> that is invoked when the state of the container changes.
         /// </summary>
-        [Parameter]
-        public EventCallback<PageState> PageStateChanged { get; set; }
+        //[Parameter]
+        //public EventCallback<PageState> PageStateChanged { get; set; }
+
 
 
         // ==================================================
@@ -204,10 +204,10 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManage
         // ==================================================
 
         /// <summary>
-        /// Method exposing the container's State parameter. Can be invoked to change the state instead
-        /// of using the parameter.
+        /// Method exposing the container's State parameter. 
+        /// Can be invoked to change the state instead of using the parameter.
         /// </summary>
-        /// <param name="state">The new <see cref="PageState"/> of the state machine.</param>
+        /// <param name="state">The new <see cref="Code420.SfBlazorPlus.Code.Enums.PageState"/> of the state machine.</param>
         public void SetPageState(PageState state)
         {
             this.PageState = state;

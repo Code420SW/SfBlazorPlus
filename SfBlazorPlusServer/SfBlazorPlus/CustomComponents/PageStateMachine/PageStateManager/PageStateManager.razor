@@ -13,13 +13,14 @@
     Remember, the only thing produced by the PageStateManager is a single
     RenderFragment--the one associated with the current page state.
 -->
+
 <PageStateContainer  State=PageState>
     <LoadingFragment>
         @Loading
     </LoadingFragment>
-    <ContentFragment>
+    <OperatingFragment>
         @Operating
-    </ContentFragment>
+    </OperatingFragment>
     <ErrorFragment>
         @Error
     </ErrorFragment>

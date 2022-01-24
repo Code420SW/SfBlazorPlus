@@ -43,7 +43,7 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateContai
         /// The default value is null.
         /// </summary>
         [Parameter]
-        public RenderFragment ContentFragment { get; set; } = null;
+        public RenderFragment OperatingFragment { get; set; } = null;
 
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateContai
             return State switch
             {
                 PageState.Loading => LoadingFragment,
-                PageState.Operating => ContentFragment,
+                PageState.Operating => OperatingFragment,
                 PageState.Error => ErrorFragment,
                 _ => ErrorFragment
             };
