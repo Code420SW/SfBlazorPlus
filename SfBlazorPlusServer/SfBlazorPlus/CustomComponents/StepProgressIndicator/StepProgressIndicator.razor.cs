@@ -50,7 +50,7 @@ namespace Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
 
 
         /// <summary>
-        /// String value containing CSS class definition(s) that will be injected in the root HTML div element containing the step incicators.
+        /// String value containing CSS class definition(s) that will be injected in the root HTML div element containing the step indicators.
         /// Default value is container__indicators.
         /// </summary>
         [Parameter]
@@ -82,8 +82,8 @@ namespace Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
 
         /// <summary>
         /// String containing the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/height">height</see> value for the indicator.
-        /// Indicators are rendered as dot (width = height).
         /// The height CSS property specifies the height of an element. By default, the property defines the height of the content area.
+        /// Indicators are rendered as dots (width = height).
         /// Default value is 12px
         /// </summary>
         [Parameter]
@@ -109,113 +109,10 @@ namespace Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/background">background</see> value for the inactive indicators.
         /// The background shorthand CSS property sets all background style properties at once, such as color, image, origin and size, or repeat method.
-        /// Default value is #00000033 = rgba(0, 0, 0, 0.2).
+        /// Default value is rgba(0, 0, 0, 0.2).
         /// </summary>
         [Parameter]
-        public string InactiveIndicatorBackground { get; set; } = "#00000033";
-
-
-
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/color">color</see> value for the label font color.
-        /// The color CSS property sets the foreground color value of an element's text and text decorations, and sets the currentcolor value.
-        /// Default value is black.
-        /// </summary>
-        [Parameter]
-        public string FontColor { get; set; } = "black";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">font-size</see> value for the label.
-        /// The font-size CSS property sets the size of the font.
-        /// Default value is 1rem.
-        /// </summary>
-        [Parameter]
-        public string FontSize { get; set; } = "1rem";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight">font-weight</see> value for the label.
-        /// The font-weight CSS property sets the weight (or boldness) of the font. The weights available depend on the font-family that is currently set.
-        /// Default value is normal.
-        /// </summary>
-        [Parameter]
-        public string FontWeight { get; set; } = "normal";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-style">font-style</see> value for the label.
-        /// The font-style CSS property sets whether a font should be styled with a normal, italic, or oblique face from its font-family.
-        /// Default value is normal.
-        /// </summary>
-        [Parameter]
-        public string FontStyle { get; set; } = "normal";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-align">text-align</see> value for the label.
-        /// The text-align CSS property sets the horizontal alignment of the content inside a block element or table-cell box.
-        /// Default value is left.
-        /// </summary>
-        [Parameter]
-        public string TextAlign { get; set; } = "left";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration">text-decoration</see> value for the label.
-        /// The text-decoration shorthand CSS property sets the appearance of decorative lines on text. It is a shorthand for text-decoration-line, text-decoration-color, text-decoration-style, and the newer text-decoration-thickness property.
-        /// Default value is none.
-        /// </summary>
-        [Parameter]
-        public string TextDecoration { get; set; } = "none";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform">text-transform</see> value for the label.
-        /// The text-transform CSS property specifies how to capitalize an element's text. It can be used to make text appear in all-uppercase or all-lowercase, or with each word capitalized.
-        /// Default value is none.
-        /// </summary>
-        [Parameter]
-        public string TextTransform { get; set; } = "none";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">background-color</see> value for the label.
-        /// The background-color CSS property sets the background color of an element.
-        /// Default value is transparent.
-        /// </summary>
-        [Parameter]
-        public string LabelBackgroundColor { get; set; } = "transparent";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border">border</see> value for the label.
-        /// The border shorthand CSS property sets an element's border. It sets the values of border-width, border-style, and border-color.
-        /// Default value is none.
-        /// </summary>
-        [Parameter]
-        public string LabelBorder { get; set; } = "none";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius">border-radius</see> value for the label.
-        /// The border-radius CSS property rounds the corners of an element's outer border edge.
-        /// Default value is none.
-        /// </summary>
-        [Parameter]
-        public string LabelBorderRadius { get; set; } = "0";
-
-        /// <summary>
-        /// String containing the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/margin">margin</see> value used for the label.
-        /// The margin CSS shorthand property sets the margin area on all four sides of an element.
-        /// Specify the margin in top, right, bottom, left order. Or use any of the margin shorhands.
-        /// Default value is: 0px on all sides.
-        /// </summary>
-        [Parameter]
-        public string LabelMargin { get; set; } = "0px";
-
-        /// <summary>
-        /// String containing the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding">padding</see> value for the label.
-        /// The padding CSS shorthand property sets the padding area on all four sides of an element at once.
-        /// Specify the padding in top, right, bottom, left order. Or use any of the padding shorhands.
-        /// Default value is: 0px on all sides.
-        /// </summary>
-        [Parameter]
-        public string LabelPadding { get; set; } = "0px";
-
-
+        public string InactiveIndicatorBackground { get; set; } = "rgba(0, 0, 0, 0.2)";
 
 
         #endregion
@@ -291,9 +188,6 @@ namespace Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
             {
                 ActiveIndicator = IndicatorCount;
             }
-
-            // Build the master CSS selector
-            masterCssSelector = "." + CssClass;
         }
 
         // Once the state from the ParameterCollection has been assigned to the component’s
@@ -311,6 +205,9 @@ namespace Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
 
             // Build the string containing the <span> tags to be injected in the HTML
             for (int i = 0; i < IndicatorCount; i++) spanString += "<span></span>";
+
+            // Build the master CSS selector
+            masterCssSelector = "." + CssClass;
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -357,6 +254,16 @@ namespace Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
         /// </param>
         public void SetActiveIndicator(int value)
         {
+            // Do some validation on the passed value.
+            if (value < 1)
+            {
+                value = 1;
+            }
+            else if (value > IndicatorCount)
+            {
+                value = IndicatorCount;
+            }
+
             this.ActiveIndicator = value;
             InvokeAsync(StateHasChanged);
         }

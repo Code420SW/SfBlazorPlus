@@ -1,5 +1,15 @@
 ﻿@namespace Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
 
+<!--
+    Simple HTML element. The code-behind builds a string of <span></span> pairs,
+    one pair for each indicator dot. The string is rendered as markup.
+
+    The styling below takes care of rendering the dots according to the
+    component parameters.
+
+    Note that the indicators are in a flexbox.
+-->
+
 <div class=@CssClass>
 
     @((MarkupString)spanString)
