@@ -1,5 +1,19 @@
 ﻿@namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
 
+<!--
+    Provides a simple card element consisting of a container that encapsulates
+    three content divs (header, body and footer) and two separator divs, one
+    displayed below the header and one above the footer.
+
+    The header and header separator divs are suppressed if the HeaderContent 
+    RenderFragment is null.
+
+    The body div is suppressed if the BodyContent RenderFragment is null.
+
+    The footer and footer separator divs are suppressed if the FooterContent 
+    RenderFragment is null.
+-->
+
 <div id="@CssId" class="@CssClass card card__container">
 
     @if (includeHeader)
@@ -93,8 +107,8 @@
         Set the styling for the Footer Seperator div 
     */
     @(masterCssSelector) .card__footer-separator {
-        border-bottom: @FooterSeparatorTopBorder;
-        padding-bottom: @FooterSeparatorTopPadding;
+        border-top: @FooterSeparatorTopBorder;
+        padding-top: @FooterSeparatorTopPadding;
     }
 
     /* 

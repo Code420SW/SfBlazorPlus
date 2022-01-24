@@ -51,15 +51,14 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
 
         /// <summary>
         /// String value containing CSS class definition(s) that will be injected in
-        /// the root HTML ?????? element of the Card.
+        /// the root HTML card element of the Card.
         /// Default value is String.Empty.
         /// </summary>
         [Parameter]
         public string CssClass { get; set; } = String.Empty;
 
         /// <summary>
-        /// String value that specifies the CSS ID assigned to the HTML ??????? element
-        /// of the Card.
+        /// String value that specifies the CSS ID assigned to the HTML card element of the Card.
         /// Default value is String.Empty.
         /// </summary>
         [Parameter]
@@ -69,10 +68,10 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">font-size</see> value used for the Card font size.
         /// The font-size CSS property sets the size of the font.
         /// This is the base font size for the entire card (=1em). Relative font sizes for child components are based on this font size.
-        /// Default value is 15px.
+        /// Default value is 16px.
         /// </summary>
         [Parameter]
-        public string CardFontSize { get; set; } = "15px";
+        public string CardFontSize { get; set; } = "16px";
 
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/color">color</see> value used for the Card font color.
@@ -85,10 +84,10 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height">line-height</see> value used for the Card line height.
         /// The line-height CSS property sets the height of a line box. It's commonly used to set the distance between lines of text.
-        /// Default value is 36px.
+        /// Default value is normal.
         /// </summary>
         [Parameter]
-        public string CardLineHeight { get; set; } = "36px";
+        public string CardLineHeight { get; set; } = "normal";
 
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/height">height</see> value used for the Card.
@@ -237,7 +236,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         public string HeaderFontColor { get; set; } = "#212529";
 
         /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height">line-height</see> value used for the Card header line height.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height">line-height</see> value used for the header line height.
         /// The line-height CSS property sets the height of a line box. It's commonly used to set the distance between lines of text.
         /// Default value is normal.
         /// </summary>
@@ -247,7 +246,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow">overflow</see> value used for the Header content.
         /// The overflow CSS shorthand property sets the desired behavior for an element's overflow — i.e. when an element's content is too big to fit in its block formatting context — in both directions.
-        /// Default value is auto.
+        /// Default value is auto (scrollbars provided).
         /// </summary>
         [Parameter]
         public string HeaderOverflow { get; set; } = "auto";
@@ -279,10 +278,10 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding">padding</see> value used for the Card header padding.
         /// The padding CSS shorthand property sets the padding area on all four sides of an element at once.
-        /// Default value is normal.
+        /// Default value is 1em.
         /// </summary>
         [Parameter]
-        public string HeaderPadding { get; set; } = "16px";
+        public string HeaderPadding { get; set; } = "1em";
 
 
 
@@ -302,6 +301,22 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         [Parameter]
         public string HeaderSeparatorBottomPadding { get; set; } = "0px";
 
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-top">border-top</see> value used for the Card footer separator.
+        /// The border-top shorthand CSS property sets an element's top border. It sets the values of border-top-width, border-top-style and border-top-color.
+        /// Default value is 1px solid rgba(0,0,0,0.12).
+        /// </summary>
+        [Parameter]
+        public string FooterSeparatorTopBorder { get; set; } = "1px solid rgba(0,0,0,0.12)";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top">padding-top</see> value used for the Card footer separator.
+        /// The padding-top CSS property sets the height of the padding area on the top of an element.
+        /// Default value is 0px.
+        /// </summary>
+        [Parameter]
+        public string FooterSeparatorTopPadding { get; set; } = "0px";
+
 
 
         /// <summary>
@@ -319,24 +334,6 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         /// </summary>
         [Parameter]
         public string ContentMinimumHeight { get; set; } = "24px";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-top">border-top</see> value used for the Card footer separator.
-        /// The border-top shorthand CSS property sets an element's top border. It sets the values of border-top-width, border-top-style and border-top-color.
-        /// Default value is 1px solid rgba(0,0,0,0.12).
-        /// </summary>
-        [Parameter]
-        public string FooterSeparatorTopBorder { get; set; } = "1px solid rgba(0,0,0,0.12)";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom">padding-bottom</see> value used for the Card footer separator.
-        /// The padding-bottom CSS property sets the height of the padding area on the bottom of an element.
-        /// Default value is 0px.
-        /// </summary>
-        [Parameter]
-        public string FooterSeparatorTopPadding { get; set; } = "0px";
-
-
 
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">font-size</see> value used for the Card content.
@@ -373,7 +370,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow">overflow</see> value used for the Card content.
         /// The overflow CSS shorthand property sets the desired behavior for an element's overflow — i.e. when an element's content is too big to fit in its block formatting context — in both directions.
-        /// Default value is auto.
+        /// Default value is auto (scrollbars provided).
         /// </summary>
         [Parameter]
         public string ContentOverflow { get; set; } = "auto";
@@ -405,10 +402,10 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding">padding</see> value used for the Card content.
         /// The padding CSS shorthand property sets the padding area on all four sides of an element at once.
-        /// Default value is 16px.
+        /// Default value is 1em.
         /// </summary>
         [Parameter]
-        public string ContentPadding { get; set; } = "16px";
+        public string ContentPadding { get; set; } = "1em";
 
 
 
@@ -487,7 +484,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow">overflow</see> value used for the Footer content.
         /// The overflow CSS shorthand property sets the desired behavior for an element's overflow — i.e. when an element's content is too big to fit in its block formatting context — in both directions.
-        /// Default value is auto.
+        /// Default value is auto (scrollbars provided).
         /// </summary>
         [Parameter]
         public string FooterOverflow { get; set; } = "auto";
@@ -549,9 +546,9 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         // ==================================================
 
         private string masterCssSelector = String.Empty;        // The master selector for the HTML div element
-        private bool includeHeader = true;
-        private bool includeFooter = true;
-        private bool includeBody = true;
+        private bool includeHeader = true;                      // Indicates if the HTML elements for the header and header seperator are included in the DOM
+        private bool includeFooter = true;                      // Indicates if the HTML elements for the footer and footer seperator are included in the DOM
+        private bool includeBody = true;                        // Indicates if the HTML elements for the body are included in the DOM
 
         #endregion
 
@@ -585,19 +582,6 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             await base.SetParametersAsync(parameters);
-
-            // Build the master selector
-            masterCssSelector = ((CssClass == String.Empty) ? ".card" : $".{ CssClass }.card");
-
-            // Determine if the header section should be excluded
-            includeHeader = (HeaderContent is not null);
-
-            // Determine if the content section should be excluded
-            includeBody = (BodyContent is not null);
-
-            // Determine if the footer section should be excluded
-            includeFooter = (FooterContent is not null);
-
         }
 
         // Once the state from the ParameterCollection has been assigned to the component’s
@@ -612,6 +596,18 @@ namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
+
+            // Build the master selector
+            masterCssSelector = ((CssClass == String.Empty) ? ".card" : $".{ CssClass }.card");
+
+            // Determine if the header section should be excluded
+            includeHeader = (HeaderContent is not null);
+
+            // Determine if the content section should be excluded
+            includeBody = (BodyContent is not null);
+
+            // Determine if the footer section should be excluded
+            includeFooter = (FooterContent is not null);
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
