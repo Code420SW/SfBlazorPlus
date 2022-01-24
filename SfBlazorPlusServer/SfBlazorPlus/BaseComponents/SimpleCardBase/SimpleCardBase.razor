@@ -1,0 +1,138 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
+
+<div id="@CssId" class="@CssClass card card__container">
+
+    @if (includeHeader)
+    {
+        <div class="card-header card__header">
+            @HeaderContent
+        </div>
+
+        <div class="card-separator card__header-separator"></div>
+    }
+
+    @if (includeBody)
+    {
+    <div class="card-body card__body">
+        @BodyContent
+    </div>
+    }
+
+    @if (includeFooter)
+    {
+        <div class="card-separator card__footer-separator"></div>
+
+        <div class="card-footer card__footer">
+            @FooterContent
+        </div>
+    }
+
+</div>
+
+
+<style>
+
+    /*
+        To ensure isolation of styling between multiple sliders on a page, append the CssClass
+        to each selector (assuming the CssClass is not String.Empty).
+        Need to use CssClass to directly address.
+
+        masterCssSelector = .CssClass.card
+    */
+
+    /* 
+        Set the styling for the Card div
+    */
+    @(masterCssSelector).card__container {
+        box-sizing: border-box;
+        font-size: @CardFontSize;
+        color: @CardFontColor;
+        line-height: @CardLineHeight;
+        height: @CardHeight;
+        width: @CardWidth;
+        min-height: @CardMinimumHeight;
+        background: @CardBackground;
+        border: @CardBorder;
+        border-radius: @CardBorderRadius;
+        box-shadow: @CardBoxShadow;
+        outline: @CardOutline;
+        margin: @CardMargin;
+        padding: @CardPadding;
+    }
+
+    /* 
+        Set the styling for the Header div
+    */
+    @(masterCssSelector) .card__header {
+        min-height: @HeaderMinimumHeight;
+        width: @HeaderWidth;
+        display: flex;
+        flex-direction: @HeaderFlexDirection;
+        justify-content: @HeaderJustifyContent;
+        align-content: @HeaderAlignContent;
+        font-size: @HeaderFontSize;
+        font-weight: @HeaderFontWeight;
+        color: @HeaderFontColor;
+        line-height: @HeaderLineHeight;
+        overflow: @HeaderOverflow;
+        text-overflow: @HeaderTextOverflow;
+        white-space: @HeaderWhiteSpace;
+        background: @HeaderBackground;
+        padding: @HeaderPadding;
+    }
+
+    /* 
+        Set the styling for the Header Seperator div 
+    */
+    @(masterCssSelector) .card__header-separator {
+        border-bottom: @HeaderSeparatorBottomBorder;
+        padding-bottom: @HeaderSeparatorBottomPadding;
+    }
+
+    /* 
+        Set the styling for the Footer Seperator div 
+    */
+    @(masterCssSelector) .card__footer-separator {
+        border-bottom: @FooterSeparatorTopBorder;
+        padding-bottom: @FooterSeparatorTopPadding;
+    }
+
+    /* 
+        Set the styling for the Content div
+    */
+    @(masterCssSelector) .card__body {
+        min-height: @ContentMinimumHeight;
+        width: @ContentWidth;
+        font-size: @ContentFontSize;
+        font-weight: @ContentFontWeight;
+        color: @ContentFontColor;
+        line-height: @ContentLineHeight;
+        overflow: @ContentOverflow;
+        text-overflow: @ContentTextOverflow;
+        white-space: @ContentWhiteSpace;
+        background: @ContentBackground;
+        padding: @ContentPadding;
+    }
+
+    /* 
+        Set the styling for the Footer div
+    */
+    @(masterCssSelector) .card__footer {
+        min-height: @FooterMinimumHeight;
+        width: @FooterWidth;
+        display: flex;
+        flex-direction: @FooterFlexDirection;
+        justify-content: @FooterJustifyContent;
+        align-content: @FooterAlignContent;
+        font-size: @FooterFontSize;
+        font-weight: @FooterFontWeight;
+        color: @FooterFontColor;
+        line-height: @FooterLineHeight;
+        overflow: @FooterOverflow;
+        text-overflow: @FooterTextOverflow;
+        white-space: @FooterWhiteSpace;
+        background: @FooterBackground;
+        padding: @FooterPadding;
+    }
+
+</style>
