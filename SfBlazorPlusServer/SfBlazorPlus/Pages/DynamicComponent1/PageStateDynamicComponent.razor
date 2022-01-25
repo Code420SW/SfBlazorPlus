@@ -1,0 +1,251 @@
+﻿@using Code420.SfBlazorPlus.BaseComponents.LabelBase
+@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
+@using Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
+@using Code420.SfBlazorPlus.Code.Enums
+@using Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
+@using Code420.SfBlazorPlus.Pages.DynamicComponent1
+@using System.Diagnostics
+
+<!--
+    This page demonstrates use of the SimpleCardBase components and the StepProgressIndicator component.
+    It also demonstrates use of Dynamic Components in the Body section of the SimpleCardBase component.
+
+    The SimpleCardBase component provides a container providing parameters controlling the overall
+    appearance of the card and, perhaps most important, the CardFontSize parameter which sets the
+    base font-size propery for the card and its children. The CardFontSize setting equals 1em so that
+    the children can use releative font sizes. The card container provides three directly addressible 
+    child components and two implicit components:
+        <HeaderContent>: This is a flex container and parameters exist to control flex direction and alignment
+                            as well as style content.
+        <BodyComponent>: This is a standard div. Parameters exist to style content.
+        <FooterContent>: This is a flex container and parameters exist to control flex direction and alignment
+                            as well as style content
+
+    Two implicit divs exist that provide bottom/top borders and padding for the header/footer section. These are
+    exposed by the HeaderSeparatorBottonBorder, HeaderSeparatorBottonPadding, FootereparatorTopBorder and  
+    FootereparatorTopPadding parameters.
+
+    It should be noted that if any of the Content RenderFragments are omitted, that section of the card (and the
+    associated separator if applicable) will not be rendered to HTML.
+
+    The StepProgressIndicator components renders the specified number of indicator dots and us used to show progress
+    through a sequence (in this case, the three dynamic components). Parameters exist to style the dots. It should be
+    noted that the component is a flexbox.
+
+    The real purpose of this demonstration is to show how to use Dynamic Componenets. The card header and footer are static
+    in that their content does not change, aside from the progression indication in the header. The body content renders
+    a DynamicComponent which can be one of three child components. The parameters for the chilren are defined in the
+    childComponents array and, based on the progression, are passed to the <BodyContent>'s <DynamicComponent>. As progress
+    is made, the currentChildIndex is changed and a StateHasChanged is issued to force the <DynamicComponent> to render
+    the correct fragment.
+-->
+
+<SimpleCardBase @ref=@cardContainer
+
+                CardBorderRadius="4px"
+                CardBorder="2px solid #ccc"
+                CardMargin="50px auto"
+                CardPadding="0px"
+                CardHeight="auto"
+                CardWidth="500px"
+                CardFontSize="16px"
+
+                HeaderBackground="whitesmoke"
+                HeaderMinimumHeight="auto"
+                HeaderPadding="5px"
+
+                HeaderSeparatorBottomBorder="1px solid var(--mydarkgreen)"
+
+                ContentBackground="var(--mybeige)"
+                ContentPadding="20px 10px 10px 10px"
+
+                FooterBackground="whitesmoke"
+
+                FooterSeparatorTopBorder="1px solid var(--mydarkgreen)"
+
+                CssClass="card__dynamic-component"
+                >
+
+    <HeaderContent>
+        <StepProgressIndicator  @ref=@stepIndicator
+                                CssClass="container__indicators"
+                                IndicatorCount=3
+                                ActiveIndicator=1
+                                ContainerHeight="auto"
+                                ContainerBottomBorder="none"
+                                ActiveIndicatorBackground="var(--mydarkgreen)"
+                                InactiveIndicatorBackground="var(--mydarkbrown)"
+                                >
+        </StepProgressIndicator>
+    </HeaderContent>
+
+    <BodyContent>
+        <DynamicComponent   Type=@(Type.GetType(childComponents[indexCurrentChild].CType))
+                            Parameters=@childComponents[indexCurrentChild].Params
+                            >
+        </DynamicComponent>
+    </BodyContent>
+
+    <FooterContent>
+        <LabelBase  @ref=@labelFooter
+                    LabelText="This is a SimpleCardBase providing Header, Body and Footer content. All are optional.
+                                This page demonstrates using the StepProgressIndicator component in the Header and 
+                                using a series of Dynamic Components in the Body."
+                    CssClass="label__footer"
+                    FontSize=".8em"
+                    FontColor="var(--mydarkgreen)"
+                    LabelPadding=".75em"
+                    >
+        </LabelBase>
+    </FooterContent>
+
+</SimpleCardBase>
+
+
+
+@code 
+{
+    //
+    // This parameter need to callback to the parent SPA deploying the
+    // PageStateManager so, as needed, this component can signal changes in
+    // the Page State Machine.
+    //
+    [Parameter]
+    public Action<PageState> ChangePageState { get; set; }
+
+
+    //
+    // These two parameters contain the PageState indicating the next/previous
+    // Page State Machine states and are passed by the parent SPA. Based on the
+    // logic in this component, these parameters can be sent back to the parent
+    // SPA to invoke changes in the Page State Machine. There aren't many use
+    // cases for the PreviousPageState but is included for completness.
+    [Parameter]
+    public PageState PreviousPageState { get; set; }
+
+    [Parameter]
+    public PageState NextPageState { get; set; }
+
+
+    //
+    // Instance variables
+    //
+    private SimpleCardBase cardContainer;
+    private StepProgressIndicator stepIndicator;
+    private LabelBase labelFooter;
+
+    private List<ChildComponent> childComponents;
+    private int indexCurrentChild;
+
+
+    //
+    // Definitions for the array of dynamic components used
+    //
+
+
+    //
+    // Constructor
+    //
+
+    // Once the state from the ParameterCollection has been assigned to the component’s
+    //  [Parameter] properties, this method is executed. This is useful in the same way
+    //  as SetParametersAsync, except it is possible to use the component’s state.
+    // This method is only executed once when the component is first created. If the parent
+    //  changes the component’s parameters at a later time, this method is skipped.
+    // When the component is a @page, and our Blazor app navigates to a new URL that renders
+    //  the same page, Blazor will reuse the current object instance for that page. Because the
+    //  object is the same instance, Blazor does not call IDisposable.Dispose on the object,
+    //  nor does it execute its OnInitialized method again.
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        // Initialize the childComponents list
+        childComponents = new()
+            {
+                new()
+                {
+                    CType=typeof(PageStateDynamicChild1).AssemblyQualifiedName,
+                    Params = new Dictionary<string, object>() 
+                    { 
+                        { "StepForward", OnStepForwardClick },                      // Next button moves to Child #2
+                        { "StepBack", OnPreviousButtonClick }                       // Previous button changes Page State Machine to Loading
+                    }
+                },
+                new()
+                {
+                    CType=typeof(PageStateDynamicChild2).AssemblyQualifiedName,
+                    Params = new Dictionary<string, object>() 
+                    { 
+                        { "StepForward", OnStepForwardClick },                      // Next button moves to Child #3
+                        { "StepBack", OnStepBackClick }                             // Previous button moves to Child #1
+                    }
+                },
+                new()
+                {
+                    CType=typeof(PageStateDynamicChild3).AssemblyQualifiedName,
+                    Params = new Dictionary<string, object>() 
+                    { 
+                        { "StepForward", OnNextButtonClick },                       // Previous button changes Page State Machine to Loading
+                        { "StepBack", OnStepBackClick }                             // Previous button moves to Child #2
+                    }
+                }
+            };
+
+        // Initialize the current child index
+        indexCurrentChild = 0;
+    }
+
+    //
+    // These callbacks are provided to child components to allow them
+    // to signal the need for a change in the state of the Page State Machine
+    //
+    public void OnPreviousButtonClick()
+    {
+        if (ChangePageState is not null)
+        {
+            ChangePageState(PreviousPageState);
+        }
+    }
+
+    public void OnNextButtonClick()
+    {
+        if (ChangePageState is not null)
+        {
+            ChangePageState(NextPageState);
+        }
+    }
+
+
+    //
+    // These callbacks are provided to child components to allow them
+    // to signal the need to step forward/back through the progression.
+    // These will cause a change in the <DynamicComponent> that is rendered
+    //
+    public void OnStepForwardClick()
+    {
+        indexCurrentChild++;
+        stepIndicator.SetActiveIndicator(indexCurrentChild+1);
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void OnStepBackClick()
+    {
+        indexCurrentChild--;
+        stepIndicator.SetActiveIndicator(indexCurrentChild+1);
+        InvokeAsync(StateHasChanged);
+    }
+
+
+
+    //
+    // This class encapsulates the info for the child components passed to <DynamicComponent>
+    //
+    public class ChildComponent
+    {
+        public string CType { get; set; }
+        public Dictionary<string, object> Params { get; set; }
+
+    }
+
+}
