@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Folder Include="Code\Demo\DynamicComponent\" />
-    <Folder Include="Pages\DynamicComponent2\" />
   </ItemGroup>
 
 </Project>
