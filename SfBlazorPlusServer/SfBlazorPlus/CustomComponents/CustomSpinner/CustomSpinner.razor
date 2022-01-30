@@ -1,0 +1,106 @@
+﻿@namespace Code420.SfBlazorPlus.CustomComponents.CustomSpinner
+
+@using Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
+
+
+<!--
+    The SimpleCardBase component is used to render the custom spinner definition element in the body of
+    the card. The LoadingMessageContent RenderFragment--if defined--will be rendered in the header section
+    of the card. Nothing is rendered in the footer section of the card.
+
+    The custom spinner definition element is rendered in the card body as a dynamic component. Given the
+    uniqueness of each definition, its HTML/CSS should be responsible for positioning itself in the card
+    body versus using the SimpleCardBase parameters (ContentPadding). The size of the SimpleCardBase
+    (CardHeight/CardWidth) should be sufficient to contain the custom spinner definition element.
+
+    Positioning the card on the screen is the responsibility of the parent component through the
+    CustomSpinner component's SpinnerMargin property which is passed through to the SimpleCardBase
+    CardMargin parameter.
+
+    The CardFont parameter is set below in case the custom spinner definition want to use relative (em) measurements.
+
+    Sorry, the markup below is kludgy...
+
+    The problem is that the consumer may or may not pass a RenderFragment through the LoadingMessageContent
+        which, if defined, is rendered in the header section of SimpleCardBase. Even if LoadingMessageContent
+        is a null RenderFragment, if passed through the <HeaderContent> below, an empty header is rendered in
+        the SimpleCardBase. This is due to the fact that SimpleCardBase's HeaderContent parameter defaults
+        to null and if any <HeaderContent> is defined--even if it is null-- will cause SimpleCardBase to
+        render the header section (and header separator section) even though there is nothing to display.
+
+    The definition of includeHeader in the code-behind drives which SimpleCardBase definition below is rendered--
+        one with <HeaderContent> and one without.
+-->
+
+
+@if (includeHeader)
+{
+    <SimpleCardBase @ref=@simpleCardBase
+
+                    CardBorderRadius=@SpinnerBorderRadius
+                    CardBackground=@SpinnerBackground
+                    CardBorder=@SpinnerBorder
+                    CardMargin=@SpinnerMargin
+                    CardBoxShadow=@SpinnerBoxShadow
+                    CardPadding="0px"
+                    CardHeight="400px"
+                    CardWidth="400px"
+                    CardFontSize="16px"
+
+                    HeaderBackground="inherit"
+
+                    ContentPadding="0px"
+                    ContentBackground="inherit"
+
+                    FooterBackground="inherit"
+
+                    CssClass="card__dynamic-component"
+                    >
+
+        <HeaderContent>
+            @LoadingMessageContent
+        </HeaderContent>
+
+        <BodyContent>
+            <DynamicComponent   Type=@(Type.GetType(spinnerType))
+                                Parameters=@spinnerParams
+                                >
+            </DynamicComponent>
+        </BodyContent>
+
+    </SimpleCardBase>
+}
+else
+{
+    <SimpleCardBase @ref=@simpleCardBase
+
+                    CardBorderRadius=@SpinnerBorderRadius
+                    CardBackground=@SpinnerBackground
+                    CardBorder=@SpinnerBorder
+                    CardMargin=@SpinnerMargin
+                    CardBoxShadow=@SpinnerBoxShadow
+                    CardPadding="0px"
+                    CardHeight="400px"
+                    CardWidth="400px"
+                    CardFontSize="16px"
+
+                    HeaderBackground="inherit"
+
+                    ContentPadding="0px"
+                    ContentBackground="inherit"
+
+                    FooterBackground="inherit"
+
+                    CssClass="card__dynamic-component"
+                    >
+
+        <BodyContent>
+            <DynamicComponent   Type=@(Type.GetType(spinnerType))
+                                Parameters=@spinnerParams
+                                >
+            </DynamicComponent>
+        </BodyContent>
+
+    </SimpleCardBase>
+    
+}

@@ -1,0 +1,224 @@
+﻿<!--
+    This is a custom spinner definition element that, when specified by the consumer, is dynamically
+    rendered by the CustomSpinner component.
+
+    The <DymanicComponent> in CustomSpinner will pass in two parameters (Heght and Width). 
+    These parameters must exist in all custom spinner definition elements (for the time being...may change)
+    though right now they are not used.
+
+    For this custom spinner definition most CSS styling is either paramerized through variables (in .spinner__body)
+    or are relative measures. 
+    The idea behind variable use is to allow the consume to change the size of the spinner. More work is need on this.
+    The animation timings are hard-coded and could be parameterized.
+-->
+
+
+<div class="spinner__body">
+    <div class="container">
+        <div class="swing"></div>
+        <div class="ball"></div>
+    </div>
+</div>
+
+@code{
+
+    [Parameter]
+    public string Height { get; set; }
+
+    [Parameter]
+    public string Width { get; set; }
+}
+
+<style>
+
+/*
+    The key is to set the --container-size (.container) to the size of the desired spinner.
+    Place .container inside .card__body to set display size (height, width), margin and padding
+    The .card__body should be a flexbox so .container can be centered in it.
+    Adjust the padding in .card__body to position .container.
+    No padding in .container
+*/
+
+.spinner__body {
+    --container-size: 200px;
+    --swing-outer-radius: calc(var(--container-size) / 2);
+    --swing-width: 30px;
+    --swing-inner-radius: calc(var(--swing-outer-radius) - var(--swing-width));
+    --swing-cap-height: calc(var(--swing-width) / 2);
+    --ball-size: var(--swing-width);
+
+    /*background-image: linear-gradient(120deg, #002, #000);*/
+    height: 100%; /*calc(var(--container-size) + 100px);*/
+    width: 100%; /*calc(var(--container-size) + 100px);*/
+    padding: 40px 30px 0px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/*
+    Need relative positioning in .container to the ::before and ::after can be positioned correctly
+    The width must be the OD of the semi-circular element.
+    The height should be the same as width
+*/
+.container {
+    position: relative;
+    width: var(--container-size);
+    height: var(--container-size);
+    margin: 0px;
+    padding: 0px;
+}
+
+/*
+    .swing is the semi-circular element
+    The width and height must be 100% which means the diameter of the semi-circular element is --container-width
+    The background-image creates the swing placing it in the center of .container
+    transparent: 70px sets the ID of the swing
+    The three color transitions set the highlighting in the swing. These need to be adjusted as the swing size changes.
+    transparent: 100px set the OD of the swing
+    The background-size, -position and -repeat control placement of the swind in the container
+*/
+.swing {
+    position: relative;
+    width: 100%; 
+    height: 100%; 
+    border-radius: 50%; 
+    background-image: radial-gradient(
+        circle at 50% 0%,
+        transparent var(--swing-inner-radius), 
+        #555 calc(var(--swing-inner-radius) + 5px), 
+        #aaa calc(var(--swing-inner-radius) + (var(--swing-width) / 2)), 
+        #555 calc(var(--swing-outer-radius) - 5px),  
+        transparent var(--swing-outer-radius) 
+    );
+    background-size: 100% 50%;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    animation: swingA 6s infinite ease-in-out;
+}
+
+/*
+    The ::before and ::after elements create the caps on the swing.
+    The caps have to be positioned absolute so the left and right styling puts them at the edges of the container.
+    The cap width should be OD minus ID.
+    The cap height should be half the cap width.
+    The top styling should be the middle of the container (--container-size / 2) minus the height of the caps.
+    The background-image transparent style should equal the cap height.
+*/
+
+.swing::before,
+.swing::after {
+    content: "";
+    position: absolute;
+    width: var(--swing-width); 
+    height: var(--swing-cap-height); 
+    top: calc(var(--swing-outer-radius) - var(--swing-cap-height)); 
+    background-image: radial-gradient(
+        circle at 50% 100%,
+        #aaa,
+        #555 calc(var(--swing-cap-height) - 5px),  
+        transparent var(--swing-cap-height) 
+    );
+}
+.swing::before {
+    left: 0;
+}
+.swing::after {
+    right: 0;
+}
+
+@@keyframes swingA {
+    0%,
+    7.5% {
+        transform: rotate(0deg);
+    }
+    42.5%,
+    57.5% {
+        transform: rotate(720deg);
+    }
+    92.5%,
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/*
+    The ball has to be positioned absolutely in the container.
+    The diameter of the ball is usually the same as OD m=inus ID but it doesn't have to be.
+    The top of the ball can go whereever but is usually 2 times the ball diamter above the centerpoint of the swing
+    The left side of the ball is placed at the midpoint of the container (centerpoint of swing).
+    The transform: translate() moves the ball 50px to the right which means the right side of the ball is at 80px (5px inside the edge of the swing)
+        and up 50% of the ball diamter so now the centerpoint of the ball is two ball diameters above the centerpoint of the swing
+*/
+
+.ball {
+    position: absolute;
+
+    width: var(--ball-size); 
+    height: var(--ball-size);/
+    border-radius: 50%;
+/*     top: 50%; */
+    top: calc(50% - (var(--ball-size) * 2));
+
+    left: var(--swing-outer-radius);
+    transform: translate(50px, -50%);
+    transform-origin: 0px 0px; 
+    animation: ballV 1.5s infinite ease-in alternate, 
+                ballA 6s infinite linear; 
+}
+
+/*
+    The ::after element sets the internal gradient and external shadow.
+*/
+
+.ball::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-image: radial-gradient(circle at 30% 70%, #faa, #300 25px);
+    box-shadow: 0 0 var(--ball-size) #0009;
+    animation: ballB 6s -3s infinite linear;
+}
+
+@@keyframes ballV {
+    0% {
+        top: -20px; 
+    }
+    30%,
+    100% {
+        top: 100px; 
+    }
+}
+
+@@keyframes ballA {
+    0%,
+    7.5%,
+    92.5%,
+    100% {
+        transform: rotate(0deg) translate(45px, -50%); 
+    }
+    42.5%,
+    57.5% {
+        transform: rotate(900deg) translate(45px, -50%); 
+    }
+}
+
+@@keyframes ballB {
+    0%,
+    7.5%,
+    92.5%,
+    100% {
+        transform: rotate(0deg);
+    }
+    42.5%,
+    57.5% {
+        transform: rotate(900deg);
+    }
+}
+
+</style>
