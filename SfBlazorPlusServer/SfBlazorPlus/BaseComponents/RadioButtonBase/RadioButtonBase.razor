@@ -1,0 +1,215 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.RadioButtonBase
+
+@using Syncfusion.Blazor.Buttons
+
+@typeparam TChecked
+
+
+<SfRadioButton  @ref=sfRadioButton
+                TChecked=TChecked
+                Label=@Label
+                LabelPosition=@LabelPosition
+                Checked=@Checked
+                Disabled=@Disabled
+                EnablePersistence=@EnablePersistance
+                Name=@Name
+                Value=@Value
+
+
+                ValueChange=@ValueChange
+                Created=@Created
+
+                CssClass=@CssClass
+
+                >
+
+</SfRadioButton>
+
+
+@*
+    (1) RadioButton div:                <CssClass>
+                                        e-radio-wrapper 
+                                        e-wrapper 
+
+        (2) RadioButton <input>:        id=radiobutton-<Blazor ID>
+                                        e-control 
+                                        e-radio 
+                                        e-lib
+
+        (2) RadioButton <label>         for = radiobutton-<Blazor ID>
+
+            (3) ::before                X
+
+            (3) <spaan>                 e-label
+
+            (3) ::after                 X
+
+    Defaults:
+        (1) .e-radio-wrapper
+                display: inline-block;          NO
+                line-height: 1;                 NO
+                position: relative;             NO
+
+        (2) input[type="checkbox"], input[type="radio"]
+                box-sizing: border-box;         NO
+                padding: 0;                     NO
+
+            .e-radio
+                height: 1px;                    NO
+                opacity: 0;                     NO
+                position: absolute;             NO
+                width: 1px;                     NO
+
+            .e-control
+                font-family: "Helvetica Neue","Helvetica","Arial",sans-serif,"-apple-system","BlinkMacSystemFont";
+                font-size: 12px;                NO
+                font-weight: normal;            NO
+
+            input
+                overflow: visible;              NO
+                margin: 0;                      NO
+                line-height: inherit;           NO
+
+        (2) .e-radio + label                    <label>
+                cursor: pointer;                NO
+                display: inline-block;          NO
+                margin: 0;                      YES             RadioButtonMargin
+                position: relative;             NO
+                user-select: none;              NO
+                vertical-align: middle          NO
+                white-space: nowrap;            NO
+
+        (3) .e-radio:checked + label::before    ::before
+                background-color: #007bff;      YES             CheckedOuterBackgroundColor
+                border-color: #007bff;          YES             CheckedOuterBorder
+
+
+            .e-radio + label::before
+                background-color: #fff;         YES             UncheckedOuterBackgroundColor
+                border-color: #adb5bd;          YES             UncheckedOuterBorder
+
+                border: 1px solid;              NO
+                border-radius: 50%;             NO
+                box-sizing: border-box;         NO
+                content: '';                    NO
+                height: 14px;                   YES             RadioButtonOuterSize            height/width sets size of outer ring
+                left: 0;                        NO
+                position: absolute;             NO
+                top: 0;                         NO
+                width: 14px;                    YES             RadioButtonOuterSize
+
+        (3) .e-radio + label .e-label           <span>
+                color: #212529                  YES             LabelColor
+                display: inline-block;
+                font-family: "Helvetica Neue","Helvetica","Arial",sans-serif,"-apple-system","BlinkMacSystemFont";
+                font-size: 14px;                YES             LabelFontSize                   should be the same as ::before height/width
+                font-weight: normal;            YES             LabelFontWeight
+                line-height: 1;                 NO
+                padding-left: 24px;             YES             LabelPadding
+                vertical-align: text-top;       NO
+                white-space: normal;            NO
+
+        (3) .e-radio:checked + label::after     ::after
+                background-color: #fff;         YES             CheckedInnerBackgroundColor          
+                color: #fff;                    YES             CheckedInnerColor
+                transform: scale(1);            NO
+                transition: none;               NO
+
+            .e-radio + label::after
+                1px solid #ADB5BD;              YES             RadioButtonInnerBorder
+                border-radius: 50%;             NO
+                box-sizing: border-box;         NO
+                content: '';                    NO  
+                height: 6px;                    YES             RadioButtonInnerSize            height/width sets size of inner dot
+                left: 4px;                      YES             RadioButtonInnerPosition        left/top positions dot in the outer ring
+                position: absolute;             NO
+                top: 4px;                       YES             RadiobuttonInnerPosition
+                transform: scale(0);            NO
+                width: 6px;                     YES             RadioButtonInnerSize
+
+            .e-radio:focus + label::before
+                box-shadow: 0 0 0 3px           YES             RadioButtonFocusBoxShadow
+                    rgba(0,123,255,0.25);
+*@
+
+
+<style>
+
+    /*
+        To ensure isolation of styling between multiple sliders on a page, append the CssClass
+        to each selector (assuming the CssClass is not String.Empty).
+        Need to use CssClass to directly address.
+
+        masterCssSelector = .CssClass.e-radio-wrapper
+    */
+    
+    /*
+        Set styling for radio button wrapper
+    */
+    @(masterCssSelector) {
+        padding: @RadioButtonPadding;
+    }
+
+    /*
+        Set styling for label element
+    */
+    @(masterCssSelector) .e-radio + label {
+        margin: @RadioButtonMargin;
+    }
+
+    /*
+        Set styling for outer button in the checked state
+    */
+    @(masterCssSelector) .e-radio:checked + label::before {
+        background-color: @CheckedOuterBackgroundColor;
+        border: @CheckedOuterBorder;
+    }
+
+    /*
+        Set styling for outer button in checked/unchecked state
+    */
+    @(masterCssSelector) .e-radio + label::before {
+        background-color: @UncheckedOuterBackgroundColor;
+        border: @UncheckedOuterBorder;
+        height: @RadioButtonOuterSize;
+        width: @RadioButtonOuterSize;
+    }
+
+    /*
+        Set styling for label itself
+    */
+    @(masterCssSelector) .e-radio + label .e-label {
+        color: @LabelColor;
+        font-size: @LabelFontSize;
+        font-weight: @LabelFontWeight;
+        padding: @LabelPadding;
+    }
+
+    /*
+        Set styling for inner button in the checked state
+    */
+    @(masterCssSelector) .e-radio:checked + label::after {
+        background-color: @CheckedInnerBackgroundColor ;         
+        color: @CheckedInnerColor;
+    }
+
+        /*
+        Set styling for inner button in checked/unchecked state
+    */
+    @(masterCssSelector) .e-radio + label::after {
+        border: @RadioButtonInnerBorder;
+        height: @RadioButtonInnerSize;
+        width: @RadioButtonInnerSize;
+        left: @RadioButtonInnerPosition;
+        top: @RadioButtonInnerPosition;
+    }
+
+    /*
+        Set styling for the box shadow when the radio button has focus
+    */
+    @(masterCssSelector) .e-radio:focus + label::before,
+    @(masterCssSelector) .e-radio + label:focus::before {
+        box-shadow: @RadioButtonFocusBoxShadow;
+    }
+
+</style>
