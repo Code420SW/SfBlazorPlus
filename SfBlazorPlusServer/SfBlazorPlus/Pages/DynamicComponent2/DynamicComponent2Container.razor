@@ -7,7 +7,34 @@
 @using System.Diagnostics
 
 <!--
-    XXX
+    This is a composite component that allows the user to move through a progression of 
+    related data collection step. The user can move forward and backwards through the
+    progression.
+
+    The SimpleCardBase component encapsulates the static and dynamic child components.
+
+    The header section of the card renders the StepProgressIndicator component which
+    displays a series of dots. Each dot represents a step in the progression with the
+    dot representing the current (active) progression step rendered in a different color
+    that the rest of the (inactive) dots. As the use moves forward/backwards through the
+    progression, the callbacl methods invoked by the child components (details below)
+    invoke the StepProgressIndicator's SetActiveIndicator() method.
+
+    The body section of the card does nothing but render a Dynamic Component. The code-behind
+    builds a list of ChildComponent containing the series of child components in the
+    data collection progression. The list is build in the OnInitializedAsync() constructor.
+
+    Each ChildComponent contains the identifier for a child component and a dictionary of
+    parameters passed to the child. For this demonstration each child accepts the same set
+    of parameters: StepForward, StepBack and DataSource. 
+
+    The StepForward and StepBack parameters are callbacks to the OnStepForwardClick() and
+    OnStepBackClick() methods in the code-behind.
+
+    The DataSource parameter passes a class instatiated in the code-behind to the child
+    components. The data elements collected in the child components are stored in the class.
+
+    The footer section of the card contains a LabelBase component with nothing significant.
 -->
 
 <SimpleCardBase @ref=@cardContainer
@@ -28,6 +55,7 @@
 
                 ContentBackground="var(--mybeige)"
                 ContentPadding="20px 10px 10px 10px"
+                ContentMinimumHeight="170px"
 
                 FooterBackground="whitesmoke"
 

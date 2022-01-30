@@ -3,27 +3,71 @@
 @using Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManager
 @using Code420.SfBlazorPlus.Code.Enums
 @using Code420.SfBlazorPlus.BaseComponents.ButtonBase
+@using Code420.SfBlazorPlus.BaseComponents.LabelBase
 @using Code420.SfBlazorPlus.Pages.DynamicComponent2
+@using Code420.SfBlazorPlus.CustomComponents.CustomSpinner
 
 
 <!--
-    XXX
+    Demonstration of composing a SPA utilizing the PageStateManager to control execution flow.
+    Execution flow begins with the Loading state and progresses to the Operating state.
+    Right now there is no execution path to the Error state but this will be added later.
+
+    The Loading state renders the CustomSpinner control which, in turn, renders the
+    CustomSpinnerSwingingBall custom spinner definition element. The available custom spinner 
+    definitions are specified in the CustomSpinners enum. In this implementation, the CustomSpinner
+    renders the optional LoadingMessageContent RenderFragment which is a LabelBase component.
+
+    The Loading state also renders a ButtonBase component that allows the user to progress to
+    the Operating state. Typically the Loading state is rendered while the code-behind performs
+    preparatory work for the Operating state and, when completed, would programmatically invoke
+    the PageStateManager's SetPageState() method to advance to the Operating (or Error) state. 
+    In this demo, there is no preparatory work, so a button is used.
+
+    The Operating state renders a composite component (DynamicComponent2Container) that encapsulates
+    a series of child components. These simulate a series of related data collection elements that
+    allow the user to move forward and backwards through the progression.
+
+    The Error state contains a ButtonBase component that allows the user to move back to the Loading
+    state. As mentioned above, nothing in the overall execution flow allows the user to reach the
+    Error state.
 -->
 
 <PageStateManager   @ref=@pageStateManager 
                     PageState=PageState.Loading>
 
     <Loading>
-        Loading State... (dynamic)
+
+        <CustomSpinner  Spinner=CustomSpinners.SwingingBall
+                        SpinnerMargin="100px auto"
+                        SpinnerBackground="linear-gradient(120deg, #002, #000)"
+                        SpinnerBorder="2px solid #ccc"
+                        SpinnerBorderRadius="10px"
+                        SpinnerBoxShadow="none"
+                        >
+
+            <LoadingMessageContent>
+                <LabelBase  LabelText="Loading...Please Wait"
+                            FontSize="16px"
+                            FontColor="white"
+                            FontWeight="bold"
+                            LabelBackgroundColor="inherit"
+                            >
+                </LabelBase>
+            </LoadingMessageContent>   
+
+        </CustomSpinner>
+
         <ButtonBase @ref=@loadingButton
                     IsPrimary=true
-                    CssClass="loading-button"
+                    CssClass="error-button"
                     OnClick=@OnLoadingButtonClick
-                    Margin="0px 0px 0px 10px"
+                    Margin="10px auto"
                     Padding="4px 8px"
                     >
-            <ContentFragment>Move On</ContentFragment>
+            <ContentFragment>Click Me to Move On</ContentFragment>
         </ButtonBase>
+
     </Loading>
 
     <Operating>
