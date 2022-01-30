@@ -7,37 +7,7 @@
 @using System.Diagnostics
 
 <!--
-    This page demonstrates use of the SimpleCardBase components and the StepProgressIndicator component.
-    It also demonstrates use of Dynamic Components in the Body section of the SimpleCardBase component.
-
-    The SimpleCardBase component provides a container providing parameters controlling the overall
-    appearance of the card and, perhaps most important, the CardFontSize parameter which sets the
-    base font-size propery for the card and its children. The CardFontSize setting equals 1em so that
-    the children can use releative font sizes. The card container provides three directly addressible 
-    child components and two implicit components:
-        <HeaderContent>: This is a flex container and parameters exist to control flex direction and alignment
-                            as well as style content.
-        <BodyComponent>: This is a standard div. Parameters exist to style content.
-        <FooterContent>: This is a flex container and parameters exist to control flex direction and alignment
-                            as well as style content
-
-    Two implicit divs exist that provide bottom/top borders and padding for the header/footer section. These are
-    exposed by the HeaderSeparatorBottonBorder, HeaderSeparatorBottonPadding, FootereparatorTopBorder and  
-    FootereparatorTopPadding parameters.
-
-    It should be noted that if any of the Content RenderFragments are omitted, that section of the card (and the
-    associated separator if applicable) will not be rendered to HTML.
-
-    The StepProgressIndicator components renders the specified number of indicator dots and us used to show progress
-    through a sequence (in this case, the three dynamic components). Parameters exist to style the dots. It should be
-    noted that the component is a flexbox.
-
-    The real purpose of this demonstration is to show how to use Dynamic Componenets. The card header and footer are static
-    in that their content does not change, aside from the progression indication in the header. The body content renders
-    a DynamicComponent which can be one of three child components. The parameters for the chilren are defined in the
-    childComponents array and, based on the progression, are passed to the <BodyContent>'s <DynamicComponent>. As progress
-    is made, the currentChildIndex is changed and a StateHasChanged is issued to force the <DynamicComponent> to render
-    the correct fragment.
+    XXX
 -->
 
 <SimpleCardBase @ref=@cardContainer
@@ -47,8 +17,8 @@
                 CardMargin="50px auto"
                 CardPadding="0px"
                 CardHeight="auto"
-                CardWidth="500px"
-                CardFontSize="16px"
+                CardWidth="400px"
+                CardFontSize="14px"
 
                 HeaderBackground="whitesmoke"
                 HeaderMinimumHeight="auto"
@@ -71,6 +41,7 @@
                                 CssClass="container__indicators"
                                 IndicatorCount=3
                                 ActiveIndicator=1
+                                IndicatorHeight="1em"
                                 ContainerHeight="auto"
                                 ContainerBottomBorder="none"
                                 ActiveIndicatorBackground="var(--mydarkgreen)"
@@ -165,16 +136,15 @@
             {
                 new()
                 {
-                    CType=typeof(PageStateDynamicChild1).AssemblyQualifiedName,
+                    CType=typeof(DynamicComponent2Child1).AssemblyQualifiedName,
                     Params = new Dictionary<string, object>() 
                     { 
-                        { "StepForward", OnStepForwardClick },                      // Next button moves to Child #2
-                        { "StepBack", OnPreviousButtonClick }                       // Previous button changes Page State Machine to Loading
+                        { "StepForward", OnStepForwardClick }                       // Previous button changes Page State Machine to Loading
                     }
                 },
                 new()
                 {
-                    CType=typeof(PageStateDynamicChild2).AssemblyQualifiedName,
+                    CType=typeof(DynamicComponent2Child2).AssemblyQualifiedName,
                     Params = new Dictionary<string, object>() 
                     { 
                         { "StepForward", OnStepForwardClick },                      // Next button moves to Child #3
@@ -183,10 +153,9 @@
                 },
                 new()
                 {
-                    CType=typeof(PageStateDynamicChild3).AssemblyQualifiedName,
+                    CType=typeof(DynamicComponent2Child3).AssemblyQualifiedName,
                     Params = new Dictionary<string, object>() 
                     { 
-                        { "StepForward", OnNextButtonClick },                       // Previous button changes Page State Machine to Loading
                         { "StepBack", OnStepBackClick }                             // Previous button moves to Child #2
                     }
                 }

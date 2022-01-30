@@ -1,7 +1,83 @@
 ﻿@page "/pagestatemachinedynamic2"
 
-<h3>DynamicComponent2</h3>
+@using Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManager
+@using Code420.SfBlazorPlus.Code.Enums
+@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
+@using Code420.SfBlazorPlus.Pages.DynamicComponent2
 
-@code {
+
+<!--
+    XXX
+-->
+
+<PageStateManager   @ref=@pageStateManager 
+                    PageState=PageState.Loading>
+
+    <Loading>
+        Loading State... (dynamic)
+        <ButtonBase @ref=@loadingButton
+                    IsPrimary=true
+                    CssClass="loading-button"
+                    OnClick=@OnLoadingButtonClick
+                    Margin="0px 0px 0px 10px"
+                    Padding="4px 8px"
+                    >
+            <ContentFragment>Move On</ContentFragment>
+        </ButtonBase>
+    </Loading>
+
+    <Operating>
+        <DynamicComponent2Container @ref=@dynamicComponent
+                                    ChangePageState=@UpdatePageState
+                                    PreviousPageState=PageState.Loading
+                                    NextPageState=PageState.Error
+                                    >
+        </DynamicComponent2Container>
+    </Operating>
+
+    <Error>
+        Error Sate... (dynamic)
+        <ButtonBase @ref=@errorButton
+                    IsPrimary=true
+                    CssClass="error-button"
+                    OnClick=@OnErrorButtonClick
+                    Margin="0px 0px 0px 10px"
+                    Padding="4px 8px"
+                    >
+            <ContentFragment>Retry</ContentFragment>
+        </ButtonBase>
+    </Error>
+
+</PageStateManager>
+
+@code 
+{
+    
+    //
+    // Instance Variable
+    //
+    public PageStateManager pageStateManager;
+    PageState currentPageState = PageState.Loading;     // No real use for this right now...defined just in case.
+
+    private ButtonBase loadingButton;
+    private ButtonBase operatingButton;
+    private ButtonBase errorButton;
+    private DynamicComponent2Container dynamicComponent;
+
+
+
+    // Events
+
+    private void OnOperatingButtonClick() =>  pageStateManager.SetPageState(PageState.Error);
+
+    private void OnErrorButtonClick() => pageStateManager.SetPageState(PageState.Loading);
+
+    private void OnLoadingButtonClick() => pageStateManager.SetPageState(PageState.Operating);
+
+    private void UpdatePageState(PageState pageState)
+    {
+        currentPageState = pageState;
+        pageStateManager.SetPageState(pageState);
+    }
 
 }

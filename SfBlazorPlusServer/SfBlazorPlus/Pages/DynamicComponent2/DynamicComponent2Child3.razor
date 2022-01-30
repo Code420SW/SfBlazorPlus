@@ -1,0 +1,49 @@
+﻿@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
+@using Code420.SfBlazorPlus.BaseComponents.LabelBase
+@using Code420.SfBlazorPlus.Code.Enums
+
+
+<LabelBase  @ref=@labelRef
+            LabelText="This is the last dynamic component is a series of three."
+            CssClass="label__ref"
+            FontSize="1em"
+            FontColor="black"
+            >
+</LabelBase>
+
+<ButtonBase @ref=@buttonPrevious
+            ButtonStyle=ButtonStyle.Secondary
+            CssClass="button__previous"
+            OnClick=@StepBack
+            Margin="2em 2em 1em 1em"
+            Padding=".25em .5em"
+            TextFontSize="1em"
+            >
+    <ContentFragment>Previous Step</ContentFragment>
+</ButtonBase>
+
+@code 
+{
+
+    //
+    // These two parameters establish the callbacks to the parent to
+    // indicate if the user wants to step forward/back through the
+    // progression.
+    //
+    [Parameter]
+    public Action StepForward { get; set; }
+
+    [Parameter]
+    public Action StepBack { get; set; }
+
+
+
+    //
+    // Instance variables
+    //
+    private LabelBase labelRef;
+    private LabelBase labelFooter;
+    private ButtonBase buttonNext;
+    private ButtonBase buttonPrevious;
+
+}
