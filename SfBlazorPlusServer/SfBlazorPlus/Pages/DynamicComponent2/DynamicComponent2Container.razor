@@ -2,6 +2,7 @@
 @using Code420.SfBlazorPlus.BaseComponents.ButtonBase
 @using Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
 @using Code420.SfBlazorPlus.Code.Enums
+@using Code420.SfBlazorPlus.Code.Models
 @using Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
 @using Code420.SfBlazorPlus.Pages.DynamicComponent2
 @using System.Diagnostics
@@ -135,6 +136,7 @@
 
     private List<ChildComponent> childComponents;
     private int indexCurrentChild;
+    private NflPicks nflPicks = new();
 
 
     //
@@ -167,7 +169,8 @@
                     CType=typeof(DynamicComponent2Child1).AssemblyQualifiedName,
                     Params = new Dictionary<string, object>() 
                     { 
-                        { "StepForward", OnStepForwardClick }                       // Previous button changes Page State Machine to Loading
+                        { "StepForward", OnStepForwardClick },                      // Previous button changes Page State Machine to Loading
+                        { "DataSource", nflPicks }                                  // Pass around the nflPicks class for data entry
                     }
                 },
                 new()
@@ -176,7 +179,8 @@
                     Params = new Dictionary<string, object>() 
                     { 
                         { "StepForward", OnStepForwardClick },                      // Next button moves to Child #3
-                        { "StepBack", OnStepBackClick }                             // Previous button moves to Child #1
+                        { "StepBack", OnStepBackClick },                            // Previous button moves to Child #1
+                        { "DataSource", nflPicks }                                  // Pass around the nflPicks class for data entry
                     }
                 },
                 new()
@@ -184,7 +188,8 @@
                     CType=typeof(DynamicComponent2Child3).AssemblyQualifiedName,
                     Params = new Dictionary<string, object>() 
                     { 
-                        { "StepBack", OnStepBackClick }                             // Previous button moves to Child #2
+                        { "StepBack", OnStepBackClick },                            // Previous button moves to Child #2
+                        { "DataSource", nflPicks }                                  // Pass around the nflPicks class for data entry
                     }
                 }
             };

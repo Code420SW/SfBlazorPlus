@@ -1,39 +1,146 @@
 ﻿@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
 @using Code420.SfBlazorPlus.BaseComponents.LabelBase
+@using Code420.SfBlazorPlus.BaseComponents.RadioButtonBase
 @using Code420.SfBlazorPlus.Code.Enums
+@using Code420.SfBlazorPlus.Code.Models
+@using Syncfusion.Blazor.Buttons
+
+<div class="container__body">
+
+    <div class="row__label-intro">
+        <LabelBase  @ref=@labelIntro
+                    LabelText="Now, pick the winning teams in the American Football Conference and National Football Conference."
+                    CssClass="label__intro"
+                    FontSize="1em"
+                    FontColor="black"
+                    LabelPadding="5px 0px 10px 0px"
+                    >
+        </LabelBase>
+    </div>
+
+    <div class="row__label-teams">
+        <LabelBase  @ref=@labelAfcTeams
+                    LabelText="AFC:"
+                    CssClass="label__afc"
+                    FontSize="1em"
+                    FontColor="black"
+                    LabelMargin="5px 0px 0px 10px"
+                    >
+        </LabelBase>
+
+        <LabelBase  @ref=@labelNfcTeams
+                    LabelText="NFC:"
+                    CssClass="label__nfc"
+                    FontSize="1em"
+                    FontColor="black"
+                    LabelMargin="5px 0px 0px 158px"
+                    >
+        </LabelBase>
+    </div>
+
+    <div class="row__teams-1">
+        <RadioButtonBase    @ref=afcTeam1
+                            TChecked="string"
+                            Checked=@afcCheckedValue
+                            Value=@DataSource.AfcTeams.TeamList[0].FullName
+                            Label=@DataSource.AfcTeams.TeamList[0].FullName
+                            LabelPosition=LabelPosition.After
+                            Name="afc"
+
+                            ValueChange=@OnAfcValueChange
+
+                            CssClass="radio__afcteam1"
+                            RadioButtonMargin="5px 0px 0px 10px"
+                            >
+        </RadioButtonBase>
+
+        <RadioButtonBase    @ref=nfcTeam1
+                            TChecked="string"
+                            Checked=@nfcCheckedValue
+                            Value=@DataSource.NfcTeams.TeamList[0].FullName
+                            Label=@DataSource.NfcTeams.TeamList[0].FullName
+                            LabelPosition=LabelPosition.After
+                            Name="nfc"
+
+                            ValueChange=@OnNfcValueChange
+
+                            CssClass="radio__nfcteam1"
+                            RadioButtonMargin="5px 0px 0px 50px"
+                            >
+        </RadioButtonBase>
+    </div>
+
+        <div class="row__teams-2">
+        <RadioButtonBase    @ref=afcTeam2
+                            TChecked="string"
+                            Checked=@afcCheckedValue
+                            Value=@DataSource.AfcTeams.TeamList[1].FullName
+                            Label=@DataSource.AfcTeams.TeamList[1].FullName
+                            LabelPosition=LabelPosition.After
+                            Name="afc"
+
+                            ValueChange=@OnAfcValueChange
+
+                            CssClass="radio__afcteam2"
+                            RadioButtonMargin="5px 0px 0px 10px"
+                            >
+        </RadioButtonBase>
+
+        <RadioButtonBase    @ref=nfcTeam2
+                            TChecked="string"
+                            Checked=@nfcCheckedValue
+                            Value=@DataSource.NfcTeams.TeamList[1].FullName
+                            Label=@DataSource.NfcTeams.TeamList[1].FullName
+                            LabelPosition=LabelPosition.After
+                            Name="nfc"
+
+                            ValueChange=@OnNfcValueChange
+
+                            CssClass="radio__nfcteam2"
+                            RadioButtonMargin="5px 0px 0px 48px"
+                            >
+        </RadioButtonBase>
+    </div>
 
 
-<LabelBase  @ref=@labelRef
-            LabelText="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-            CssClass="label__ref"
-            FontSize="1em"
-            FontColor="black"
-            >
-</LabelBase>
+    <div class="row__buttons">
+        <ButtonBase @ref=@buttonPrevious
+                    ButtonStyle=ButtonStyle.Secondary
+                    CssClass="button__previous"
+                    OnClick=@StepBack
+                    Margin="3em 2em 1em 1em"
+                    Padding=".25em .5em"
+                    TextFontSize="1em"
+                    >
+            <ContentFragment>Previous Step</ContentFragment>
+        </ButtonBase>
 
-<ButtonBase @ref=@buttonPrevious
-            ButtonStyle=ButtonStyle.Secondary
-            CssClass="button__previous"
-            OnClick=@StepBack
-            Margin="2em 2em 1em 1em"
-            Padding=".25em .5em"
-            TextFontSize="1em"
-            >
-    <ContentFragment>Previous Step</ContentFragment>
-</ButtonBase>
+        <ButtonBase @ref=@buttonNext
+                    IsPrimary=true
+                    CssClass="button__next"
+                    OnClick=@StepForward
+                    Margin="3em 0em 1em 0em"
+                    Padding=".25em .5em"
+                    TextFontSize="1em"
+                    >
+            <ContentFragment>Next Step</ContentFragment>
+        </ButtonBase>
+    </div>
+</div>
 
-<ButtonBase @ref=@buttonNext
-            IsPrimary=true
-            CssClass="button__next"
-            OnClick=@StepForward
-            Margin="2em 0em 1em 0em"
-            Padding=".25em .5em"
-            TextFontSize="1em"
-            >
-    <ContentFragment>Next Step</ContentFragment>
-</ButtonBase>
+
+<style>
+    /*
+        Probably easier to use grid instead of flex
+    */
+    .container__body {
+        display: flex;
+        flex-direction: column;
+    }
+
+</style>
+
+
 
 
 @code 
@@ -50,14 +157,46 @@
     [Parameter]
     public Action StepBack { get; set; }
 
+    [Parameter]
+    public NflPicks DataSource { get; set; }
+
 
 
     //
     // Instance variables
     //
-    private LabelBase labelRef;
+    private LabelBase labelIntro;
+    private LabelBase labelAfcTeams;
+    private LabelBase labelNfcTeams;
     private LabelBase labelFooter;
     private ButtonBase buttonNext;
     private ButtonBase buttonPrevious;
+    private RadioButtonBase<string> afcTeam1;
+    private RadioButtonBase<string> afcTeam2;
+    private RadioButtonBase<string> nfcTeam1;
+    private RadioButtonBase<string> nfcTeam2;
+    private string afcCheckedValue;
+    private string nfcCheckedValue;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        // Initialize afcCheckedVale and nfcCheckedValue
+        afcCheckedValue = DataSource.AfcTeams.TeamList[0].FullName;
+        nfcCheckedValue = DataSource.NfcTeams.TeamList[0].FullName;
+    }
+
+
+    private void OnAfcValueChange(ChangeArgs<string> value)
+    {
+        DataSource.AfcTeams.SelectedTeam = value.Value;
+    }
+
+    private void OnNfcValueChange(ChangeArgs<string> value)
+    {
+        DataSource.NfcTeams.SelectedTeam = value.Value;
+    }
 
 }
