@@ -70,7 +70,7 @@
         </RadioButtonBase>
     </div>
 
-        <div class="row__teams-2">
+    <div class="row__teams-2">
         <RadioButtonBase    @ref=afcTeam2
                             TChecked="string"
                             Checked=@afcCheckedValue
@@ -102,7 +102,6 @@
         </RadioButtonBase>
     </div>
 
-
     <div class="row__buttons">
         <ButtonBase @ref=@buttonPrevious
                     ButtonStyle=ButtonStyle.Secondary
@@ -118,7 +117,7 @@
         <ButtonBase @ref=@buttonNext
                     IsPrimary=true
                     CssClass="button__next"
-                    OnClick=@StepForward
+                    OnClick=@OnNextStepClick
                     Margin="3em 0em 1em 0em"
                     Padding=".25em .5em"
                     TextFontSize="1em"
@@ -186,17 +185,30 @@
         // Initialize afcCheckedVale and nfcCheckedValue
         afcCheckedValue = DataSource.AfcTeams.TeamList[0].FullName;
         nfcCheckedValue = DataSource.NfcTeams.TeamList[0].FullName;
+
+        // Provide a default display name if one wasn't entered
+        if (DataSource.DisplayName == String.Empty) DataSource.DisplayName = "Mystery User";
     }
 
 
     private void OnAfcValueChange(ChangeArgs<string> value)
     {
-        DataSource.AfcTeams.SelectedTeam = value.Value;
+        afcCheckedValue = DataSource.AfcTeams.SelectedTeam = value.Value;
     }
 
     private void OnNfcValueChange(ChangeArgs<string> value)
     {
-        DataSource.NfcTeams.SelectedTeam = value.Value;
+        nfcCheckedValue = DataSource.NfcTeams.SelectedTeam = value.Value;
+    }
+
+    private void OnNextStepClick()
+    {
+        // Set the DataSource.*.SelectedTeam fields
+        DataSource.AfcTeams.SelectedTeam = afcCheckedValue;
+        DataSource.NfcTeams.SelectedTeam = nfcCheckedValue;
+
+        // Invoke the StepForward callback to progress to the next step
+        StepForward.Invoke();
     }
 
 }

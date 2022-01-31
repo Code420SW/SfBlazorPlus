@@ -1,9 +1,11 @@
 ﻿@page "/pagestatemachinedynamic2"
 
+@using Code420.SfBlazorPlus.Code.Models
 @using Code420.SfBlazorPlus.CustomComponents.PageStateMachine.PageStateManager
 @using Code420.SfBlazorPlus.Code.Enums
 @using Code420.SfBlazorPlus.BaseComponents.ButtonBase
 @using Code420.SfBlazorPlus.BaseComponents.LabelBase
+@using Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
 @using Code420.SfBlazorPlus.Pages.DynamicComponent2
 @using Code420.SfBlazorPlus.CustomComponents.CustomSpinner
 
@@ -75,28 +77,70 @@
                                     ChangePageState=@UpdatePageState
                                     PreviousPageState=PageState.Loading
                                     NextPageState=PageState.Error
+                                    DataSource=@nflPicks
                                     >
         </DynamicComponent2Container>
     </Operating>
 
     <Error>
-        Error Sate... (dynamic)
-        <ButtonBase @ref=@errorButton
-                    IsPrimary=true
-                    CssClass="error-button"
-                    OnClick=@OnErrorButtonClick
-                    Margin="0px 0px 0px 10px"
-                    Padding="4px 8px"
-                    >
-            <ContentFragment>Retry</ContentFragment>
-        </ButtonBase>
+        <SimpleCardBase @ref=@cardError
+
+                CardBorderRadius="4px"
+                CardBorder="2px solid #ccc"
+                CardMargin="50px auto"
+                CardPadding="0px"
+                CardHeight="auto"
+                CardWidth="400px"
+                CardFontSize="14px"
+
+                HeaderBackground="whitesmoke"
+                HeaderMinimumHeight="auto"
+                HeaderPadding="5px"
+
+                HeaderSeparatorBottomBorder="1px solid var(--mydarkgreen)"
+
+                ContentBackground="var(--mybeige)"
+                ContentPadding="20px 10px 10px 10px"
+                ContentMinimumHeight="170px"
+
+                FooterBackground="whitesmoke"
+
+                FooterSeparatorTopBorder="1px solid var(--mydarkgreen)"
+
+                CssClass="card__dynamic-component"
+                >
+
+        <HeaderContent>
+            <LabelBase  @ref=@labelHeader
+            LabelText=@($"Thanks for participating { nflPicks.DisplayName }")
+            CssClass="label__header"
+            FontSize="1em"
+            FontColor="black"
+            LabelPadding="5px 0px 10px 0px"
+            >
+</LabelBase>
+        </HeaderContent>
+
+        <BodyContent>
+            <LabelBase  @ref=@labelBody
+            LabelText=@($"Unfortunately the { nflPicks.SuperBowlWinner } can't win the Super Bowl. Every Super Bowl (in my opinion) should be won by the New England Patriots.")
+            CssClass="label__body"
+            FontSize="1em"
+            FontColor="black"
+            LabelPadding="5px 0px 10px 0px"
+            >
+</LabelBase>
+        </BodyContent>
+
+
+    </SimpleCardBase>
     </Error>
 
 </PageStateManager>
 
 @code 
 {
-    
+
     //
     // Instance Variable
     //
@@ -106,7 +150,12 @@
     private ButtonBase loadingButton;
     private ButtonBase operatingButton;
     private ButtonBase errorButton;
+    private SimpleCardBase cardError;
+    private LabelBase labelHeader;
+    private LabelBase labelBody;
     private DynamicComponent2Container dynamicComponent;
+    
+    private NflPicks nflPicks = new();
 
 
 

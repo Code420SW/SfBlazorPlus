@@ -1,27 +1,111 @@
 ﻿@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
 @using Code420.SfBlazorPlus.BaseComponents.LabelBase
+@using Code420.SfBlazorPlus.BaseComponents.RadioButtonBase
 @using Code420.SfBlazorPlus.Code.Enums
 @using Code420.SfBlazorPlus.Code.Models
+@using Syncfusion.Blazor.Buttons
+
+<div class="container__body">
+
+    <div class="row__label-intro">
+        <LabelBase  @ref=@labelIntro
+                    LabelText=@labelIntroText
+                    CssClass="label__intro"
+                    FontSize="1em"
+                    FontColor="black"
+                    LabelPadding="5px 0px 10px 0px"
+                    >
+        </LabelBase>
+    </div>
+
+    <div class="row__label-teams">
+        <LabelBase  @ref=@labelPickWinner
+                    LabelText="Who will win the Super Bowl?"
+                    CssClass="label__winner"
+                    FontSize="1em"
+                    FontColor="black"
+                    LabelMargin="5px 0px 0px 10px"
+                    >
+        </LabelBase>
+    </div>
+
+     <div class="row__teams1">
+        <RadioButtonBase    @ref=afcTeam1
+                            TChecked="string"
+                            Checked=@sbCheckedValue
+                            Value=@DataSource.AfcTeams.SelectedTeam
+                            Label=@DataSource.AfcTeams.SelectedTeam
+                            LabelPosition=LabelPosition.After
+                            Name="superbowl"
+
+                            ValueChange=@OnValueChange
+
+                            CssClass="radio__afcteam"
+                            RadioButtonMargin="5px 0px 0px 10px"
+                            >
+        </RadioButtonBase>
+    </div>
+
+    <div class="row__teams2">
+        <RadioButtonBase    @ref=nfcTeam1
+                            TChecked="string"
+                            Checked=@sbCheckedValue
+                            Value=@DataSource.NfcTeams.SelectedTeam
+                            Label=@DataSource.NfcTeams.SelectedTeam
+                            LabelPosition=LabelPosition.After
+                            Name="superbowl"
+
+                            ValueChange=@OnValueChange
+
+                            CssClass="radio__nfcteam"
+                            RadioButtonMargin="5px 0px 0px 10px"
+                            >
+        </RadioButtonBase>
+    </div>
 
 
-<LabelBase  @ref=@labelRef
-            LabelText="This is the last dynamic component is a series of three."
-            CssClass="label__ref"
-            FontSize="1em"
-            FontColor="black"
-            >
-</LabelBase>
+    <div class="row__buttons">
 
-<ButtonBase @ref=@buttonPrevious
-            ButtonStyle=ButtonStyle.Secondary
-            CssClass="button__previous"
-            OnClick=@StepBack
-            Margin="2em 2em 1em 1em"
-            Padding=".25em .5em"
-            TextFontSize="1em"
-            >
-    <ContentFragment>Previous Step</ContentFragment>
-</ButtonBase>
+        <ButtonBase @ref=@buttonPrevious
+                    ButtonStyle=ButtonStyle.Secondary
+                    CssClass="button__previous"
+                    OnClick=@StepBack
+                    Margin="3em 2em 1em 1em"
+                    Padding=".25em .5em"
+                    TextFontSize="1em"
+                    >
+            <ContentFragment>Previous Step</ContentFragment>
+        </ButtonBase>
+
+        <ButtonBase @ref=@buttonPrevious
+                    IsPrimary=true
+                    ButtonStyle=ButtonStyle.Primary
+                    CssClass="button__previous"
+                    OnClick=@StepForward
+                    Margin="3em 2em 1em 1em"
+                    Padding=".25em .5em"
+                    TextFontSize="1em"
+                    >
+            <ContentFragment>Done</ContentFragment>
+        </ButtonBase>
+
+    </div>
+</div>
+
+
+<style>
+    /*
+        Probably easier to use grid instead of flex
+    */
+    .container__body {
+        display: flex;
+        flex-direction: column;
+    }
+
+</style>
+
+
+
 
 @code 
 {
@@ -45,9 +129,31 @@
     //
     // Instance variables
     //
-    private LabelBase labelRef;
-    private LabelBase labelFooter;
-    private ButtonBase buttonNext;
+    private LabelBase labelIntro;
+    private LabelBase labelPickWinner;
     private ButtonBase buttonPrevious;
+    private ButtonBase buttonDone;
+    private RadioButtonBase<string> afcTeam1;
+    private RadioButtonBase<string> nfcTeam1;
+    private string sbCheckedValue;
+    private string labelIntroText;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        // Initialize sbCheckedValue
+        sbCheckedValue = DataSource.SuperBowlWinner = DataSource.AfcTeams.SelectedTeam;
+
+        // Build the labelIntroText
+        labelIntroText = $"Great choices, { DataSource.DisplayName }.";
+    }
+
+
+    private void OnValueChange(ChangeArgs<string> value)
+    {
+        DataSource.SuperBowlWinner = value.Value;
+    }
 
 }

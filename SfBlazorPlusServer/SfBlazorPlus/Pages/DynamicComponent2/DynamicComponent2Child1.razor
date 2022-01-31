@@ -102,6 +102,9 @@
     // Fired when the Beginning Tag textbox is created
     private async Task OnTextboxCreatedAsync()
     {
+        // Initialize sbCheckedValue
+        dummyTextboxValue = DataSource.DisplayName;
+
         // Set the focus to the textbox
         await this.maskedTextboxBase.FocusAsync();
     }
