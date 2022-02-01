@@ -8,6 +8,8 @@
 @using System.Diagnostics
 
 <!--
+    THIS IS NOT AN EXAMPLE OF PRODUCTION CODE...IT IS A DEMO
+
     This is a composite component that allows the user to move through a progression of 
     related data collection step. The user can move forward and backwards through the
     progression.
@@ -17,9 +19,9 @@
     The header section of the card renders the StepProgressIndicator component which
     displays a series of dots. Each dot represents a step in the progression with the
     dot representing the current (active) progression step rendered in a different color
-    that the rest of the (inactive) dots. As the use moves forward/backwards through the
+    that the rest of the (inactive) dots. As the user moves forward/backwards through the
     progression, the callbacl methods invoked by the child components (details below)
-    invoke the StepProgressIndicator's SetActiveIndicator() method.
+    invokes the StepProgressIndicator's SetActiveIndicator() method.
 
     The body section of the card does nothing but render a Dynamic Component. The code-behind
     builds a list of ChildComponent containing the series of child components in the
@@ -27,13 +29,18 @@
 
     Each ChildComponent contains the identifier for a child component and a dictionary of
     parameters passed to the child. For this demonstration each child accepts the same set
-    of parameters: StepForward, StepBack and DataSource. 
+    of parameters: StepForward (all but last child), StepBack (all but first child) and DataSource. 
 
     The StepForward and StepBack parameters are callbacks to the OnStepForwardClick() and
     OnStepBackClick() methods in the code-behind.
 
-    The DataSource parameter passes a class instatiated in the code-behind to the child
-    components. The data elements collected in the child components are stored in the class.
+    The last child receives the OnDoneClick method instead of StepForward since it will change
+    the parent Page State Machine to the Error state. OnDoneClick is a local method which
+    invokes the method passed in through the ChangePageState parameter.
+
+    The DataSource parameter passes a class instatiated in the parent and passed in through 
+    the DataSource parameter. It is passed to the child  components. The data elements collected 
+    in the child components are stored in the class.
 
     The footer section of the card contains a LabelBase component with nothing significant.
 -->
@@ -106,7 +113,7 @@
 @code 
 {
     //
-    // This parameter need to callback to the parent SPA deploying the
+    // This parameter needed to callback to the parent SPA deploying the
     // PageStateManager so, as needed, this component can signal changes in
     // the Page State Machine.
     //
@@ -133,32 +140,17 @@
     //
     // Instance variables
     //
-    private SimpleCardBase cardContainer;
+    private SimpleCardBase cardContainer;                       // I am in the habit of declaring refernce variables for child components
     private StepProgressIndicator stepIndicator;
     private LabelBase labelFooter;
 
-    private List<ChildComponent> childComponents;
-    private int indexCurrentChild;
-
-
-    //
-    // Definitions for the array of dynamic components used
-    //
+    private List<ChildComponent> childComponents;               // The list of child components to be dynamically rendered
+    private int indexCurrentChild;                              // Index into childComponents list
 
 
     //
     // Constructor
     //
-
-    // Once the state from the ParameterCollection has been assigned to the component’s
-    //  [Parameter] properties, this method is executed. This is useful in the same way
-    //  as SetParametersAsync, except it is possible to use the component’s state.
-    // This method is only executed once when the component is first created. If the parent
-    //  changes the component’s parameters at a later time, this method is skipped.
-    // When the component is a @page, and our Blazor app navigates to a new URL that renders
-    //  the same page, Blazor will reuse the current object instance for that page. Because the
-    //  object is the same instance, Blazor does not call IDisposable.Dispose on the object,
-    //  nor does it execute its OnInitialized method again.
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -171,8 +163,8 @@
                     CType=typeof(DynamicComponent2Child1).AssemblyQualifiedName,
                     Params = new Dictionary<string, object>() 
                     { 
-                        { "StepForward", OnStepForwardClick },                      // Previous button changes Page State Machine to Loading
-                        { "DataSource", DataSource }                                  // Pass around the nflPicks class for data entry
+                        { "StepForward", OnStepForwardClick },                      // Next button moves to Child #2
+                        { "DataSource", DataSource }                                // Pass around the nflPicks class for data entry
                     }
                 },
                 new()
@@ -182,7 +174,7 @@
                     { 
                         { "StepForward", OnStepForwardClick },                      // Next button moves to Child #3
                         { "StepBack", OnStepBackClick },                            // Previous button moves to Child #1
-                        { "DataSource", DataSource }                                  // Pass around the nflPicks class for data entry
+                        { "DataSource", DataSource }                                // Pass around the nflPicks class for data entry
                     }
                 },
                 new()
@@ -190,35 +182,15 @@
                     CType=typeof(DynamicComponent2Child3).AssemblyQualifiedName,
                     Params = new Dictionary<string, object>() 
                     { 
-                        { "StepForward", OnDoneClick },                      // Next button moves Error State
+                        { "StepForward", OnDoneClick },                             // Next button moves Error State
                         { "StepBack", OnStepBackClick },                            // Previous button moves to Child #2
-                        { "DataSource", DataSource }                                  // Pass around the nflPicks class for data entry
+                        { "DataSource", DataSource }                                // Pass around the nflPicks class for data entry
                     }
                 }
             };
 
         // Initialize the current child index
         indexCurrentChild = 0;
-    }
-
-    //
-    // These callbacks are provided to child components to allow them
-    // to signal the need for a change in the state of the Page State Machine
-    //
-    public void OnPreviousButtonClick()
-    {
-        if (ChangePageState is not null)
-        {
-            ChangePageState(PreviousPageState);
-        }
-    }
-
-    public void OnNextButtonClick()
-    {
-        if (ChangePageState is not null)
-        {
-            ChangePageState(NextPageState);
-        }
     }
 
 
@@ -230,14 +202,14 @@
     public void OnStepForwardClick()
     {
         indexCurrentChild++;
-        stepIndicator.SetActiveIndicator(indexCurrentChild+1);
+        stepIndicator.SetActiveIndicator(indexCurrentChild+1);      // Step indicator is one-based reference
         InvokeAsync(StateHasChanged);
     }
 
     public void OnStepBackClick()
     {
         indexCurrentChild--;
-        stepIndicator.SetActiveIndicator(indexCurrentChild+1);
+        stepIndicator.SetActiveIndicator(indexCurrentChild+1);      // Step indicator is one-based reference
         InvokeAsync(StateHasChanged);
     }
 

@@ -5,6 +5,21 @@
 @using Code420.SfBlazorPlus.Code.Models
 @using Syncfusion.Blazor.Inputs
 
+<!--
+    THIS IS NOT AN EXAMPLE OF PRODUCTION CODE...IT IS A DEMO
+
+    This child component collects the display name for the user and stores it in the
+    DataSource parameter. It is the first in a series of progressive data collection
+    elements.
+
+    A LabelBase displays a simple message.
+
+    A MaskedTextboxBase component is used instead of a textbox. MaskedTextBoxBase offers
+    a few more capabilities than a textbox including the prompts.
+
+    A single ButtonBase offers the user the sole choice of moving forward through
+    the progression.
+-->
 
 <LabelBase  @ref=@labelRef
             LabelText="You will be asked to select the NFL Super Bowl winner. We will start by getting your name."
@@ -84,22 +99,24 @@
     //
     // Instance variables
     //
-    private LabelBase labelRef;
+    private LabelBase labelRef;                                                                     // I am in the habit of declaring refernce variables for child components
     private LabelBase labelFooter;
     private ButtonBase buttonNext;
     private ButtonBase buttonPrevious;
     private MaskedTextboxBase maskedTextboxBase;
+
     private const string textboxPlaceholderPrompt = "Enter your name for display purposes...";      // Placeholder displayed when the textbox is inactive and empty
-    private const string textboxPlaceholderLabel = "Your Display Name:";                           // Label displayed above the textbox when it is active, or inactive and not empty
+    private const string textboxPlaceholderLabel = "Your Display Name:";                            // Label displayed above the textbox when it is active, or inactive and not empty
     private string dummyTextboxValue;                                                               // Contents of the textbox since it is not a full value when a mask is being used...just the unmasked part
     private FloatLabelType textboxFloatLabelType = FloatLabelType.Auto;                             // FloatLabelType setting for the textbox
 
 
 
+        
 
-
-
+    //
     // Fired when the Beginning Tag textbox is created
+    //
     private async Task OnTextboxCreatedAsync()
     {
         // Initialize sbCheckedValue
@@ -109,13 +126,19 @@
         await this.maskedTextboxBase.FocusAsync();
     }
 
-    // Fired when there are changes to the Beginning Tag textbox contents and focus is lost
+    //
+    // Fired when there are changes to the textbox contents and focus is lost
+    //
     private void OnTextboxValueChange(string value)
     {
         // Save the value to the instance variable and the BO
         this.dummyTextboxValue = this.DataSource.DisplayName = value;
     }
 
+
+    // 
+    // Fired when the textbox loses focus
+    //
     private async Task OnTextboxBlurAsync(string value)
     {
         // Handle the case where the FloatLabelType is Auto...
@@ -127,6 +150,9 @@
         }
     }
 
+    //
+    // Fired when the textbox gains focus
+    //
     private async Task OnTextboxFocusAsync(int start, int end, string value)
     {
         // Handle the case where the FloatLabelType is Auto...

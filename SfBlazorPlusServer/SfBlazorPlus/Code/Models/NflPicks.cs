@@ -1,7 +1,13 @@
 ﻿namespace Code420.SfBlazorPlus.Code.Models
 {
+    //
+    // This is a fast and dirty data struction for demonstration purposes.
+    // DO NOT consider this good coding pratice--SRP is proper approach.
+    //
+
     public class NflPicks
     {
+        // Properties--no backing fields
         public Teams AfcTeams { get; set; }
 
         public Teams NfcTeams { get; set; }
@@ -11,7 +17,7 @@
         public string DisplayName { get; set; } = String.Empty;
 
 
-
+        // Constructor
         public NflPicks()
         {
             AfcTeams = new();

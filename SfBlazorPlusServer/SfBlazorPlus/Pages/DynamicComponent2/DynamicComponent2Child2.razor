@@ -5,6 +5,19 @@
 @using Code420.SfBlazorPlus.Code.Models
 @using Syncfusion.Blazor.Buttons
 
+
+<!--
+    THIS IS NOT AN EXAMPLE OF PRODUCTION CODE...IT IS A DEMO
+
+    This is the second child component in a progression of data collection elements.
+    The use is presented with two pair of radio buttons and is asked to make a selection
+    from each set. The selections are stored in the DataSource parameter.
+
+    Two buttons are rendered that allow the user to move back to the first child, or
+    forward to the third child component.
+-->
+
+
 <div class="container__body">
 
     <div class="row__label-intro">
@@ -164,7 +177,7 @@
     //
     // Instance variables
     //
-    private LabelBase labelIntro;
+    private LabelBase labelIntro;                           // I am in the habit of declaring refernce variables for child components
     private LabelBase labelAfcTeams;
     private LabelBase labelNfcTeams;
     private LabelBase labelFooter;
@@ -174,10 +187,14 @@
     private RadioButtonBase<string> afcTeam2;
     private RadioButtonBase<string> nfcTeam1;
     private RadioButtonBase<string> nfcTeam2;
-    private string afcCheckedValue;
-    private string nfcCheckedValue;
+
+    private string afcCheckedValue;                         // Contains current selection for the AFC teams radio buttons
+    private string nfcCheckedValue;                         // Contains current selection for the CFC teams radio buttons
 
 
+    //
+    // Constructor
+    //
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -191,11 +208,18 @@
     }
 
 
+
+    //
+    // Capture change to clicked AFC radio buttons
+    //
     private void OnAfcValueChange(ChangeArgs<string> value)
     {
         afcCheckedValue = DataSource.AfcTeams.SelectedTeam = value.Value;
     }
 
+    //
+    // Capture change to clicked NFC radio buttons
+    //
     private void OnNfcValueChange(ChangeArgs<string> value)
     {
         nfcCheckedValue = DataSource.NfcTeams.SelectedTeam = value.Value;

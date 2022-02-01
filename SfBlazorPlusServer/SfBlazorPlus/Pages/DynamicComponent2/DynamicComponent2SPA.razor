@@ -11,9 +11,11 @@
 
 
 <!--
+    THIS IS NOT AN EXAMPLE OF PRODUCTION CODE...IT IS A DEMO
+
     Demonstration of composing a SPA utilizing the PageStateManager to control execution flow.
     Execution flow begins with the Loading state and progresses to the Operating state.
-    Right now there is no execution path to the Error state but this will be added later.
+    The Error state is used for a "thank you" message...not really the purpose of the Error state..
 
     The Loading state renders the CustomSpinner control which, in turn, renders the
     CustomSpinnerSwingingBall custom spinner definition element. The available custom spinner 
@@ -35,11 +37,11 @@
     Error state.
 -->
 
+
 <PageStateManager   @ref=@pageStateManager 
                     PageState=PageState.Loading>
 
     <Loading>
-
         <CustomSpinner  Spinner=CustomSpinners.SwingingBall
                         SpinnerMargin="100px auto"
                         SpinnerBackground="linear-gradient(120deg, #002, #000)"
@@ -69,7 +71,6 @@
                     >
             <ContentFragment>Click Me to Move On</ContentFragment>
         </ButtonBase>
-
     </Loading>
 
     <Operating>
@@ -84,59 +85,59 @@
 
     <Error>
         <SimpleCardBase @ref=@cardError
+                        CardBorderRadius="4px"
+                        CardBorder="2px solid #ccc"
+                        CardMargin="50px auto"
+                        CardPadding="0px"
+                        CardHeight="auto"
+                        CardWidth="400px"
+                        CardFontSize="14px"
 
-                CardBorderRadius="4px"
-                CardBorder="2px solid #ccc"
-                CardMargin="50px auto"
-                CardPadding="0px"
-                CardHeight="auto"
-                CardWidth="400px"
-                CardFontSize="14px"
+                        HeaderBackground="whitesmoke"
+                        HeaderMinimumHeight="auto"
+                        HeaderPadding="5px"
 
-                HeaderBackground="whitesmoke"
-                HeaderMinimumHeight="auto"
-                HeaderPadding="5px"
+                        HeaderSeparatorBottomBorder="1px solid var(--mydarkgreen)"
 
-                HeaderSeparatorBottomBorder="1px solid var(--mydarkgreen)"
+                        ContentBackground="var(--mybeige)"
+                        ContentPadding="20px 10px 10px 10px"
+                        ContentMinimumHeight="170px"
 
-                ContentBackground="var(--mybeige)"
-                ContentPadding="20px 10px 10px 10px"
-                ContentMinimumHeight="170px"
+                        FooterBackground="whitesmoke"
 
-                FooterBackground="whitesmoke"
+                        FooterSeparatorTopBorder="1px solid var(--mydarkgreen)"
 
-                FooterSeparatorTopBorder="1px solid var(--mydarkgreen)"
+                        CssClass="card__dynamic-component"
+                        >
 
-                CssClass="card__dynamic-component"
-                >
+            <HeaderContent>
+                <LabelBase  @ref=@labelHeader
+                    LabelText=@($"Thanks for participating { nflPicks.DisplayName }")
+                    CssClass="label__header"
+                    FontSize="1em"
+                    FontColor="black"
+                    LabelPadding="5px 0px 10px 0px"
+                    >
+                </LabelBase>
+            </HeaderContent>
 
-        <HeaderContent>
-            <LabelBase  @ref=@labelHeader
-            LabelText=@($"Thanks for participating { nflPicks.DisplayName }")
-            CssClass="label__header"
-            FontSize="1em"
-            FontColor="black"
-            LabelPadding="5px 0px 10px 0px"
-            >
-</LabelBase>
-        </HeaderContent>
+            <BodyContent>
+                <LabelBase  @ref=@labelBody
+                            LabelText=@($"Unfortunately the { nflPicks.SuperBowlWinner } can't win the Super Bowl. Every Super Bowl (in my opinion) should be won by the New England Patriots.")
+                            CssClass="label__body"
+                            FontSize="1em"
+                            FontColor="black"
+                            LabelPadding="5px 0px 10px 0px"
+                            >
+                </LabelBase>
+            </BodyContent>
 
-        <BodyContent>
-            <LabelBase  @ref=@labelBody
-            LabelText=@($"Unfortunately the { nflPicks.SuperBowlWinner } can't win the Super Bowl. Every Super Bowl (in my opinion) should be won by the New England Patriots.")
-            CssClass="label__body"
-            FontSize="1em"
-            FontColor="black"
-            LabelPadding="5px 0px 10px 0px"
-            >
-</LabelBase>
-        </BodyContent>
-
-
-    </SimpleCardBase>
+        </SimpleCardBase>
     </Error>
 
 </PageStateManager>
+
+
 
 @code 
 {
@@ -144,9 +145,7 @@
     //
     // Instance Variable
     //
-    public PageStateManager pageStateManager;
-    PageState currentPageState = PageState.Loading;     // No real use for this right now...defined just in case.
-
+    public PageStateManager pageStateManager;               // I am in the habit of declaring refernce variables for child components
     private ButtonBase loadingButton;
     private ButtonBase operatingButton;
     private ButtonBase errorButton;
@@ -154,23 +153,33 @@
     private LabelBase labelHeader;
     private LabelBase labelBody;
     private DynamicComponent2Container dynamicComponent;
+
+    PageState currentPageState = PageState.Loading;         // No real use for this right now...defined just in case.
     
-    private NflPicks nflPicks = new();
+    private NflPicks nflPicks = new();                      // The data structure populated by the children of DynamicComponent2Container. Populated by its constructor.
 
 
+    //
+    // Callbacks
+    //
 
-    // Events
-
-    private void OnOperatingButtonClick() =>  pageStateManager.SetPageState(PageState.Error);
-
-    private void OnErrorButtonClick() => pageStateManager.SetPageState(PageState.Loading);
-
+    // Used to advance from Loading to Operating state
     private void OnLoadingButtonClick() => pageStateManager.SetPageState(PageState.Operating);
 
+    // Passed to the DynamicComponent2Container who passes it to the last child component so it can
+    //  advance the Page State Machine to the Error state.
     private void UpdatePageState(PageState pageState)
     {
         currentPageState = pageState;
         pageStateManager.SetPageState(pageState);
     }
 
+
+    //
+    // Deprecated but retained
+    //
+
+    //private void OnOperatingButtonClick() =>  pageStateManager.SetPageState(PageState.Error);
+
+    //private void OnErrorButtonClick() => pageStateManager.SetPageState(PageState.Loading);
 }

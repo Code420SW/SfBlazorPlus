@@ -5,6 +5,20 @@
 @using Code420.SfBlazorPlus.Code.Models
 @using Syncfusion.Blazor.Buttons
 
+
+<!--
+    THIS IS NOT AN EXAMPLE OF PRODUCTION CODE...IT IS A DEMO
+
+    This is the last of three child components in which the user is presented
+    with their choice from each of the two sets of radio button in the second
+    child component. They are asked to select one of the teams.
+
+    Two button are rendered that allow the user to move back to the second child
+    component or out of the progression (into the Error state of the parent's
+    Page State Manager).
+-->
+
+
 <div class="container__body">
 
     <div class="row__label-intro">
@@ -129,16 +143,20 @@
     //
     // Instance variables
     //
-    private LabelBase labelIntro;
+    private LabelBase labelIntro;                           // I am in the habit of declaring refernce variables for child components
     private LabelBase labelPickWinner;
     private ButtonBase buttonPrevious;
     private ButtonBase buttonDone;
     private RadioButtonBase<string> afcTeam1;
     private RadioButtonBase<string> nfcTeam1;
-    private string sbCheckedValue;
-    private string labelIntroText;
+
+    private string sbCheckedValue;                          // Contains active radio button
+    private string labelIntroText;                          // Customized label text
 
 
+    //
+    // Constructor
+    //
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -151,6 +169,9 @@
     }
 
 
+    // 
+    // Capture change in radio button
+    //
     private void OnValueChange(ChangeArgs<string> value)
     {
         DataSource.SuperBowlWinner = value.Value;
