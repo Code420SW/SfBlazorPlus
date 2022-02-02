@@ -32,7 +32,8 @@ Don't try to boil the ocean. Use a staged, task-based approach to acheiving the 
 
 #### [Stage 1](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-1): Complete
 #### [Stage 2](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-2): Complete
-#### [Stage 3](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-3): Pending
+#### [Stage 3](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-3): Complete
+#### [Stage 4](https://github.com/Code420SW/SfBlazorPlus/wiki/Stage-4): Complete
 
 
 ## Project Issues
@@ -40,3 +41,4 @@ The following chronicles issues opened for the project and their status.
 
 #### [Rationalize styling of the ButtonBase component](https://github.com/Code420SW/SfBlazorPlus/issues/2): Open
 #### [Create better mechnism for setting PageState in the PageStateMachine component](https://github.com/Code420SW/SfBlazorPlus/issues/4): Open
+#### [Create a better method to resolve a custom spinner definition in CustomSpinner component](https://github.com/Code420SW/SfBlazorPlus/issues/6) : Open
