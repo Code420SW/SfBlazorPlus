@@ -74,7 +74,7 @@
     @(masterDivSelector).e-input-group {
         background-color: @TextboxBackgroundColor;
         color: @TextboxFontColor;
-        border-width: @TextboxBorderWidth;
+        border: @TextboxBorderWidth;
         border-style: solid;
         border-color: @TextboxBorderColor;
         border-radius: @TextboxBorderRadius;
@@ -107,8 +107,7 @@
         font-size: @TextboxFontSize;
         font-weight: @TextboxFontWeight;
         line-height: @TextboxLineHeight;
-        margin-top: @TextboxMarginTop;
-        margin-bottom: @TextboxMarginBottom;
+        margin: @TextboxMargin;
         padding-top: @TextboxPaddingTop;
     }
 
@@ -181,10 +180,7 @@
             background-color = transparent
     */
     @(masterDivSelector).e-float-input .e-clear-icon {
-        padding-top: @ClearButtonPaddingTop;
-        padding-right: @ClearButtonPaddingRight;
-        padding-left: @ClearButtonPaddingLeft;
-        padding-bottom: @ClearButtonPaddingBottom;
+        padding: @ClearButtonPadding;
         color: @ClearButtonIconColor;
         min-height: 0;
         min-width: @ClearButtonMinimumWidth;

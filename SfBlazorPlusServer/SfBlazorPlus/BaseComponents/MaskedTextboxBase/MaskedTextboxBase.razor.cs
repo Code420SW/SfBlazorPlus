@@ -22,10 +22,8 @@ namespace Code420.SfBlazorPlus.BaseComponents.MaskedTextboxBase
         public string Value { get; set; }
 
         /// <summary>
-        /// Collection of values to be mapped for non-mask elements (literals) which 
-        /// have been set in the mask of Masked TextBox. This is a <see cref="Dictionary{TKey, TValue}"/>
-        /// where TKey and TValue are <see cref="string"/>.
-        /// Default value is null.
+        /// Collection of values to be mapped for non-mask elements (literals) which  have been set in the mask of Masked TextBox. 
+        /// This is a <see cref="Dictionary{TKey, TValue}"/> where TKey and TValue are <see cref="string"/>.
         /// </summary>
         [Parameter]
         public Dictionary<string, string> CustomCharacters { get; set; }
@@ -38,35 +36,31 @@ namespace Code420.SfBlazorPlus.BaseComponents.MaskedTextboxBase
         public bool Enabled { get; set; } = true;
 
         /// <summary>
-        /// Boolean value indicating if the Masked Textbox <see cref="Value"/> parameter is
-        /// persisted between page reloads.
+        /// Boolean value indicating if the Masked Textbox <see cref="Value"/> parameter is persisted between page reloads.
         /// Default value is false.
         /// </summary>
         [Parameter]
         public bool EnablePersistence { get; set; } = false;
 
         /// <summary>
-        /// Specifies the floating label behavior of the Masked TextBox that the placeholder 
-        /// text floats above the Masked TextBox based on the values in <see cref="Syncfusion.Blazor.Inputs.FloatLabelType"/>
+        /// A <see cref="Syncfusion.Blazor.Inputs.FloatLabelType"/> that specifies the floating label behavior of the Masked TextBox.
         /// Valid values are Never, Always and Auto (label floats above the textbox after focusing it or when enters the value in it).
-        /// Default value is FloatLabelType.Auto.
+        /// Default value is Auto.
         /// </summary>
         [Parameter]
         public FloatLabelType FloatLabelType { get; set; } = FloatLabelType.Auto;
 
         /// <summary>
-        /// String value containing the mask based on the 
-        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.maskedtextbox.mask">MSDN</see> 
-        /// standard to allow/validate the user input.
+        /// String value containing the mask based on the <see href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.maskedtextbox.mask">MSDN</see> standard to allow/validate the user input.
         /// Default value is String.Empty.
         /// </summary>
         [Parameter]
         public string Mask { get; set; } = String.Empty;
 
         /// <summary>
-        /// String value containing the text that is shown as a hint or placeholder until the user focuses 
-        /// or enter a value in the Masked Textbox. The property is depending on the <see cref="FloatLabelType"/> property
-        /// Default value is null.
+        /// String value containing the text that is shown as a hint or placeholder until the user focuses or enter a value in the Masked Textbox. 
+        /// Use of this property depends on the <see cref="FloatLabelType"/> property setting.
+        /// Default value is String.Empty.
         /// </summary>
         [Parameter]
         public string Placeholder { get; set; } = String.Empty;
@@ -93,25 +87,11 @@ namespace Code420.SfBlazorPlus.BaseComponents.MaskedTextboxBase
         public bool ShowClearButton { get; set; } = false;
 
         /// <summary>
-        /// Integer value specifying the tab order of the Masked Textbox.
-        /// Default value is null.
+        /// Integer value specifying the tab order of the Masked Textbox relative to other HTML elements ob the page.
         /// </summary>
         [Parameter]
         public int TabIndex { get; set; }
 
-        /// <summary>
-        /// String value specifying the CSS width value of the Masked Textbox.
-        /// Default value is 200px.
-        /// </summary>
-        [Parameter]
-        public string Width { get; set; } = "200px";
-
-        /// <summary>
-        /// String value specifying the CSS height value of the Masked Textbox.
-        /// Default value is 29px.
-        /// </summary>
-        [Parameter]
-        public string Height { get; set; } = "29px";
 
 
         // ==================================================
@@ -120,43 +100,37 @@ namespace Code420.SfBlazorPlus.BaseComponents.MaskedTextboxBase
 
 
         /// <summary>
-        /// An <see cref="EventCallback"/> containng the consumer's 
-        /// method called when the textbox value changes and loses focus.
+        /// An <see cref="EventCallback"/> containng the consumer's method invoked when the textbox value changes and loses focus.
         /// </summary>
         [Parameter]
         public EventCallback<MaskChangeEventArgs> ValueChange { get; set; }
 
         /// <summary>
-        /// An <see cref="EventCallback"/> containng the consumer's 
-        /// method called when the textbox value changes.
+        /// An <see cref="EventCallback"/> containng the consumer's method invoked when the textbox value changes.
         /// </summary>
         [Parameter]
         public EventCallback<string> ValueChanged { get; set; }
 
         /// <summary>
-        /// An <see cref="EventCallback"/> containg the consumer's 
-        /// method called when the Masked Textbox has focus-out.
+        /// An <see cref="EventCallback"/> containg the consumer's method invoked when the Masked Textbox loses focus.
         /// </summary>
         [Parameter]
         public EventCallback<MaskBlurEventArgs> Blur { get; set; }
 
         /// <summary>
-        /// An <see cref="EventCallback"/> containg the consumer's 
-        /// method called when the Masked Textbox is created.
+        /// An <see cref="EventCallback"/> containg the consumer's method invoked when the Masked Textbox is created.
         /// </summary>
         [Parameter]
         public EventCallback<object> Created { get; set; }
 
         /// <summary>
-        /// An <see cref="EventCallback"/> containg the consumer's 
-        /// method called when the Masked Textbox is destroyed.
+        /// An <see cref="EventCallback"/> containg the consumer's method invoked when the Masked Textbox is destroyed.
         /// </summary>
         [Parameter]
         public EventCallback<object> Destroyed { get; set; }
 
         /// <summary>
-        /// An <see cref="EventCallback"/> containg the consumer's 
-        /// method called when the Masked Textbox gets focus.
+        /// An <see cref="EventCallback"/> containg the consumer's method invoked when the Masked Textbox gets focus.
         /// </summary>
         [Parameter]
         public EventCallback<MaskFocusEventArgs> Focus { get; set; }
@@ -169,252 +143,244 @@ namespace Code420.SfBlazorPlus.BaseComponents.MaskedTextboxBase
 
 
         /// <summary>
-        /// String value containing CSS class definition(s) that will be injected in
-        /// the root HTML div element of the Masked Textbox.
+        /// String value containing CSS class definition(s) that will be injected in the root HTML div element of the Masked Textbox.
         /// Default value is String.Empty.
         /// </summary>
         [Parameter]
         public string CssClass { get; set; } = String.Empty;
 
         /// <summary>
-        /// String value that specifies the CSS ID assigned to the HTML input element
-        /// of the Masked Textbox. The Id is also injected into the HTML label element
-        /// when the <see cref="FloatLabelType"/> parameter is set to Always or 
-        /// Auto and is used by the UpdateParameter method.
+        /// String value that specifies the CSS ID assigned to the HTML input element  of the Masked Textbox. 
+        /// The Id is also injected into the HTML label element when the <see cref="FloatLabelType"/> parameter is set to Always or Auto.
+        /// The IOd is used by the and is used by the UpdatePlaceholderAsync() method.
         /// Default value is String.Empty.
         /// </summary>
         [Parameter]
         public string CssId { get; set; } = String.Empty;
 
         /// <summary>
-        /// Collection of additional HTML attributes such as styles, class, and more that 
-        /// are injected in root element. If both property and equivalent HTML attribute 
-        /// are configured, the component considers the property value. This is a 
-        /// <see cref="Dictionary{TKey, TValue}"/> where TKey is a <see cref="string"/> 
-        /// and TValue is an <see cref="object"/>.
-        /// Default value is null.
+        /// Collection of additional HTML attributes such as styles, class, and more that are injected in root element. 
+        /// If both property and equivalent HTML attribute are configured, the component considers the property value. 
+        /// This is a <see cref="Dictionary{TKey, TValue}"/> where TKey is a <see cref="string"/> and TValue is an <see cref="object"/>.
         /// </summary>
         [Parameter]
         public Dictionary<string, object> HtmlAttributes { get; set; }
 
         /// <summary>
-        /// Collection of additional input attributes such as disabled, value, and more that 
-        /// are injected in root element. If both property and equivalent input attribute 
-        /// are configured, the component considers the property value. This is a 
-        /// <see cref="Dictionary{TKey, TValue}"/> where TKey is a <see cref="string"/> 
-        /// and TValue is an <see cref="object"/>.
-        /// Default value is null.
+        /// Collection of additional input attributes such as disabled, value, and more that are injected in root element. 
+        /// If both property and equivalent input attribute are configured, the component considers the property value. 
+        /// This is a <see cref="Dictionary{TKey, TValue}"/> where TKey is a <see cref="string"/> and TValue is an <see cref="object"/>.
         /// </summary>
         [Parameter]
         public Dictionary<string, object> InputAttributes { get; set; }
 
         /// <summary>
-        /// String value that specifies the CSS color value used for the textbox backbround color.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/width">width</see> value used for the textbox.
+        /// The width CSS property sets an element's width.
+        /// Default value is 200px.
+        /// </summary>
+        [Parameter]
+        public string Width { get; set; } = "200px";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/height">height</see> value used for the textbox.
+        /// The height CSS property specifies the height of an element.
+        /// Default value is 29px.
+        /// </summary>
+        [Parameter]
+        public string Height { get; set; } = "29px";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">background</see> value used for the textbox.
+        /// The background-color CSS property sets the background color of an element.
         /// Default value is #FFF.
         /// </summary>
         [Parameter]
         public string TextboxBackgroundColor { get; set; } = "#FFF";
 
         /// <summary>
-        /// String value that specifies the CSS color value used for the textbox border color.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-color">border-color</see> value used for the textbox.
+        /// The border-color shorthand CSS property sets the color of an element's border.
         /// Default value is black.
         /// </summary>
         [Parameter]
         public string TextboxBorderColor { get; set; } = "black";
 
         /// <summary>
-        /// String value that specifies the CSS size value used for the textbox border width.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-width">border-width</see> value used for the textbox.
+        /// The border-width shorthand CSS property sets the width of an element's border.
         /// Default value is 1px.
         /// </summary>
         [Parameter]
         public string TextboxBorderWidth { get; set; } = "1px";
 
         /// <summary>
-        /// String value that specifies the CSS size value used for the textbox border radius.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius">border-radius</see> value used for the textbox.
+        /// The border-radius CSS property rounds the corners of an element's outer border edge.
         /// Default value is 4px.
         /// </summary>
         [Parameter]
         public string TextboxBorderRadius { get; set; } = "4px";
 
         /// <summary>
-        /// String value that specifies the CSS color value used for the textbox border color when the textbox is active.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-color">border-color</see> value used for the textbox when active.
+        /// The border-color shorthand CSS property sets the color of an element's border..
         /// Default value is #80BDFF.
         /// </summary>
         [Parameter]
         public string TextboxActiveBorderColor { get; set; } = "#80BDFF";
 
         /// <summary>
-        /// String value that specifies the CSS size value used for the textbox font.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">font-size</see> value used for the textbox font size.
+        /// The font-size CSS property sets the size of the font.
         /// Default value is 14px.
         /// </summary>
         [Parameter]
         public string TextboxFontSize { get; set; } = "14px";
 
         /// <summary>
-        /// String value that specifies the CSS color value used for the font color.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/color">color</see> value used for the textbox font color.
+        /// The color CSS property sets the foreground color value of an element's text and text decorations.
         /// Default value is #495057.
         /// </summary>
         [Parameter]
         public string TextboxFontColor { get; set; } = "#495057";
 
         /// <summary>
-        /// String value that specifies the CSS font-weight value used for the font.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight">font-weigh</see> value used for the textbox font.
+        /// The font-weight CSS property sets the weight (or boldness) of the font. The weights available depend on the font-family that is currently set.
         /// Default value is 400.
         /// </summary>
         [Parameter]
         public string TextboxFontWeight { get; set; } = "400";
 
         /// <summary>
-        /// String value that specifies the CSS line-height value used for the textbox.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height">line-height</see> value used for the textbox line height.
+        /// The line-height CSS property sets the height of a line box. It's commonly used to set the distance between lines of text.
         /// Default value is 1.4.
         /// </summary>
         [Parameter]
         public string TextboxLineHeight { get; set; } = "1.4";
 
         /// <summary>
-        /// String value that specifies the CSS size value used for the top margin of the textbox.
-        /// Default value is 24px.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/margin">margin</see> value used for the textbox margin.
+        /// The margin CSS shorthand property sets the margin area on all four sides of an element
+        /// Default value is 24px 0px 0px 0px.
         /// </summary>
         [Parameter]
-        public string TextboxMarginTop { get; set; } = "24px";
+        public string TextboxMargin { get; set; } = "24px 0px 0px 0px";
 
         /// <summary>
-        /// String value that specifies the CSS size value used for the bottom margin of the textbox.
-        /// Default value is 0px.
-        /// </summary>
-        [Parameter]
-        public string TextboxMarginBottom { get; set; } = "0px";
-
-        /// <summary>
-        /// String value that specifies the CSS size value used for the top padding of the textbox.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top">padding-top</see> value used for the textbox padding.
+        /// The padding-top CSS property sets the height of the padding area on the top of an element.
         /// Default value is 0px.
         /// </summary>
         [Parameter]
         public string TextboxPaddingTop { get; set; } = "0px";
 
         /// <summary>
-        /// String value that specifies the CSS size value used for the left padding of the textbox.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left">padding-left</see> value used for the textbox padding.
+        /// The padding-left CSS property sets the width of the padding area to the left of an element.
         /// Default value is 8px.
         /// </summary>
         [Parameter]
         public string TextboxPaddingLeft { get; set; } = "8px";
 
         /// <summary>
-        /// String value that specifies the CSS size value used for the text indent of the textbox.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent">text-indent</see> value used for the textbox contents.
+        /// The text-indent CSS property sets the length of empty space (indentation) that is put before lines of text in a block.
         /// Default value is 0px.
         /// </summary>
         [Parameter]
         public string TextboxTextIndent { get; set; } = "0px";
 
         /// <summary>
-        /// String value that specifies the CSS font-size value used for the placeholder.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">font-size</see> value used for the textbox placeholder font.
+        /// The font-size CSS property sets the size of the font.
         /// Default value is 14px.
         /// </summary>
         [Parameter]
         public string PlaceholderFontSize { get; set; } = "14px";
 
         /// <summary>
-        /// String value that specifies the CSS font-weight value used for the placeholder.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight">font-weigh</see> value used for the textbox placeholder font.
+        /// The font-weight CSS property sets the weight (or boldness) of the font. The weights available depend on the font-family that is currently set.
         /// Default value is 400.
         /// </summary>
         [Parameter]
         public string PlaceholderFontWeight { get; set; } = "400";
 
         /// <summary>
-        /// String value that specifies the CSS color value used for the placeholder in
-        /// its normal (non-floating) position.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/color">color</see> value used for the textbox placeholder font its normal (non-floating) position.
+        /// The color CSS property sets the foreground color value of an element's text and text decorations.
         /// Default value is #6C757D.
         /// </summary>
         [Parameter]
         public string PlaceholderNormalColor { get; set; } = "#6C757D";
 
         /// <summary>
-        /// String value that specifies the CSS font-size value used for the placeholder
-        /// in its floating position.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">font-size</see> value used for the textbox placeholder font in its floating position.
+        /// The font-size CSS property sets the size of the font.
         /// Default value is 14px.
         /// </summary>
         [Parameter]
         public string PlaceholderFloatingFontSize { get; set; } = "14px";
 
         /// <summary>
-        /// String value that specifies the CSS font-weight value used for the placeholder
-        /// in its floating position.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight">font-weigh</see> value used for the textbox placeholder font in its floating position.
+        /// The font-weight CSS property sets the weight (or boldness) of the font. The weights available depend on the font-family that is currently set.
         /// Default value is 400.
         /// </summary>
         [Parameter]
         public string PlaceholderFloatingFontWeight { get; set; } = "400";
 
         /// <summary>
-        /// String value that specifies the CSS color value used for the placeholder in
-        /// its floating position.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/color">color</see> value used for the textbox placeholder font its floating position.
+        /// The color CSS property sets the foreground color value of an element's text and text decorations.
         /// Default value is #212529.
         /// </summary>
         [Parameter]
         public string PlaceholderFloatingColor { get; set; } = "#212529";
 
         /// <summary>
-        /// String value that specifies the CSS font-size value used set the size of 
-        /// the close button's <see cref="ShowClearButton"/> icon.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">font-size</see> value used for the close button's <see cref="ShowClearButton"/> icon.
+        /// The font-size CSS property sets the size of the font.
         /// Default value is 12px.
         /// </summary>
         [Parameter]
         public string ClearButtonIconSize { get; set; } = "12px";
 
         /// <summary>
-        /// String value that specifies the CSS color value used set the color of 
-        /// the close button's <see cref="ShowClearButton"/> icon.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/color">color</see> value used for the close button's <see cref="ShowClearButton"/> icon..
+        /// The color CSS property sets the foreground color value of an element's text and text decorations.
         /// Default value is rgba(0,0,0,0.5).
         /// </summary>
         [Parameter]
         public string ClearButtonIconColor { get; set; } = "rgba(0,0,0,0.5)";
 
         /// <summary>
-        /// String value that specifies the CSS color value used set the background color of 
-        /// the close button's <see cref="ShowClearButton"/> icon.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">background</see> value used for the close button's <see cref="ShowClearButton"/> icon.
+        /// The background-color CSS property sets the background color of an element.
         /// Default value is transparent.
         /// </summary>
         [Parameter]
         public string ClearButtonIconBackgroundColor { get; set; } = "transparent";
 
         /// <summary>
-        /// String value that specifies the CSS size value used set the minimum width of 
-        /// the close button.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/min-width">min-width</see> value used for the close button's <see cref="ShowClearButton"/> icon.
+        /// The min-width CSS property sets the minimum width of an element. It prevents the used value of the width property from becoming smaller than the value specified for min-width.
         /// Default value is 24px.
         /// </summary>
         [Parameter]
         public string ClearButtonMinimumWidth { get; set; } = "24px";
 
         /// <summary>
-        /// String value that specifies the CSS size value used set the top padding of 
-        /// the close button.
-        /// Default value is 0px.
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding">padding</see> value used for the close button padding.
+        /// The padding CSS shorthand property sets the padding area on all four sides of an element at once.
+        /// Default value is 0px on all sides.
         /// </summary>
         [Parameter]
-        public string ClearButtonPaddingTop { get; set; } = "0px";
-
-        /// <summary>
-        /// String value that specifies the CSS size value used set the bottom padding of 
-        /// the close button.
-        /// Default value is 0px.
-        /// </summary>
-        [Parameter]
-        public string ClearButtonPaddingBottom { get; set; } = "0px";
-
-        /// <summary>
-        /// String value that specifies the CSS size value used set the left padding of 
-        /// the close button.
-        /// Default value is 0px.
-        /// </summary>
-        [Parameter]
-        public string ClearButtonPaddingLeft { get; set; } = "0px";
-
-        /// <summary>
-        /// String value that specifies the CSS size value used set the right padding of 
-        /// the close button.
-        /// Default value is 0px.
-        /// </summary>
-        [Parameter]
-        public string ClearButtonPaddingRight { get; set; } = "0px";
+        public string ClearButtonPadding { get; set; } = "0px";
 
         #endregion
 
