@@ -1,4 +1,4 @@
-﻿namespace Code420.SfBlazorPlus.Code
+﻿namespace Code420.SfBlazorPlus.Code.CssUtilities
 {
     public interface ICssUtilities
     {

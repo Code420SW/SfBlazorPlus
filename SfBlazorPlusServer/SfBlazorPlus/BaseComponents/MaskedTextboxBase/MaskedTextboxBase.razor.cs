@@ -1,4 +1,4 @@
-﻿using Code420.SfBlazorPlus.Code;
+﻿using Code420.SfBlazorPlus.Code.CssUtilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Syncfusion.Blazor.Inputs;

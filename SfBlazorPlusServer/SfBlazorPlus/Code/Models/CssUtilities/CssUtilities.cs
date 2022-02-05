@@ -1,7 +1,7 @@
 ﻿using Microsoft.JSInterop;
 using System.Drawing;
 
-namespace Code420.SfBlazorPlus.Code
+namespace Code420.SfBlazorPlus.Code.CssUtilities
 {
     public class CssUtilities : ICssUtilities
     {
