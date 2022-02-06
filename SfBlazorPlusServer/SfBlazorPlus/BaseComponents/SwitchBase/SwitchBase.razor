@@ -1,0 +1,171 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.SwitchBase
+
+@using Syncfusion.Blazor.Buttons
+
+@typeparam TChecked
+
+<SfSwitch @ref=sfSwitch
+          TChecked=TChecked
+          OnLabel=@OnLabel
+          OffLabel=@OffLabel
+          Checked=@Value
+          Disabled=@IsDisabled
+          Name=@NameAttribute
+          Value=@ValueAttribute
+          EnablePersistence=@EnablePersistence
+
+          CssClass=@CssClass
+
+          ValueChange=@ValueChanged
+          Created=@Created
+          />
+
+
+@*
+    (1) Switch div:         e-wrapper 
+                            e-switch-wrapper 
+
+        (2) Input div:      e-control 
+                            e-switch 
+                            e-lib
+
+            (3) Span        e-switch-inner
+
+                (4) Span    e-switch-on -- contains text displayed when switch is on
+
+                (4) Span    e-switch-off -- contains text displayed when switch is off
+
+            (3) Span        e-switch-handle
+*@
+
+<style>
+
+    /*
+        To ensure isolation of styling between multiple switches on a page, append the CssClass
+        to each selector (assuming the CssClass is not String.Empty).
+
+        masterDivSelector = .CssClass.e-switch-wrapper
+    */
+
+    /* 
+        Customize the switch as a whole 
+
+        Defaults:
+            height = 16px
+            width = 38px
+    */
+    @(masterDivSelector) {
+        height: @Height;
+        width: @Width;
+        margin: @Margin;
+        padding: @Padding;
+    }
+
+    /* 
+        Customize the inner portion of the switch, active/inactive (enabled or disabled) 
+
+        Defaults:
+            border-color = #adb5bd
+    */
+    @(masterDivSelector) .e-switch-inner,
+    @(masterDivSelector) .e-switch-inner.e-switch-active {
+       border: 1 px solid @BorderColor;
+    }
+
+    /* 
+        Customize the inner portion of the switch when hovered, active/inactive (enabled or disabled) 
+
+        Defaults:
+            border-color = #adb5bd
+    */
+    @(masterDivSelector):hover .e-switch-inner,
+    @(masterDivSelector):hover .e-switch-inner.e-switch-active {
+       border: 1px solid @HoverBorderColor;
+    }
+
+    /*
+        Customize the inner portion of the switch in either on/off position (enabled or disabled)
+        Styling is applied to the inner section of the switch in either on/off position.
+        The default color, background-color and border-color styling comes from bootstrap.
+
+        Defaults:
+            top = 0
+            color = #FFF
+            font-size = 12px
+            background-color = #007BFF
+    */
+    @(masterDivSelector) .e-switch-inner .e-switch-on,
+    @(masterDivSelector) .e-switch-inner .e-switch-off {
+        font-size: @LabelFontSize;
+        color: @LabelFontColor;
+        top: 0;
+        background-color: @BackgroundColor;
+    }
+
+    /*
+        Customize the switch inner section in on/off position (enabled only)
+        The default background color will either come from bootstrap's hover style
+        or inherit the non-hover background color.
+        The default border color is inherited from the non-hover style.
+
+        Defaults:
+            Background-color = #007BFF (on), transparent (off)
+            border-color = X
+    */
+    @(masterDivSelector):not(.e-switch-disabled):hover .e-switch-inner.e-switch-active .e-switch-on,
+    @(masterDivSelector):not(.e-switch-disabled):hover .e-switch-inner:not(.e-switch-active) .e-switch-off,
+    @(masterDivSelector):hover .e-switch-inner.e-switch-active .e-switch-on {
+        background-color: @HoverBackgroundColor;
+        border-color: @HoverBorderColor;
+    }
+
+    /* 
+        To customize the switch handle (enabled or disabled) 
+
+        Defaults:
+            background-color = #ADB5BD;
+            height = 12px
+            width = 12px
+            top = 2px
+            margin = 0 2px 2px 1px ????
+            margin-bottom = X
+            margin-left = X
+            left = 1px
+    */
+    @(masterDivSelector) .e-switch-handle:not(.e-switch-active),
+    @(masterDivSelector) .e-switch-handle.e-switch-active {
+        background-color: @HandleBackgroundColor;
+        height: @HandleHeight;
+        width: @HandleHeight;
+        top: calc( ( @Height - @HandleHeight ) / 2 );           /* vertically center the handle */
+        margin-bottom: 0px;
+        margin-left: 2px;
+        left: 2px;
+    }
+
+    /* 
+        Customize the handle in the on position (enabled or disabled) 
+
+        Defaults:
+            left = 100%
+            margin-left = -14px
+    */
+    @(masterDivSelector) .e-switch-handle.e-switch-active {
+        left: 100%;
+        margin-left: calc( (@HandleHeight + 4px ) * -1 );        /* left is 100% so need to set left margin so there are 4px on the right side */
+    }
+
+    /* 
+        To customize the switch handle when hovered in on/off position.
+        
+        Defaults:
+            background-color = #FFF
+    */
+    @(masterDivSelector):not(.e-switch-disabled):hover .e-switch-handle:not(.e-switch-active),
+    @(masterDivSelector):not(.e-switch-disabled):hover .e-switch-handle.e-switch-active,
+    @(masterDivSelector).e-switch-disabled:hover .e-switch-handle.e-switch-active,
+    @(masterDivSelector).e-switch-disabled:hover .e-switch-handle:not(.e-switch-active) {
+        background-color: @HandleHoverBackgroundColor;
+    }
+
+</style>
