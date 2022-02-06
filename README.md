@@ -41,4 +41,4 @@ The following chronicles issues opened for the project and their status.
 
 #### [Rationalize styling of the ButtonBase component](https://github.com/Code420SW/SfBlazorPlus/issues/2): Open
 #### [Create better mechnism for setting PageState in the PageStateMachine component](https://github.com/Code420SW/SfBlazorPlus/issues/4): Thinking about closing, leaving open for comment
-#### [Create a better method to resolve a custom spinner definition in CustomSpinner component](https://github.com/Code420SW/SfBlazorPlus/issues/6) : Open
+#### [Create a better method to resolve a custom spinner definition in CustomSpinner component](https://github.com/Code420SW/SfBlazorPlus/issues/6) : Closed
