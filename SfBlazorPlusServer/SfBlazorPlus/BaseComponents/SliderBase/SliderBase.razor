@@ -1,0 +1,330 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.SliderBase
+
+@using Syncfusion.Blazor.Inputs
+
+@typeparam TValue
+
+
+<!--
+    Need to inject a wrapper div around the SfSlider component so the slider button are addressible.
+    The CssClass and CssId parameters are injected (by SfSlider) in the slider control div (see HTML map below).
+    The slider control div is a sibling of the slider button divs.
+-->
+
+<div id=@cssIdSliderWrapper>
+    <SfSlider @ref=@sfSlider
+          Type=SliderType.Default
+          TValue=TValue
+          Value=@Value
+          ValueChanged=@ValueChanged
+          Enabled=@Enabled
+          Min=@ValueMin
+          Max=@ValueMax
+          Step=@ValueStep
+          CustomValues=CustomValues
+          CssClass=@CssClass
+          ID=@CssId
+          EnableAnimation=@EnableAnimation
+          IsImmediateValue=@IsImmediateValue
+          Orientation=@Orientation
+          ReadOnly=@ReadOnly
+          ShowButtons=@ShowButtons
+          Width=@SliderContainerWidth>
+
+    @if (TicksEnabled)
+    {
+        <SliderTicks Format=@TicksFormat
+                     LargeStep=@TicksLargeStep
+                     Placement=@TicksPlacement
+                     ShowSmallTicks=@TicksShowSmallTicks
+                     SmallStep=@TicksSmallStep>
+        </SliderTicks>
+    }
+
+    @if (TooltipsEnabled)
+    {
+        <SliderTooltip CssClass=@TooltipsCssClass
+                       Format=@TooltipsFormat
+                       IsVisible=@TooltipsIsVisible
+                       Placement=@TooltipsPlacement
+                       ShowOn=@TooltipsShowOn>
+        </SliderTooltip>
+    }
+
+    @if (EventsEnabled)
+    {
+        <SliderEvents TValue=TValue
+                      Created=EventsCreated
+                      Destroyed=EventsDestroyed
+                      OnChange=EventsOnChange
+                      OnTooltipChange=EventsOnTooltipChange
+                      TicksRendered=EventsTicksRendered
+                      TicksRendering=EventsTicksRendering
+                      ValueChange=EventsValueChange>
+        </SliderEvents>
+    }
+
+    </SfSlider>
+</div>
+@*
+    (1) Slider Wrapper div:                             id=d-slider-wrapper__<CssClass>
+
+        (2) Slider Container div:                       e-slider-container 
+                                                        e-control-wrapper 
+                                                        e-slider-btn 
+                                                        e-horizontal 
+                                                        e-scale-before          TicksPlacement=Placement.Before
+                                                        e-scale-after           TicksPlacement=Placement.After
+                                                        e-scale-both            TicksPlacement=Placement.Both
+
+            (3) Slider Button (left) div:               e-slider-button 
+                                                        e-first-button
+
+                (4) Slider Button Icon (left) span:     e-button-icon
+
+            (3) Slider Button (right) div:              e-slider-button 
+                                                        e-second-button
+
+                (4) Slider Button Icon (right) span:    e-button-icon
+
+            (3) Slider Control div:                     id=<CssId>
+                                                        <CssClass>
+                                                        e-control 
+                                                        e-slider 
+                                                        e-lib
+
+                (4) Slider Track div:                   e-slider-track
+
+                (4) Slider Handle div:                  e-handle 
+                                                        e-handle-first
+
+                (4) Slider Scale ul:                    e-scale 
+                                                        e-h-scale 
+                                                        e-tick-before           TicksPlacement=Placement.Before
+                                                        e-tick-after            TicksPlacement=Placement.After
+                                                        e-tick-both             TicksPlacement=Placement.Both
+
+                    (5) Scale tick li (first):          e-tick 
+                                                        e-large                 (only if a large tick)
+                                                        e-first-tick
+
+                        (6) Scale tick span:            e-tick-value            (only for ticks with values)
+                                                        e-tick-before           TicksPlacement=Placement.Before
+                                                        e-tick-after            TicksPlacement=Placement.After
+                                                        e-tick-both             TicksPlacement=Placement.Both
+
+                    (5) Scale ticks li (middle):        e-tick                  <== These are repeated for all middle ticks
+                                                        e-large                 (only if a large tick)
+
+                        (6) Scale tick span:            e-tick-value            (only for ticks with values)
+                                                        e-tick-before           TicksPlacement=Placement.Before
+                                                        e-tick-after            TicksPlacement=Placement.After
+                                                        e-tick-both             TicksPlacement=Placement.Both
+
+                    (5) Scale tick li (last):           e-tick
+                                                        e-large                 (ony if a large tick)
+                                                        e-last-tick
+
+                        (6) Scale tick span:            e-tick-value            (only for ticks with values)
+                                                        e-tick-before           TicksPlacement=Placement.Before
+                                                        e-tick-after            TicksPlacement=Placement.After
+                                                        e-tick-both             TicksPlacement=Placement.Both
+
+*@
+
+<!--
+    
+    Ticks
+        .e-control-wrapper.e-slider-container .e-scale.e-h-scale .e-tick.e-first-tick
+            background-position: left center;
+        .e-control-wrapper.e-slider-container .e-tick-both.e-scale.e-h-scale .e-large
+            height: 22px;
+            top: -5px;
+        .e-control-wrapper.e-slider-container .e-tick-both.e-scale.e-h-scale .e-tick
+            height: 16px;
+            top: -8px;
+
+    TicksPlacement=Placement.Both
+        .e-control-wrapper.e-slider-container .e-scale.e-h-scale .e-tick .e-tick-value.e-tick-both:first-child
+            top: -18px;
+        .e-control-wrapper.e-slider-container .e-scale.e-h-scale .e-tick .e-tick-value.e-tick-both
+            bottom: -20px;
+-->
+
+
+<style>
+
+    /*
+        To ensure isolation of styling between multiple sliders on a page, append the CssClass
+        to each selector (assuming the CssClass is not String.Empty).
+
+        #id-slider-wrapper__slider__tester1 .e-slider-container
+
+
+        RIGHT NOW THIS WORKS FOR HORIZONTAL SLIDERS.
+        IT WILL PROBABLY BLOWUP FOR VERTICAL SLIDERS
+
+    */
+
+
+    /*
+        Customize the slider buttons
+
+        The default values:
+            Slider Container (48px high) (with left/right padding for buttons)
+            The buttons are in the paddind area using position = absolute
+                Default size (hight/width) = 16px
+                Default background-color = #6C757D
+
+                Horizontal Slider:
+                    Default horizontal position for e-first-button is left = 0. For e-second-button is right = 0.
+                    Default vertical position is top = 50%, margin-top = -8px (half of default height/width)
+
+                Vertical Slider:
+    */
+    @(masterCssSelector) .e-slider-button {
+        background-color: @ButtonBackgroundColor;
+        height: @ButtonSize;
+        width: @ButtonSize;
+    }
+
+    @(masterCssSelector).e-horizontal .e-slider-button {
+        margin-top: calc(-1 * (@ButtonSize / 2));
+    }
+
+    /*
+        Customize the button icon
+
+        Horizontal and Vertical Slider:
+            The height and width are set to ButtonIconSize.
+            Center the icons vertically within the button
+            For the left button, horizontally center the icon in the button and add a 1px right shift
+            For the right button, horizontally center the icon in the button and add a 1px left shift
+    */
+    @(masterCssSelector) .e-button-icon {
+        height: @ButtonIconSize;
+        width: @ButtonIconSize;
+        top: calc(50% - (@ButtonIconSize / 2));
+    }
+
+    @(masterCssSelector) .e-first-button .e-button-icon {
+        left: calc(50% - ((@ButtonIconSize / 2) + 1px));    /* Move center left 1px more than half the icon size */
+    }
+
+    @(masterCssSelector) .e-second-button .e-button-icon {
+        left: calc(50% - ((@ButtonIconSize / 2) - 1px));    /* Move center left 1px less than half the icon size */
+    }
+
+
+    /*
+        Customize the track
+
+        Horizontal and Vertical Slider:
+            Set the background-color of the track
+
+        Horizontal Slider:
+            Use TrackHeight for the track height (or width) and for the border radius
+            Vertically center the track in the Slider Control
+
+        Vertical Slider:
+    */
+    @(masterCssSelector) .e-slider-track {
+        height: @TrackHeight;
+        border-radius: @TrackHeight;
+        top: calc(50% - (@TrackHeight / 2));
+        background-color: @TrackBackgroundColor;
+        /*opacity: .2; */
+    }
+
+
+    /*
+        Customize the slider handle
+
+        Horizontal and Vertical Sliders:
+            Set the color and size
+        
+        Horizontal Slider:
+            Vertically center the handle on the track by adjusting the top 
+            THorizontally center the handle on the slider tick marks by adjusting the left margin by half the handle size
+    */
+    @(masterCssSelector) .e-slider .e-handle {
+        background-color: @HandleBackgroundColor;
+        border-color: @HandleBackgroundColor;
+        height: @HandleSize;
+        width: @HandleSize;
+    }
+
+    @(masterCssSelector).horizontal .e-slider .e-handle {
+        top: calc(50% - (@HandleSize / 2));
+        margin-left: calc(-1 * (@HandleSize / 2));
+    }
+
+
+    /*
+        Customize the handle when active
+
+        When the handle has a mousedown event (e-handle-active is injected in the e-handle div),
+        a two concentric box shadows, both centered on the handle with no blur-radius (0 0 0).
+        The inner shadow is 1px white and the outer is 3px with the same color as the handle with 25% opacity.
+
+    */
+    @(masterCssSelector) .e-slider .e-handle-first.e-handle-active,
+    @(masterCssSelector) .e-slider .e-handle-second.e-handle-active {
+        box-shadow: 0 0 0 1px #fff,
+                    0 0 0 3px @boxShadowRgba;
+    }
+
+
+    /*
+        Customize (fix) the position of the scale relative to the track
+        The default values:
+            Slider Container (48px high) (with left/right padding for buttons)
+            Slider Control (32px high, position relative) centered in Slider Container (top: calc(50% - 16px))
+            Track is centered in the Track Control (for standard 6px high track, position = absolute--top: calc(50% - (6px / 2)))
+            Scale ul (position = absolute) with top = 16px and margin-top = -5px means the top of
+                the ul is 2px above the top edge of the defailt track (6px high). Since all
+                the associated li elements are position = relative, this adds a weird bias when trying to calculate the
+                position of the tick marks relative to the center of the track
+
+        The fix is to align the top of the Scale ul with the center of the track regardless of the track height.
+    */
+    @(masterCssSelector) .e-tick-after.e-scale.e-h-scale {
+        margin-top: 0px;        /* Align with center of track */
+    }
+
+
+    /*
+        Customize the large ticks
+
+        The tick is nominally (when track height = 6px) 10px high starting at 1px below the center of the track.
+        This means the visible portion of the tick is 8px. To simplify the math, the tick height will be
+        8px + TrackHeight/2 and the top of the tick will be 0 since the top of the Scale ul is in the center of the track.
+    */
+    @(masterCssSelector) .e-tick-after.e-scale.e-h-scale .e-tick.e-large {
+        height: calc(8px + (@TrackHeight / 2));
+        top: 0px;
+    }
+
+    /*
+        Customize the small ticks
+
+        The tick is nominally (when track height = 6px) 6px high starting at 1px below the center of the track.
+        This means the visible portion of the tick is 4px. The weird part is that the height grows from the bottom
+        of the tick which means the top is the variable portion of the positioning challenge. To simplify the math,
+        the tick height will be 4px + TrackHeight/2 and the top of the tick will be -4px.
+
+        top: 1px;
+    */
+    @(masterCssSelector) .e-tick-after.e-scale.e-h-scale .e-tick:not(.e-large) {
+        height: calc(4px + (@TrackHeight / 2));
+        top: -4px;
+    }
+
+    /*
+        Customize the tick labels
+    */
+    @(masterCssSelector) .e-tick.e-large .e-tick-value {
+        color: @TickFontColor;
+    }
+
+</style>
