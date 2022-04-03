@@ -1,0 +1,32 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
+
+@using Syncfusion.Blazor.Navigations
+
+<SfSidebar  @ref=@sidebar
+            Animate=@Animate
+            ChildContent=@ChildContent
+            CloseOnDocumentClick=@CloseOnDocumentClick
+            EnableDock=@EnableDock
+            EnableGestures=@EnableGestures
+            EnablePersistence=@EnablePersistence
+            IsOpen=@IsOpen
+            Position=@Position
+            ShowBackdrop=@ShowBackdrop
+            Target=@Target
+            Type=@Type
+
+            DockSize=@DockSize
+            HtmlAttributes=@HtmlAttributes
+            ID=@CssId
+            MediaQuery=@MediaQuery
+            Width=@Width
+
+            Changed=@ChangedHandler
+            Created=@CreatedHandler
+            Destroyed=@DestroyedHandler
+            IsOpenChanged=@IsOpenChangedHandler
+            OnClose=@OnCloseHandler
+            OnOpen=@OnOpenHandler
+            >
+
+</SfSidebar>
