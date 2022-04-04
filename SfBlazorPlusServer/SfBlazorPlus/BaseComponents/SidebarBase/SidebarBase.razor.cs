@@ -338,7 +338,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
             await base.OnInitializedAsync();
 
             // Build the master selectors
-            masterCssSelector = (CssClass == string.Empty) ? ".e-tab" : $".{ CssClass }.e-tab";
+            masterCssSelector = (CssClass == string.Empty) ? ".e-sidebar" : $".{ CssClass }.e-sidebar";
 
             // If the HtmlAttributes parameter is not set, create it.
             if (HtmlAttributes is null) HtmlAttributes = new();

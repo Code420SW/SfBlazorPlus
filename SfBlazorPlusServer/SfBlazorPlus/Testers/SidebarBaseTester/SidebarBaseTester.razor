@@ -1,14 +1,80 @@
 ﻿@page "/testers/sidebarbasetester"
 
+@using Code420.SfBlazorPlus.BaseComponents.SidebarBase
 @using Syncfusion.Blazor.Navigations
+@using ChangeEventArgs = Syncfusion.Blazor.Navigations.ChangeEventArgs
+@using EventArgs = Syncfusion.Blazor.Navigations.EventArgs
 @using System.Diagnostics
 
 
-<div id="header" style="height:55px;text-align: center;color:white;background-color: midnightblue;font-size:1.5rem;line-height:55px;">
-    Header
+<!--
+    MediaQuery=@MediaQuery
+    Auto, Over, Push, Slide
+    HtmlAttributes=@myHtmlAttributes
+-->
+<div class="my__content">
+    <div>
+        <p style="padding: 1em;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ornare massa eget egestas purus viverra accumsan. Luctus accumsan tortor posuere ac ut consequat semper viverra nam. Porttitor massa id neque aliquam vestibulum. Cras adipiscing enim eu turpis egestas pretium aenean pharetra. Eros donec ac odio tempor orci dapibus ultrices in iaculis. Id diam vel quam elementum. Dictum varius duis at consectetur lorem donec massa. Diam vulputate ut pharetra sit amet aliquam id diam. Eget arcu dictum varius duis at consectetur lorem donec massa. Ornare arcu odio ut sem. Arcu dictum varius duis at. Arcu cursus euismod quis viverra nibh. Aenean et tortor at risus viverra adipiscing at in. Facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum. Id leo in vitae turpis massa. Faucibus turpis in eu mi bibendum. Lorem donec massa sapien faucibus et molestie ac.
+        </p>
+        <p style="padding: 1em;">
+        Tristique et egestas quis ipsum suspendisse ultrices gravida dictum fusce. Eget mi proin sed libero enim sed. Ut diam quam nulla porttitor. Eu augue ut lectus arcu. Eu lobortis elementum nibh tellus molestie nunc. At in tellus integer feugiat scelerisque varius. Tortor pretium viverra suspendisse potenti nullam ac. Aliquet nibh praesent tristique magna sit amet purus. Egestas purus viverra accumsan in nisl nisi. A arcu cursus vitae congue mauris rhoncus aenean vel elit.
+        </p>
+        <p style="padding: 1em;">
+        Et malesuada fames ac turpis. Vel pharetra vel turpis nunc eget lorem dolor sed viverra. At varius vel pharetra vel turpis nunc eget lorem dolor. Morbi tristique senectus et netus. Sagittis eu volutpat odio facilisis mauris sit amet massa. Eu turpis egestas pretium aenean pharetra magna ac placerat. Orci eu lobortis elementum nibh tellus molestie nunc non. Auctor eu augue ut lectus arcu bibendum at varius vel. Urna neque viverra justo nec ultrices. Lobortis feugiat vivamus at augue eget arcu dictum varius. Aliquet eget sit amet tellus cras adipiscing enim eu. Quis blandit turpis cursus in. Et odio pellentesque diam volutpat commodo sed egestas egestas fringilla. Enim ut sem viverra aliquet eget. Quis ipsum suspendisse ultrices gravida dictum fusce ut. Nunc consequat interdum varius sit. At auctor urna nunc id cursus metus aliquam eleifend. Faucibus nisl tincidunt eget nullam non nisi est sit amet.
+        </p>
+        <p style="padding: 1em;">
+        Tincidunt id aliquet risus feugiat in. Ultricies integer quis auctor elit. Tempor commodo ullamcorper a lacus vestibulum sed. Turpis egestas pretium aenean pharetra magna ac placerat vestibulum. Diam phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet. Convallis posuere morbi leo urna molestie. Tincidunt vitae semper quis lectus nulla. In metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Eget velit aliquet sagittis id consectetur. In pellentesque massa placerat duis. Aliquam faucibus purus in massa tempor nec. Nibh sit amet commodo nulla facilisi. Volutpat consequat mauris nunc congue nisi vitae. Sollicitudin tempor id eu nisl nunc. Morbi tincidunt ornare massa eget egestas. A pellentesque sit amet porttitor eget. Arcu non sodales neque sodales ut etiam sit amet. Nulla aliquet porttitor lacus luctus accumsan tortor.
+        </p>
+        <p style="padding: 1em;">
+        Sed vulputate odio ut enim blandit volutpat maecenas. Tortor at auctor urna nunc id cursus metus. Convallis aenean et tortor at. Ultricies integer quis auctor elit sed vulputate mi sit amet. Consequat semper viverra nam libero justo laoreet sit amet. Volutpat ac tincidunt vitae semper quis. Odio aenean sed adipiscing diam. Fermentum posuere urna nec tincidunt praesent semper feugiat nibh sed. Vulputate odio ut enim blandit volutpat. Vitae tortor condimentum lacinia quis vel eros. Sem et tortor consequat id porta nibh. Nec tincidunt praesent semper feugiat nibh sed. Scelerisque viverra mauris in aliquam. Id eu nisl nunc mi. Ipsum consequat nisl vel pretium.
+        </p>
+        <p style="padding: 1em;">
+        Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque. Faucibus interdum posuere lorem ipsum dolor sit amet consectetur adipiscing. Vulputate odio ut enim blandit volutpat maecenas. Habitant morbi tristique senectus et netus et malesuada fames ac. Sit amet risus nullam eget. Egestas diam in arcu cursus. Nunc sed blandit libero volutpat sed cras. Tempor commodo ullamcorper a lacus vestibulum sed. Placerat duis ultricies lacus sed turpis tincidunt id. Pellentesque id nibh tortor id aliquet lectus. Quis hendrerit dolor magna eget est lorem ipsum dolor. Sodales ut eu sem integer vitae justo. Tellus cras adipiscing enim eu turpis egestas pretium aenean. Blandit turpis cursus in hac habitasse platea dictumst quisque sagittis. Lobortis feugiat vivamus at augue eget arcu. Aliquet enim tortor at auctor. Elementum eu facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar. Enim diam vulputate ut pharetra sit amet.
+        </p>
+        <p style="padding: 1em;">
+        Volutpat consequat mauris nunc congue nisi vitae suscipit. Risus in hendrerit gravida rutrum. Amet aliquam id diam maecenas ultricies mi. Leo in vitae turpis massa. Pretium viverra suspendisse potenti nullam ac tortor vitae. Est placerat in egestas erat imperdiet. In fermentum et sollicitudin ac orci phasellus. Malesuada nunc vel risus commodo viverra. Felis bibendum ut tristique et egestas quis ipsum suspendisse. Elementum curabitur vitae nunc sed velit dignissim sodales. Consequat interdum varius sit amet mattis vulputate enim nulla. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh sit. Imperdiet nulla malesuada pellentesque elit eget gravida. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Imperdiet proin fermentum leo vel orci porta non pulvinar. Fermentum leo vel orci porta non pulvinar neque laoreet. Nisi porta lorem mollis aliquam.
+        </p>
+        <p style="padding: 1em;">
+        Lacus luctus accumsan tortor posuere ac ut. Diam maecenas ultricies mi eget. Pellentesque habitant morbi tristique senectus et. Vitae sapien pellentesque habitant morbi. Auctor elit sed vulputate mi sit. Quam elementum pulvinar etiam non quam. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Aliquet bibendum enim facilisis gravida neque convallis a. Vitae et leo duis ut. Semper viverra nam libero justo laoreet sit. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Gravida neque convallis a cras semper auctor neque vitae tempus. At lectus urna duis convallis convallis tellus id interdum. Blandit massa enim nec dui nunc mattis. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. Mauris commodo quis imperdiet massa tincidunt nunc pulvinar. Risus viverra adipiscing at in tellus integer. Congue quisque egestas diam in arcu cursus euismod quis. Lorem ipsum dolor sit amet consectetur adipiscing elit ut aliquam.
+        </p>
+        <p style="padding: 1em;">
+        Morbi tincidunt augue interdum velit euismod. Consectetur a erat nam at lectus urna duis convallis convallis. Aliquam faucibus purus in massa tempor nec. Gravida arcu ac tortor dignissim convallis aenean. Ac turpis egestas sed tempus urna et. Et tortor at risus viverra adipiscing. Mauris commodo quis imperdiet massa tincidunt nunc. Enim diam vulputate ut pharetra sit amet. Facilisi etiam dignissim diam quis enim lobortis scelerisque. Diam maecenas ultricies mi eget mauris pharetra et. Ut venenatis tellus in metus vulputate. Nunc sed augue lacus viverra vitae. Laoreet sit amet cursus sit.
+        </p>
+        <p style="padding: 1em;">
+        Donec et odio pellentesque diam volutpat commodo sed. Amet nulla facilisi morbi tempus. Habitasse platea dictumst quisque sagittis purus sit amet volutpat. Risus viverra adipiscing at in tellus integer feugiat scelerisque. Amet volutpat consequat mauris nunc congue nisi vitae suscipit. Elementum sagittis vitae et leo. Nunc lobortis mattis aliquam faucibus purus in massa. Bibendum est ultricies integer quis auctor elit sed vulputate mi. Elementum facilisis leo vel fringilla est. Varius duis at consectetur lorem donec. Vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Diam in arcu cursus euismod quis. Ipsum faucibus vitae aliquet nec ullamcorper sit amet. Vitae aliquet nec ullamcorper sit amet risus. At lectus urna duis convallis convallis tellus id interdum. Turpis egestas sed tempus urna. Augue interdum velit euismod in pellentesque massa placerat duis. Fames ac turpis egestas integer eget aliquet nibh praesent. Vestibulum lorem sed risus ultricies tristique.
+        </p>
+    </div>
 </div>
 
-<SfSidebar @ref="sidebarObj" Width="220px" DockSize="72px" EnableDock=true @bind-IsOpen="SidebarToggle">
+
+<SidebarBase    @ref=@sidebarbase
+                Animate=true
+                CloseOnDocumentClick=false
+                EnableDock=true
+                EnableGestures=false
+                EnablePersistence=false
+                IsOpen=@isOpen
+                Position=SidebarPosition.Left
+                ShowBackdrop=true
+                
+                Type=SidebarType.Auto
+
+                DockSize="50px"
+                CssClass="my__sidebar"
+                CssId="sidebar-id"
+                
+                Target=".my__content"
+                Width="200px"
+                ZIndex=1000
+
+                Changed=@MyChangedHandler
+                Created=@MyCreatedHandler
+                Destroyed=@MyDestroyedHandler
+                IsOpenChanged=@MyIsOpenChangedHandler
+                OnClose=@MyOnCloseHandler
+                OnOpen=@MyOnOpenHandler
+                >
     <ChildContent>
         <div class="dock">
             <ul>
@@ -35,118 +101,50 @@
             </ul>
         </div>
     </ChildContent>
-</SfSidebar>
+</SidebarBase>
 
-<div id="main-content container-fluid col-md-12" style="margin-top: 10%;">
-    <div class="title default" style="text-align: center">Main content</div>
-</div>
 
-@code{
-    SfSidebar sidebarObj;
-    public bool SidebarToggle = false;
-    public void Toggle()
+@code {
+    private SidebarBase sidebarbase;
+    private bool isOpen = true;
+    private Dictionary<string, object> myHtmlAttributes = new();
+
+
+    private void Toggle()
     {
-        SidebarToggle = !SidebarToggle;
+        isOpen = !isOpen;
+    }
+
+
+
+    private async Task MyChangedHandler(ChangeEventArgs args)
+    {
+        Debug.WriteLine("MyChangedHandler method invoked.");
+    }
+
+    private async Task MyCreatedHandler(object args)
+    {
+        Debug.WriteLine("MyCreatedHandler method invoked.");
+    }
+
+    private async Task MyDestroyedHandler(object args)
+    {
+        Debug.WriteLine("MyDestroyedHandler method invoked.");
+    }
+
+    private async Task MyIsOpenChangedHandler(bool state)
+    {
+        Debug.WriteLine("MyIsOpenChangedHandler method invoked.");
+        isOpen = state;
+    }
+
+    private async Task MyOnCloseHandler(EventArgs args)
+    {
+        Debug.WriteLine("MyOnCloseHandler method invoked.");
+    }
+
+    private async Task MyOnOpenHandler(EventArgs args)
+    {
+        Debug.WriteLine("MyOnOpenHandler method invoked.");
     }
 }
-
-<style>
-    /* Content area styles */
-    .title {
-        font-size: 20px;
-    }
-
-    /* Sidebar styles */
-    .e-sidebar .e-icons::before {
-        font-size: 25px;
-    }
-
-    /* dockbar icon Style */
-    .e-sidebar .home::before {
-        content: '\e102';
-    }
-
-    .e-sidebar .profile::before {
-        content: '\e10c';
-    }
-
-    .e-sidebar .info::before {
-        content: '\e11b';
-    }
-
-    .e-sidebar .settings::before {
-        content: '\e10b';
-    }
-
-    .e-sidebar .expand::before,
-    .e-sidebar.e-right.e-open .expand::before {
-        content: '\e10f';
-    }
-
-    .e-sidebar.e-open .expand::before,
-    .e-sidebar.e-right .expand::before {
-        content: '\e10e';
-    }
-
-    /* end of dockbar icon Style */
-
-    .e-sidebar.e-dock.e-close span.e-text {
-        display: none;
-    }
-
-    .e-sidebar.e-dock.e-open span.e-text {
-        display: inline-block;
-    }
-
-    .e-sidebar li {
-        list-style-type: none;
-        cursor: pointer;
-    }
-
-    .e-sidebar ul {
-        padding: 0px;
-    }
-
-
-    .e-sidebar span.e-icons {
-        color: #c0c2c5;
-        line-height: 2
-    }
-
-    .e-open .e-icons {
-        margin-right: 16px;
-    }
-
-    .e-open .e-text {
-        overflow: hidden;
-        font-size: 15px;
-    }
-
-    .sidebar-item {
-        text-align: center;
-        border-bottom: 1px #e5e5e58a solid;
-    }
-
-    .e-sidebar.e-open .sidebar-item {
-        text-align: left;
-        padding-left: 15px;
-        color: #c0c2c5;
-    }
-
-    .e-sidebar {
-        background: #2d323e;
-        overflow: hidden;
-    }
-
-    @@font-face {
-        font-family: 'e-icons';
-        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    .main > div {
-        padding: 0px !important;
-    }
-    /* end of sidebar styles */
-</style>

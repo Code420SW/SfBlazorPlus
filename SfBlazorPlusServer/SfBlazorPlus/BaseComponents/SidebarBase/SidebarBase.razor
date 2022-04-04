@@ -20,6 +20,7 @@
             ID=@CssId
             MediaQuery=@MediaQuery
             Width=@Width
+            ZIndex=@ZIndex
 
             Changed=@ChangedHandler
             Created=@CreatedHandler
@@ -30,3 +31,136 @@
             >
 
 </SfSidebar>
+
+
+<!--
+    To ensure isolation of styling between multiple Sidebar components on a page, prepend the CssClass
+    to each selector (assuming the CssClass is not String.Empty).
+    Need to use CssClass to directly address.
+
+    masterListboxElementCssSelector = .CssClass.e-sidebar
+-->
+
+<style>
+
+    /* ==================== Sidebar Children ====================*/
+    /* 
+        Set the styling for all Tab container children
+    */
+    @(masterCssSelector) * {
+        box-sizing: border-box;
+    }
+
+
+
+    /* ==================== Sidebar (Right & Left) ====================*/
+    /*
+        Set the styling for the Sidebar element
+
+        Bootstrap defaults:
+            background: #fff;
+            height: 100%;
+            overflow: auto;
+            will-change: transform;
+    */
+    @(masterCssSelector) {
+        background: #fff;
+    }
+
+
+
+    /* ==================== Right Sidebar ====================*/
+    /*
+        Set the styling for the Right Sidebar element
+
+        Bootstrap defaults:
+            border-left: 1px solid #dee2e6;
+            left: auto;
+            right: 0;
+            top: 0;
+    */
+    @(masterCssSelector).e-right {
+        border-left: 1px solid #dee2e6;
+    }
+
+    /*
+        Set the styling for the Right Sidebar transition
+
+        Bootstrap defaults (e-close):
+            transition: width .5s ease, visibility 500ms;
+            visibility: visible;
+
+        Bootstrap defaults (e-open):
+            transform: translateX(0%);
+            transition: transform .5s ease;
+            visibility: visible;
+    */
+    @(masterCssSelector).e-right.e-close.e-dock {
+        transition: width .5s ease, visibility 500ms;       /* The transform is defined on the element */
+    }
+
+    @(masterCssSelector).e-right.e-open {
+        transition: transform .5s ease;
+    }
+
+
+
+    /* ==================== Left Sidebar ====================*/
+    /*
+        Set the styling for the Left Sidebar element
+
+        Bootstrap defaults:
+            border-left: 1px solid #dee2e6;
+            left: 0;
+            right: auto;
+            top: 0;
+    */
+    @(masterCssSelector).e-left {
+        border-right: 1px solid #dee2e6;
+    }
+
+    /*
+        Set the styling for the Left Sidebar transition
+
+        Bootstrap defaults (e-close):
+            transition: width .5s ease, visibility 500ms;
+            visibility: visible;
+
+        Bootstrap defaults (e-open):
+            transform: translateX(0%);
+            transition: transform .5s ease;
+            visibility: visible;
+    */
+    @(masterCssSelector).e-left.e-close.e-dock {
+        transition: width .5s ease, visibility 500ms;       /* The transform is defined on the element */
+    }
+
+    @(masterCssSelector).e-left.e-open {
+        transition: transform .5s ease;
+    }
+
+
+
+    /* ==================== Sidebar Overlay ====================*/
+    /*
+        Set the styling for the Sidebar overlay element
+        Need to address the overlay element as a direct child of e-content-animation 
+        which is a general sibling to the master selector
+
+        Bootstrap defaults:
+            background-color: rgba(0,0,0,0.5);
+            height: 100%;
+            left: 0;
+            opacity: .5;
+            pointer-events: auto;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+    */
+    @(masterCssSelector) ~ .e-content-animation > .e-sidebar-overlay {
+        background-color: rgba(0,0,0,0.5);
+    }
+
+
+</style>
