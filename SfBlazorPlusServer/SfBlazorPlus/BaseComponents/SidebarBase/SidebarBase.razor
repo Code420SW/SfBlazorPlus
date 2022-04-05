@@ -64,7 +64,7 @@
             will-change: transform;
     */
     @(masterCssSelector) {
-        background: #fff;
+        background: @SidebarBackgroundColor;
     }
 
 
@@ -80,7 +80,7 @@
             top: 0;
     */
     @(masterCssSelector).e-right {
-        border-left: 1px solid #dee2e6;
+        border-left: @SidebarBorderWidth @SidebarBorderStyle @SidebarBorderColor;
     }
 
     /*
@@ -96,11 +96,11 @@
             visibility: visible;
     */
     @(masterCssSelector).e-right.e-close.e-dock {
-        transition: width .5s ease, visibility 500ms;       /* The transform is defined on the element */
+        transition: @SidebarCloseTransition;       /* The transform is defined on the element */
     }
 
     @(masterCssSelector).e-right.e-open {
-        transition: transform .5s ease;
+        transition: @SidebarOpenTransition;
     }
 
 
@@ -116,7 +116,7 @@
             top: 0;
     */
     @(masterCssSelector).e-left {
-        border-right: 1px solid #dee2e6;
+        border-right: @SidebarBorderWidth @SidebarBorderStyle @SidebarBorderColor;
     }
 
     /*
@@ -132,11 +132,11 @@
             visibility: visible;
     */
     @(masterCssSelector).e-left.e-close.e-dock {
-        transition: width .5s ease, visibility 500ms;       /* The transform is defined on the element */
+        transition: @SidebarCloseTransition;       /* The transform is defined on the element */
     }
 
     @(masterCssSelector).e-left.e-open {
-        transition: transform .5s ease;
+        transition: @SidebarOpenTransition;
     }
 
 
@@ -159,7 +159,8 @@
             z-index: 999;
     */
     @(masterCssSelector) ~ .e-content-animation > .e-sidebar-overlay {
-        background-color: rgba(0,0,0,0.5);
+        background-color: @BackdropBackgroundColor;
+        opacity: @BackdropOpacity;
     }
 
 

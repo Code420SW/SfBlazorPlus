@@ -10,7 +10,7 @@
 <!--
     MediaQuery=@MediaQuery
     Auto, Over, Push, Slide
-    HtmlAttributes=@myHtmlAttributes
+    
 -->
 <div class="my__content">
     <div>
@@ -60,13 +60,21 @@
                 
                 Type=SidebarType.Auto
 
-                DockSize="50px"
+                BackdropBackgroundColor="#d2b48c"
+                BackdropOpacity="0.5"
                 CssClass="my__sidebar"
                 CssId="sidebar-id"
-                
+                DockSize="50px"
+                HtmlAttributes=@myHtmlAttributes
+                SidebarBackgroundColor="tan"
+                SidebarBorderWidth="3px"
+                SidebarBorderStyle="solid"
+                SidebarBorderColor="darkgreen"
+                SidebarCloseTransition="width ,2s ease, visibility 500ms"
+                SidebarOpenTransition="transform .5s ease"
                 Target=".my__content"
-                Width="200px"
-                ZIndex=1000
+                
+                ZIndex=0
 
                 Changed=@MyChangedHandler
                 Created=@MyCreatedHandler
@@ -76,7 +84,7 @@
                 OnOpen=@MyOnOpenHandler
                 >
     <ChildContent>
-        <div class="dock">
+        <div class="dock" style="padding:0px 20px">
             <ul>
                 <li class="sidebar-item" id="toggle" @onclick="Toggle">
                     <span class="e-icons expand"></span>

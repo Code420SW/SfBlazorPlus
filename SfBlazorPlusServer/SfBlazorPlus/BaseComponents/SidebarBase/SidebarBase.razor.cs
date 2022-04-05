@@ -18,7 +18,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
         // ==================================================
 
         /// <summary>
-        /// Boolean value specifying if animation transitions on expanding or collapsing the Sidebar are enabled.
+        /// Boolean value specifying if animation transitions when expanding or collapsing the Sidebar are enabled.
         /// Default value is true.
         /// </summary>
         [Parameter]
@@ -39,7 +39,9 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
         public bool CloseOnDocumentClick { get; set; } = false;
 
         /// <summary>
-        /// Boolean value specifying the docking state of the Sidebar.
+        /// Boolean value specifying the docking state of the Sidebar. 
+        /// When disabled, the Sidebar is not visible on the page in the closed state. A mechanism must be provided to change the Sidebar state,
+        /// When enabled, a portion of the Sidebar, specified by the <see cref="DockSize"/> parameter, is visible on the page.
         /// Default value is true.
         /// </summary>
         [Parameter]
@@ -61,7 +63,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
 
         /// <summary>
         /// Boolean value specifying if the Sidebar is open or closed.
-        ///  When the Sidebar type is set to Auto, the component will be expanded in the desktop and collapsed in the mobile mode regardless of the IsOpen property.
+        /// When the Sidebar type is set to Auto, the component will be expanded in the desktop and collapsed in the mobile mode regardless of the IsOpen property.
         /// Default value is false.
         /// </summary>
         [Parameter]
@@ -75,7 +77,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
         public SidebarPosition Position { get; set; } = SidebarPosition.Left;
 
         /// <summary>
-        /// Boolean value specifying whether to apply overlay options to the main content when the Sidebar is open.
+        /// Boolean value specifying whether to display the overlay the main content when the Sidebar is open.
         /// Default value is false.
         /// </summary>
         [Parameter]
@@ -84,7 +86,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
         /// <summary>
         /// String value specifying the CSS class whose HTML element the Sidbar will be placed within.
         /// This must be a full CSS class specification (e.g., .sidebar__target).
-        /// Default value is string.Empty.
+        /// Default value is string.Empty indicating the Sidebar will associated with the main CSS element.
         /// </summary>
         [Parameter]
         public string Target { get; set; } = string.Empty;
@@ -106,19 +108,19 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
         // ==================================================
 
         /// <summary>
-        /// An <see cref="EventCallback"/> containng the consumer's method invoked when the state(expand/collapse) of the Sidebar is changed.
+        /// An <see cref="EventCallback"/> containing the consumer's method invoked when the state (expand/collapse) of the Sidebar is changed.
         /// </summary>
         [Parameter]
         public EventCallback<ChangeEventArgs> Changed { get; set; }
 
         /// <summary>
-        /// An <see cref="EventCallback"/> containng the consumer's method invoked when the state(expand/collapse) of the Sidebar is changed.
+        /// An <see cref="EventCallback"/> containing the consumer's method invoked when the Sidebar is created.
         /// </summary>
         [Parameter]
         public EventCallback<object> Created { get; set; }
 
         /// <summary>
-        /// An <see cref="EventCallback"/> containng the consumer's method invoked when the state(expand/collapse) of the Sidebar is changed.
+        /// An <see cref="EventCallback"/> containing the consumer's method invoked when the Sidebar is destroyed.
         /// </summary>
         [Parameter]
         public EventCallback<object> Destroyed { get; set; }
@@ -155,14 +157,14 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
 
 
         /// <summary>
-        /// String value containing CSS class definition(s) that will be injected in the root HTML div element of the Tab container.
+        /// String value containing CSS class definition(s) that will be injected in the root HTML div element of the Sidebar container.
         /// Default value is string.Empty.
         /// </summary>
         [Parameter]
         public string CssClass { get; set; } = string.Empty;
 
         /// <summary>
-        /// String value containing CSS ID that will be injected in the root HTML div element of the Tab container.
+        /// String value containing CSS ID that will be injected in the root HTML div element of the Sidebar container.
         /// Default value is string.Empty.
         /// </summary>
         [Parameter]
@@ -179,9 +181,9 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
 
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/length">length</see> data type
-        /// used to specify the size of the Sidebar in dock state.
+        /// used to specify the size of the Sidebar in the docked state (<see cref="IsOpen"/> is false).
         /// The length CSS data type represents a distance value.
-        /// Note that only a single pixel value (e.g., 4px) should be set.
+        /// Note that only a single pixel value (e.g., 4px) should be used.
         /// Default value is 50px.
         /// </summary>
         [Parameter]
@@ -221,10 +223,80 @@ namespace Code420.SfBlazorPlus.BaseComponents.SidebarBase
         public int ZIndex { get; set; } = 0;
 
 
-        // ==================== Tab Header Styles ====================
+        // ==================== Sidebar Styles ====================
 
 
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-width">border-width</see> value 
+        /// used for the border on the opening edge of the Sidebar.
+        /// The border-width shorthand CSS property sets the width of an element's border.
+        /// Default value is 1px.
+        /// </summary>
+        [Parameter]
+        public string SidebarBorderWidth { get; set; } = "1px";
 
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-color">border-color</see> value 
+        /// used for the border on the opening edge of the Sidebar.
+        /// The border-color shorthand CSS property sets the color of an element's border.
+        /// Default value is #DEE2E6.
+        /// </summary>
+        [Parameter]
+        public string SidebarBorderColor { get; set; } = "#DEE2E6";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-style">border-style</see> value 
+        /// used for the border on the opening edge of the Sidebar.
+        /// The border-style shorthand CSS property sets the line style for all four sides of an element's border.
+        /// Default value is solid.
+        /// </summary>
+        [Parameter]
+        public string SidebarBorderStyle { get; set; } = "solid";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">background-color</see> value 
+        /// used for the border on the opening edge of the Sidebar.
+        /// The background-color CSS property sets the background color of an element.
+        /// Default value is #FFF.
+        /// </summary>
+        [Parameter]
+        public string SidebarBackgroundColor { get; set; } = "#FFF";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition">transition</see> value 
+        /// used for the Sidebar when opening.
+        /// The transition CSS property is a shorthand property for transition-property, transition-duration, transition-timing-function, and transition-delay.
+        /// Default value is transform .5s ease.
+        /// </summary>
+        [Parameter]
+        public string SidebarOpenTransition { get; set; } = "transform .5s ease";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition">transition</see> value 
+        /// used for the Sidebar when closing.
+        /// The transition CSS property is a shorthand property for transition-property, transition-duration, transition-timing-function, and transition-delay.
+        /// Default value is width .5s ease, visibility 500ms.
+        /// </summary>
+        [Parameter]
+        public string SidebarCloseTransition { get; set; } = "width .5s ease, visibility 500ms";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">background-color</see> value 
+        /// used for the backdrop (overlay).
+        /// The background-color CSS property sets the background color of an element.
+        /// Default value is rgba(0, 0, 0, 0.5).
+        /// </summary>
+        [Parameter]
+        public string BackdropBackgroundColor { get; set; } = "rgba(0, 0, 0, 0.5)";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/opacity">opacity</see> value 
+        /// used for the backdrop (overlay).
+        /// The opacity CSS property sets the opacity of an element. Opacity is the degree to which content behind an element is hidden.
+        /// Default value is 0.5.
+        /// </summary>
+        [Parameter]
+        public string BackdropOpacity { get; set; } = "0.5";
 
         #endregion
 
