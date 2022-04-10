@@ -56,7 +56,7 @@
                 EnablePersistence=false
                 IsOpen=@isOpen
                 Position=SidebarPosition.Left
-                ShowBackdrop=true
+                ShowBackdrop=false
                 
                 Type=SidebarType.Auto
 
@@ -83,32 +83,11 @@
                 OnClose=@MyOnCloseHandler
                 OnOpen=@MyOnOpenHandler
                 >
+
     <ChildContent>
-        <div class="dock" style="padding:0px 20px">
-            <ul>
-                <li class="sidebar-item" id="toggle" @onclick="Toggle">
-                    <span class="e-icons expand"></span>
-                    <span class="e-text" title="menu">Menu</span>
-                </li>
-                <li class="sidebar-item">
-                    <span class="e-icons home"></span>
-                    <span class="e-text" title="home">Home</span>
-                </li>
-                <li class="sidebar-item">
-                    <span class="e-icons profile"></span>
-                    <span class="e-text" title="profile">Profile</span>
-                </li>
-                <li class="sidebar-item">
-                    <span class="e-icons info"></span>
-                    <span class="e-text" title="info">Info</span>
-                </li>
-                <li class="sidebar-item">
-                    <span class="e-icons settings"></span>
-                    <span class="e-text" title="settings">Settings</span>
-                </li>
-            </ul>
-        </div>
+        <Code420.SfBlazorPlus.Testers.MenuBaseTester.MenuBaseTester />
     </ChildContent>
+
 </SidebarBase>
 
 

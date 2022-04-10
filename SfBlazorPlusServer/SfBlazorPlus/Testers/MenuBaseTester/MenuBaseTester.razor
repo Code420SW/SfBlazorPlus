@@ -1,0 +1,260 @@
+﻿@using Code420.SfBlazorPlus.BaseComponents.MenuBase
+@using Syncfusion.Blazor.Navigations
+@using System.Diagnostics
+
+
+<!--
+    Target=""
+    
+-->
+
+
+<MenuBase   @ref=@MenuObj
+            TValue=@DataList
+            EnableScrolling=false
+            HamburgerMode=false
+            Items=@MenuItems 
+            Orientation=Orientation.Vertical
+            ShowItemOnClick=false
+
+            Title="Menu Title"
+
+            Closed=@MyClosedHandler
+            Created=@MyCreatedHandler
+            ItemSelected=@MyItemSelectedHandler
+            OnClose=@MyOnCloseHandler
+            OnItemRender=@MyOnItemRenderHandler
+            OnOpen=@MyOnOpenHandler
+            Opened=@MyOpenedHandler
+
+            CssClass="my__vertical-menu"
+
+            MenuBorder="none"
+            MenuBorderRadius="4px"
+            MenuFontColor="#007BFF"
+            MenuFontSize="14px"
+            MenuFontWeight="normal"
+            MenuTextAlign="left"
+            MenuBackgroundColor="transparent"
+            MenuMinimumWidth="120px"
+            MenuMargin="0px"
+            MenuPadding="0px"
+
+            MenuItemHeight="30px"
+            MenuItemLineHeight="30px"
+            MenuItemPadding="0px 12px"
+
+            MenuItemSelectedFontColor="darkred"
+
+            MenuIconFontColor="#007BFF"
+            MenuIconFontSize="14px"
+            MenuIconHeight="auto"
+            MenuIconLineHeight="30px"
+            MenuIconWidth="1em"
+            MenuIconTextAlign="center"
+            MenuIconRightMargin="8px"
+            MenuIconVerticalAlign="middle"
+
+            MenuCaretFontColor="#007BFF"
+            MenuCaretFontSize="9px"
+            MenuCaretHeight="auto"
+            MenuCaretLineHeight="30px"
+            MenuCaretWidth="auto"
+            MenuCaretRight="12px"
+            MenuCaretTop="0px"
+            
+            MenuPopupBorder="1px solid rgba(0,0,0,0.15)"
+            MenuPopupBorderRadius="4px"
+            MenuPopupFontColor="#007BFF"
+            MenuPopupFontSize="14px"
+            MenuPopupFontWeight="normal"
+            MenuPopupTextAlign="left"
+            MenuPopupBackgroundColor="#FFF"
+            MenuPopupBoxShadow="none"
+            >
+
+    <MenuFieldSettings  Text=@nameof(DataList.Data)
+                        Children=@nameof(DataList.SubDatas)
+                        IconCss=@nameof(DataList.IconCss)
+                        ItemId=@nameof(DataList.ItemId)
+                        ParentId=@nameof(DataList.ParentId)
+                        Disabled=@nameof(DataList.Disabled)
+                        Hidden=@nameof(DataList.Hidden)
+                        Separator=@nameof(DataList.Separator)
+                        Url=@nameof(DataList.Url)
+                        HtmlAttributes=@nameof(DataList.HtmlAttributes)
+                        >
+    </MenuFieldSettings>
+
+</MenuBase>
+
+@code{
+    MenuBase<DataList> MenuObj;
+
+    public List<DataList> MenuItems = new List<DataList>
+    {       
+        new DataList
+        {
+            Data = "Company",
+            Disabled = false,
+            Hidden = false,
+            HtmlAttributes = new Dictionary<string, object>() 
+            { 
+                { "style", "color: limegreen; font-weight: bold;" },
+                { "class", "menu__company" }
+            },
+            IconCss = "oi oi-aperture",
+            ItemId = "1000",
+            ParentId = null,
+            SubDatas = new List<DataList>
+            {
+                new DataList
+                {
+                    Data= "Overview",
+                    Disabled = false,
+                    Hidden = false,
+                    IconCss = "oi oi-badge",
+                    ItemId = "1101",
+                    ParentId = "1000",
+                    SubDatas = new List<DataList>
+                    {
+                        new DataList{ Data = "Hardware", ItemId = "1201", ParentId = "1101" },
+                        new DataList{ Data = "Software", ItemId = "1202", ParentId = "1101" }
+                    }
+                },
+
+                new DataList
+                {
+                    Data= "Careers",
+                    Disabled = false,
+                    Hidden = false,
+                    IconCss = "oi oi-basket",
+                    ItemId = "1102",
+                    ParentId = "1000"
+                },
+
+                new DataList
+                {
+                    ItemId = "1199",
+                    ParentId = "1000",
+                    Separator = true
+                },
+
+                new DataList
+                { 
+                    Data= "About", 
+                    Disabled = false,
+                    Hidden = false,
+                    IconCss = "oi oi-ban",
+                    ItemId = "1103",
+                    ParentId = "1000"
+                }
+            }
+        },
+
+        new DataList
+        { 
+            Data = "Services", 
+            Disabled = false,
+            Hidden = false,
+            IconCss = "oi oi-book",
+            ItemId = "2000",
+            ParentId = null,
+            SubDatas = new List<DataList>
+            {
+                new DataList{ Data= "Consulting", ParentId = "2000" },
+                new DataList{ Data= "Education", ParentId = "2000" },
+                new DataList{ Data= "Health", ParentId = "2000" }
+            }
+        },
+
+        new DataList
+        { 
+            Data = "Products", 
+            Disabled = false,
+            Hidden = false, 
+            IconCss = "oi oi-bookmark",
+            ItemId = "3000",
+            ParentId = null,
+            SubDatas = new List<DataList>
+            {
+                new DataList{ Data = "Hardware", ParentId = "3000" },
+                new DataList{ Data = "Software", ParentId = "3000" }
+            }
+        },
+
+        new DataList
+        {
+            Data = "Contact Us", 
+            Disabled = false , 
+            Hidden = false,
+            IconCss = "oi oi-bug",
+            ItemId = "4000", 
+            ParentId = null
+        }
+    };
+
+    private void MyClosedHandler(OpenCloseMenuEventArgs<DataList> args)
+    {
+        Debug.WriteLine("MyClosedeHandler method invoked");
+    }
+
+    private void MyCreatedHandler(object args)
+    {
+        Debug.WriteLine("MyCreatedHandler method invoked");
+        //this.MenuObj.Items.Add(
+        //    new DataList {
+        //        Text = "Corporate",
+        //        SubDatas = new List<DataList>
+        //        {
+        //            new DataList { Text = "Leadership"},
+        //            new DataList { Text = "Vision"}
+        //        }
+        //    }
+        //    );
+
+        //var item = this.MenuObj.Items.First(x => x.Text == "Company");
+
+        //this.MenuObj.Items.Remove(item);
+    }
+
+    private void MyItemSelectedHandler(MenuEventArgs<DataList> args)
+    {
+        Debug.WriteLine("MyItemSelectedHandler method invoked");
+    }
+
+    private void MyOnCloseHandler(BeforeOpenCloseMenuEventArgs<DataList> args)
+    {
+        Debug.WriteLine("MyOnCloseHandler method invoked");
+    }
+
+    private void MyOnItemRenderHandler(MenuEventArgs<DataList> args)
+    {
+        Debug.WriteLine("MyOnItemRenderHandler method invoked");
+    }
+
+    private void MyOnOpenHandler(BeforeOpenCloseMenuEventArgs<DataList> args)
+    {
+        Debug.WriteLine("MyOnOpenHandler method invoked");
+    }
+
+    private void MyOpenedHandler(OpenCloseMenuEventArgs<DataList> args)
+    {
+        Debug.WriteLine("MyOpenedHandler method invoked");
+    }
+
+    public class DataList
+    {
+        public string Data { get; set; } = default;
+        public bool Disabled { get; set; } = false;
+        public bool Hidden { get; set; } = false;
+        public Dictionary<string, object> HtmlAttributes { get; set; } = new();
+        public string IconCss { get; set; } = default;
+        public string ItemId { get; set; } = default;
+        public string ParentId { get; set; } = default;
+        public bool Separator { get; set; } = false;
+        public string Url { get; set; } = default;
+        public List<DataList> SubDatas { get; set; } = default;
+    }
+
+}

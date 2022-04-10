@@ -1,0 +1,217 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.MenuBase
+
+@using Syncfusion.Blazor.Navigations
+
+@typeparam TValue
+
+<!--
+    
+-->
+
+<SfMenu     @ref=@menu
+            TValue=@TValue
+            EnableScrolling=@EnableScrolling
+            HamburgerMode=@HamburgerMode
+            Items=@Items
+            Orientation=@Orientation
+            ShowItemOnClick=@ShowItemOnClick
+            Title=@Title
+            
+            CssClass=@CssClass
+            Target=@Target
+            >
+
+    @ChildContent
+
+    <MenuEvents TValue=@TValue
+                Closed=@ClosedHandler
+                Created=@CreatedHandler
+                ItemSelected=@ItemSelectedHandler
+                OnClose=@OnCloseHandler
+                OnItemRender=@OnItemRenderHandler
+                OnOpen=@OnOpenHandler
+                Opened=@OpenedHandler
+                >
+    </MenuEvents>
+
+</SfMenu>
+
+
+<!--
+    From SF Dox
+    .e-menu-container:                                  To customize the menu wrapper
+    .e-menu-container.e-menu-popup                      To customize the menu popup
+    .e-menu-container .e-ul .e-menu-item                To customize the menu items
+    .e-menu-container .e-ul .e-menu-item.e-focused      To customize the menu items on focus
+    .e-menu-container ul .e-menu-item .e-caret::before  To customize the menu items caret icon
+    .e-menu-container .e-ul .e-menu-item.e-selected     To customize selected menu item
+-->
+
+
+<!--
+    To ensure isolation of styling between multiple Menu components on a page, prepend the CssClass
+    to each selector (assuming the CssClass is not String.Empty).
+    Need to use CssClass to directly address.
+
+    This selector applies to the main menu element and its sub-menus.
+    To address just sub-memus, append :is(.e-menu-popup).
+    To limit styling to the main menu element, append :not(.e-menu-popup)
+
+    masterListboxElementCssSelector = .CssClass.e-menu-container
+-->
+
+<style>
+
+    /* ==================== Menu Children ====================*/
+    /* 
+        Set the styling for all Menu container children
+    */
+    @(masterCssSelector) * {
+        box-sizing: border-box;
+    }
+
+
+    /*  ==================================================
+            Styling for Vertical Menus
+        ==================================================
+        */
+
+    /* ==================== Menu Container ====================*/
+    /* 
+        Set the styling for the Menu wrapper
+
+        Bootstrap defaults:
+            border: none;
+            border-radius: 4px;
+    */
+    @(masterCssSelector):not(.e-menu-popup) {
+        border: @MenuBorder;
+        border-radius: @MenuBorderRadius;
+    }
+
+    /* 
+        Set the styling for the Menu
+
+        Bootstrap defaults:
+            font-size: 14px;
+            font-weight: normal;
+            text-align: left;
+            background-color: #fff;
+            color: #007bff;
+            min-width: 120px;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            user-select: none;
+            white-space: nowrap;
+    */
+    @(masterCssSelector):not(.e-menu-popup) .e-menu-parent.e-vertical {
+        color: @MenuFontColor;
+        font-size: @MenuFontSize;
+        font-weight: @MenuFontWeight;
+        text-align: @MenuTextAlign;
+        background-color: @MenuBackgroundColor;
+        min-width: @MenuMinimumWidth;
+        margin: @MenuMargin;
+        padding: @MenuPadding;
+    }
+
+    /* 
+        Set the styling for the Menu Items
+
+        Bootstrap Defaults:
+            cursor: pointer;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 12px;
+    */
+    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-parent.e-vertical .e-menu-item {
+        height: @MenuItemHeight;
+        line-height: @MenuItemLineHeight;
+        padding: @MenuItemPadding;
+    }
+
+    /* 
+        Set the styling for the Menu Items Icons
+
+        Bootstrap defaults:
+            color: #007bff;
+            font-size: 14px;
+            height: auto;
+            line-height: 30px;
+            text-align: center;
+            width: 1em;
+            margin-right: 8px;
+            vertical-align: middle;
+    */
+    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-parent .e-menu-item .e-menu-icon {
+        color: @MenuIconFontColor;
+        font-size: @MenuIconFontSize;
+        height: @MenuIconHeight;
+        line-height: @MenuIconLineHeight;
+        width: @MenuIconWidth;
+        text-align: @MenuIconTextAlign;
+        margin-right: @MenuIconRightMargin;
+        vertical-align: @MenuIconVerticalAlign;
+    }
+
+    /* 
+        Set the styling for the Menu Items Caret
+
+        Bootstrap defaults:
+            color: #007bff;
+            font-size: 9px;
+            height: auto;
+            line-height: 30px;
+            width: auto;
+            position: absolute;
+            right: 12px;
+            top: 0;
+    */
+    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-parent .e-menu-item .e-caret {
+        color: @MenuCaretFontColor;
+        font-size: @MenuCaretFontSize;
+        height: @MenuCaretHeight;
+        line-height: @MenuCaretLineHeight;
+        width: @MenuCaretWidth;
+        right: @MenuCaretRight;
+        top: @MenuCaretTop;
+    }
+
+    /* 
+        Set the styling for the Menu Items when selected
+
+        Bootstrap defaults:
+            color: #0056b3;
+    */
+    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-item.e-selected,
+    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-item.e-focused {
+        color: @MenuItemSelectedFontColor;
+    }
+
+    /*
+        Set styling for popup menu container
+
+        Bootstrap defaults:
+            border: 1px solid rgba(0,0,0,0.15);     
+            border-radius: 4px;             
+            font-size: 14px;
+            font-weight: normal;
+            text-align: left;
+            background-color: #fff;
+            color: #007bff; 
+            margin: 0;
+            padding: 0;
+            box-shadow: none;
+    */
+    @(masterCssSelector):is(.e-menu-popup) ul {
+        color: @MenuPopupFontColor; 
+        font-size: @MenuPopupFontSize;
+        font-weight: @MenuPopupFontWeight;
+        background-color: @MenuPopupBackgroundColor;
+        border: @MenuPopupBorder;     
+        border-radius: @MenuPopupBorderRadius;  
+        box-shadow: @MenuPopupBoxShadow;
+    }
+
+</style>
