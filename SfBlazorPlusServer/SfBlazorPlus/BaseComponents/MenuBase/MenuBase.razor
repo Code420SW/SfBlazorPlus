@@ -71,51 +71,11 @@
     }
 
 
-    /*  ==================================================
-            Styling for Vertical Menus
-        ==================================================
-        */
-
-    /* ==================== Menu Container ====================*/
-    /* 
-        Set the styling for the Menu wrapper
-
-        Bootstrap defaults:
-            border: none;
-            border-radius: 4px;
+    /*  
+    ==================================================
+        Styling for All Menu Elements
+    ==================================================
     */
-    @(masterCssSelector):not(.e-menu-popup) {
-        border: @MenuBorder;
-        border-radius: @MenuBorderRadius;
-    }
-
-    /* 
-        Set the styling for the Menu
-
-        Bootstrap defaults:
-            font-size: 14px;
-            font-weight: normal;
-            text-align: left;
-            background-color: #fff;
-            color: #007bff;
-            min-width: 120px;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            user-select: none;
-            white-space: nowrap;
-    */
-    @(masterCssSelector):not(.e-menu-popup) .e-menu-parent.e-vertical {
-        color: @MenuFontColor;
-        font-size: @MenuFontSize;
-        font-weight: @MenuFontWeight;
-        text-align: @MenuTextAlign;
-        background-color: @MenuBackgroundColor;
-        min-width: @MenuMinimumWidth;
-        margin: @MenuMargin;
-        padding: @MenuPadding;
-    }
-
     /* 
         Set the styling for the Menu Items
 
@@ -125,7 +85,7 @@
             line-height: 30px;
             padding: 0 12px;
     */
-    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-parent.e-vertical .e-menu-item {
+    @(masterCssSelector) .e-menu-parent .e-menu-item:not(.e-separator) {
         height: @MenuItemHeight;
         line-height: @MenuItemLineHeight;
         padding: @MenuItemPadding;
@@ -144,7 +104,7 @@
             margin-right: 8px;
             vertical-align: middle;
     */
-    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-parent .e-menu-item .e-menu-icon {
+    @(masterCssSelector) .e-menu-parent .e-menu-item .e-menu-icon {
         color: @MenuIconFontColor;
         font-size: @MenuIconFontSize;
         height: @MenuIconHeight;
@@ -168,7 +128,7 @@
             right: 12px;
             top: 0;
     */
-    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-parent .e-menu-item .e-caret {
+    @(masterCssSelector) .e-menu-parent .e-menu-item .e-caret {
         color: @MenuCaretFontColor;
         font-size: @MenuCaretFontSize;
         height: @MenuCaretHeight;
@@ -184,25 +144,53 @@
         Bootstrap defaults:
             color: #0056b3;
     */
-    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-item.e-selected,
-    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-vertical .e-menu-item.e-focused {
+    @(masterCssSelector) .e-menu-parent .e-menu-item.e-selected,
+    @(masterCssSelector) .e-menu-parent .e-menu-item.e-focused {
         color: @MenuItemSelectedFontColor;
+        background-color: @MenuItemSelectedBackgroundColor;
     }
 
-    /*
-        Set styling for popup menu container
+    /* 
+        Set the styling for the Menu Separator
 
         Bootstrap defaults:
-            border: 1px solid rgba(0,0,0,0.15);     
-            border-radius: 4px;             
-            font-size: 14px;
-            font-weight: normal;
-            text-align: left;
-            background-color: #fff;
-            color: #007bff; 
-            margin: 0;
-            padding: 0;
-            box-shadow: none;
+            border-bottom-color: #e9ecef;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            height: auto;
+            margin: 6px 0;
+            cursor: auto;
+            line-height: normal;
+            pointer-events: none;
+    */
+    @(masterCssSelector) .e-menu-parent .e-menu-item.e-separator {
+        border: @SeparatorBorder;
+        height: @SeparatorHeight;
+        margin: @SeparatorMargin;
+        line-height: @SeparatorLineHeight;
+    }
+
+
+
+    /*  
+    ==================================================
+        Styling for All Popup Menus
+    ==================================================
+    */
+    /*
+    Set styling for popup menu container
+
+    Bootstrap defaults:
+        border: 1px solid rgba(0,0,0,0.15);     
+        border-radius: 4px;             
+        font-size: 14px;
+        font-weight: normal;
+        text-align: left;
+        background-color: #fff;
+        color: #007bff; 
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
     */
     @(masterCssSelector):is(.e-menu-popup) ul {
         color: @MenuPopupFontColor; 
@@ -212,6 +200,55 @@
         border: @MenuPopupBorder;     
         border-radius: @MenuPopupBorderRadius;  
         box-shadow: @MenuPopupBoxShadow;
+    }
+
+
+    /*  
+    ==================================================
+        Styling for Vertical Menus
+    ==================================================
+    */
+
+    /* ==================== Menu Container ====================*/
+    /* 
+        Set the styling for the Menu wrapper
+
+        Bootstrap defaults:
+            border: none;
+            border-radius: 4px;
+    */
+    @(masterCssSelector):not(.e-menu-popup) {
+        border: @MenuBorder;
+        border-radius: @MenuBorderRadius;
+        width: @MenuWidth;
+    }
+
+    /* 
+        Set the styling for the Menu
+
+        Bootstrap defaults:
+            font-size: 14px;
+            font-weight: normal;
+            text-align: left;
+            background-color: #fff;
+            color: #007bff;
+            min-width: 120px;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            user-select: none;
+            white-space: nowrap;
+    */
+    @(masterCssSelector):not(.e-menu-popup) .e-menu.e-menu-parent.e-vertical {
+        color: @MenuFontColor;
+        font-size: @MenuFontSize;
+        font-weight: @MenuFontWeight;
+        text-align: @MenuTextAlign;
+        background-color: @MenuBackgroundColor;
+        min-width: @MenuMinimumWidth;
+        margin: @MenuMargin;
+        padding: @MenuPadding;
+        width: @MenuWidth;
     }
 
 </style>

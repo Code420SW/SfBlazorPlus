@@ -44,9 +44,10 @@
             MenuItemLineHeight="30px"
             MenuItemPadding="0px 12px"
 
-            MenuItemSelectedFontColor="darkred"
+            MenuItemSelectedFontColor="#FFF"
+            MenuItemSelectedBackgroundColor="#007BFF"
 
-            MenuIconFontColor="#007BFF"
+            MenuIconFontColor="inherit"
             MenuIconFontSize="14px"
             MenuIconHeight="auto"
             MenuIconLineHeight="30px"
@@ -55,13 +56,18 @@
             MenuIconRightMargin="8px"
             MenuIconVerticalAlign="middle"
 
-            MenuCaretFontColor="#007BFF"
+            MenuCaretFontColor="inherit"
             MenuCaretFontSize="9px"
             MenuCaretHeight="auto"
             MenuCaretLineHeight="30px"
             MenuCaretWidth="auto"
             MenuCaretRight="12px"
             MenuCaretTop="0px"
+
+            SeparatorBorder="1px solid #E9ECEF"
+            SeparatorHeight="auto"
+            SeparatorLineHeight="normal"
+            SeparatorMargin="6px 0px"
             
             MenuPopupBorder="1px solid rgba(0,0,0,0.15)"
             MenuPopupBorderRadius="4px"
@@ -98,11 +104,6 @@
             Data = "Company",
             Disabled = false,
             Hidden = false,
-            HtmlAttributes = new Dictionary<string, object>() 
-            { 
-                { "style", "color: limegreen; font-weight: bold;" },
-                { "class", "menu__company" }
-            },
             IconCss = "oi oi-aperture",
             ItemId = "1000",
             ParentId = null,

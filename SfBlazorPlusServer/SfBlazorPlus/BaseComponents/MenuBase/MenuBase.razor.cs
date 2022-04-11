@@ -251,6 +251,15 @@ namespace Code420.SfBlazorPlus.BaseComponents.MenuBase
         public string MenuMinimumWidth { get; set; } = "120px";
 
         /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/width">width</see> value 
+        /// applied to the Menu container.
+        /// The width CSS property sets an element's width.
+        /// Default value is inherit.
+        /// </summary>
+        [Parameter]
+        public string MenuWidth { get; set; } = "inherit";
+
+        /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/margin">margin</see> value 
         /// applied to the Menu container.
         /// The text-align CSS property sets the horizontal alignment of the content inside a block element or table-cell box.
@@ -441,17 +450,66 @@ namespace Code420.SfBlazorPlus.BaseComponents.MenuBase
         public string MenuCaretTop { get; set; } = "0px";
 
 
+        // ==================== Menu Separator Styles ====================
+
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/border">border</see> value 
+        /// used for the Menu Separator.
+        /// The border shorthand CSS property sets an element's border. It sets the values of border-width, border-style, and border-color.
+        /// Default value is 1px solid #E9ECEF.
+        /// </summary>
+        [Parameter]
+        public string SeparatorBorder { get; set; } = "1px solid #E9ECEF";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/height">height</see> value 
+        /// used for the Menu Separator.
+        /// The height CSS property specifies the height of an element. 
+        /// Default value is auto.
+        /// </summary>
+        [Parameter]
+        public string SeparatorHeight { get; set; } = "auto";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/margin">margin</see> value 
+        /// used for the Menu Separator.
+        /// The text-align CSS property sets the horizontal alignment of the content inside a block element or table-cell box.
+        /// Default value is 6px 0px.
+        /// </summary>
+        [Parameter]
+        public string SeparatorMargin { get; set; } = "6px 0px";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height">line-height</see> value 
+        /// used for the Menu Separator.
+        /// The line-height CSS property sets the height of a line box.
+        /// Default value is normal.
+        /// </summary>
+        [Parameter]
+        public string SeparatorLineHeight { get; set; } = "nornal";
+
+
         // ==================== Selected Menu Item Styles ====================
 
 
         /// <summary>
         /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/color">color</see> value 
-        /// applied to the text element of the selected Menu Item.
+        /// applied to the text element of the focused/selected Menu Item.
         /// The color CSS property sets the foreground color value of an element's text and text decorations, and sets the currentcolor value.
-        /// Default value is #0056B3.
+        /// Default value is #FFF.
         /// </summary>
         [Parameter]
-        public string MenuItemSelectedFontColor { get; set; } = "#0056B3";
+        public string MenuItemSelectedFontColor { get; set; } = "#FFF";
+
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">background-color</see> value 
+        /// applied to the text element of the focused/selected Menu Item.
+        /// The background-color CSS property sets the background color of an element.
+        /// Default value is "#007BFF.
+        /// </summary>
+        [Parameter]
+        public string MenuItemSelectedBackgroundColor { get; set; } = "#007BFF";
 
 
         // ==================== Menu Popup Container Styles ====================
