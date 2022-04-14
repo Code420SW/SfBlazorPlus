@@ -1,0 +1,199 @@
+﻿@page "/"
+
+@namespace Code420.SfBlazorPlus.Pages.Orchestrator
+
+<!--
+
+    Overview:
+    The Orchestrator component is the primary application controller. It lives at the root URL
+    and is, therefore, the first page loaded. It is the only URL available in the application.
+
+    MainLayout provides the page div for the application amd establishes a grid on the page div
+    consisting of three row with one column each. The page div geight is set to 100vh meaning it 
+    will fill yje entire page The grid rows are defined as auto, 1fr, auto meaning the top and 
+    bottom rows will be sized based on their contents and the center row will consume the balance 
+    of the space.
+    
+    The Orchestrator component is injected into MainLayout through the @Body element.
+
+    The Orchestrator component populates the grid rows with its header, main and footer HTML elements.
+    These elements are containers for other components. The Orchestrator provides basic CSS styling for
+    the HTML elements which should be used to provide basic styling (e.g., height, background and borders).
+    Note that the child components should provide their own styling.
+
+
+    Implementation Specifics:
+    This implementation populates the header HTML elementwith one or more menu/toolbar applicable to the
+    entire application.
+
+    The footer HTML element is populated with a status bar providing messages to the user. The messaging
+    can be contextual.
+
+    The main HTML element contains the primary content consisting of a SideBarBase containing a MenuBase used 
+    as the primary menuing system. The main element also contains a TabBase through which the various 
+    applications SPAs are displayed
+
+
+    Capabilities:
+    1.  The Orchestrator passes a CascadingValue to all child components with a self-reference. This 
+        reference can be used by the child to subscribe to an Orchestrator event (e.g., ActiveTabChanged).
+
+    2.  The Orchestrator passes callback functions to child components that allow the child to notify
+        the Orchestrator that an event has ocurred (user clicked a menu item).
+
+-->
+
+<header class="page__header">
+    <div class="page__header-filler">
+        <h1>This is the Orchestrator Page</h1>
+    </div>
+</header>
+
+<main class="page__main">
+
+    <p style="padding: 1em;">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ornare massa eget egestas purus viverra accumsan. Luctus accumsan tortor posuere ac ut consequat semper viverra nam. Porttitor massa id neque aliquam vestibulum. Cras adipiscing enim eu turpis egestas pretium aenean pharetra. Eros donec ac odio tempor orci dapibus ultrices in iaculis. Id diam vel quam elementum. Dictum varius duis at consectetur lorem donec massa. Diam vulputate ut pharetra sit amet aliquam id diam. Eget arcu dictum varius duis at consectetur lorem donec massa. Ornare arcu odio ut sem. Arcu dictum varius duis at. Arcu cursus euismod quis viverra nibh. Aenean et tortor at risus viverra adipiscing at in. Facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum. Id leo in vitae turpis massa. Faucibus turpis in eu mi bibendum. Lorem donec massa sapien faucibus et molestie ac.
+    </p>
+    <p style="padding: 1em;">
+    Tristique et egestas quis ipsum suspendisse ultrices gravida dictum fusce. Eget mi proin sed libero enim sed. Ut diam quam nulla porttitor. Eu augue ut lectus arcu. Eu lobortis elementum nibh tellus molestie nunc. At in tellus integer feugiat scelerisque varius. Tortor pretium viverra suspendisse potenti nullam ac. Aliquet nibh praesent tristique magna sit amet purus. Egestas purus viverra accumsan in nisl nisi. A arcu cursus vitae congue mauris rhoncus aenean vel elit.
+    </p>
+    <p style="padding: 1em;">
+    Et malesuada fames ac turpis. Vel pharetra vel turpis nunc eget lorem dolor sed viverra. At varius vel pharetra vel turpis nunc eget lorem dolor. Morbi tristique senectus et netus. Sagittis eu volutpat odio facilisis mauris sit amet massa. Eu turpis egestas pretium aenean pharetra magna ac placerat. Orci eu lobortis elementum nibh tellus molestie nunc non. Auctor eu augue ut lectus arcu bibendum at varius vel. Urna neque viverra justo nec ultrices. Lobortis feugiat vivamus at augue eget arcu dictum varius. Aliquet eget sit amet tellus cras adipiscing enim eu. Quis blandit turpis cursus in. Et odio pellentesque diam volutpat commodo sed egestas egestas fringilla. Enim ut sem viverra aliquet eget. Quis ipsum suspendisse ultrices gravida dictum fusce ut. Nunc consequat interdum varius sit. At auctor urna nunc id cursus metus aliquam eleifend. Faucibus nisl tincidunt eget nullam non nisi est sit amet.
+    </p>
+    <p style="padding: 1em;">
+    Tincidunt id aliquet risus feugiat in. Ultricies integer quis auctor elit. Tempor commodo ullamcorper a lacus vestibulum sed. Turpis egestas pretium aenean pharetra magna ac placerat vestibulum. Diam phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet. Convallis posuere morbi leo urna molestie. Tincidunt vitae semper quis lectus nulla. In metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Eget velit aliquet sagittis id consectetur. In pellentesque massa placerat duis. Aliquam faucibus purus in massa tempor nec. Nibh sit amet commodo nulla facilisi. Volutpat consequat mauris nunc congue nisi vitae. Sollicitudin tempor id eu nisl nunc. Morbi tincidunt ornare massa eget egestas. A pellentesque sit amet porttitor eget. Arcu non sodales neque sodales ut etiam sit amet. Nulla aliquet porttitor lacus luctus accumsan tortor.
+    </p>
+    <p style="padding: 1em;">
+    Sed vulputate odio ut enim blandit volutpat maecenas. Tortor at auctor urna nunc id cursus metus. Convallis aenean et tortor at. Ultricies integer quis auctor elit sed vulputate mi sit amet. Consequat semper viverra nam libero justo laoreet sit amet. Volutpat ac tincidunt vitae semper quis. Odio aenean sed adipiscing diam. Fermentum posuere urna nec tincidunt praesent semper feugiat nibh sed. Vulputate odio ut enim blandit volutpat. Vitae tortor condimentum lacinia quis vel eros. Sem et tortor consequat id porta nibh. Nec tincidunt praesent semper feugiat nibh sed. Scelerisque viverra mauris in aliquam. Id eu nisl nunc mi. Ipsum consequat nisl vel pretium.
+    </p>
+    <p style="padding: 1em;">
+    Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque. Faucibus interdum posuere lorem ipsum dolor sit amet consectetur adipiscing. Vulputate odio ut enim blandit volutpat maecenas. Habitant morbi tristique senectus et netus et malesuada fames ac. Sit amet risus nullam eget. Egestas diam in arcu cursus. Nunc sed blandit libero volutpat sed cras. Tempor commodo ullamcorper a lacus vestibulum sed. Placerat duis ultricies lacus sed turpis tincidunt id. Pellentesque id nibh tortor id aliquet lectus. Quis hendrerit dolor magna eget est lorem ipsum dolor. Sodales ut eu sem integer vitae justo. Tellus cras adipiscing enim eu turpis egestas pretium aenean. Blandit turpis cursus in hac habitasse platea dictumst quisque sagittis. Lobortis feugiat vivamus at augue eget arcu. Aliquet enim tortor at auctor. Elementum eu facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar. Enim diam vulputate ut pharetra sit amet.
+    </p>
+    <p style="padding: 1em;">
+    Volutpat consequat mauris nunc congue nisi vitae suscipit. Risus in hendrerit gravida rutrum. Amet aliquam id diam maecenas ultricies mi. Leo in vitae turpis massa. Pretium viverra suspendisse potenti nullam ac tortor vitae. Est placerat in egestas erat imperdiet. In fermentum et sollicitudin ac orci phasellus. Malesuada nunc vel risus commodo viverra. Felis bibendum ut tristique et egestas quis ipsum suspendisse. Elementum curabitur vitae nunc sed velit dignissim sodales. Consequat interdum varius sit amet mattis vulputate enim nulla. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh sit. Imperdiet nulla malesuada pellentesque elit eget gravida. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Imperdiet proin fermentum leo vel orci porta non pulvinar. Fermentum leo vel orci porta non pulvinar neque laoreet. Nisi porta lorem mollis aliquam.
+    </p>
+    <p style="padding: 1em;">
+    Lacus luctus accumsan tortor posuere ac ut. Diam maecenas ultricies mi eget. Pellentesque habitant morbi tristique senectus et. Vitae sapien pellentesque habitant morbi. Auctor elit sed vulputate mi sit. Quam elementum pulvinar etiam non quam. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Aliquet bibendum enim facilisis gravida neque convallis a. Vitae et leo duis ut. Semper viverra nam libero justo laoreet sit. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Gravida neque convallis a cras semper auctor neque vitae tempus. At lectus urna duis convallis convallis tellus id interdum. Blandit massa enim nec dui nunc mattis. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. Mauris commodo quis imperdiet massa tincidunt nunc pulvinar. Risus viverra adipiscing at in tellus integer. Congue quisque egestas diam in arcu cursus euismod quis. Lorem ipsum dolor sit amet consectetur adipiscing elit ut aliquam.
+    </p>
+    <p style="padding: 1em;">
+    Morbi tincidunt augue interdum velit euismod. Consectetur a erat nam at lectus urna duis convallis convallis. Aliquam faucibus purus in massa tempor nec. Gravida arcu ac tortor dignissim convallis aenean. Ac turpis egestas sed tempus urna et. Et tortor at risus viverra adipiscing. Mauris commodo quis imperdiet massa tincidunt nunc. Enim diam vulputate ut pharetra sit amet. Facilisi etiam dignissim diam quis enim lobortis scelerisque. Diam maecenas ultricies mi eget mauris pharetra et. Ut venenatis tellus in metus vulputate. Nunc sed augue lacus viverra vitae. Laoreet sit amet cursus sit.
+    </p>
+    <p style="padding: 1em;">
+    Donec et odio pellentesque diam volutpat commodo sed. Amet nulla facilisi morbi tempus. Habitasse platea dictumst quisque sagittis purus sit amet volutpat. Risus viverra adipiscing at in tellus integer feugiat scelerisque. Amet volutpat consequat mauris nunc congue nisi vitae suscipit. Elementum sagittis vitae et leo. Nunc lobortis mattis aliquam faucibus purus in massa. Bibendum est ultricies integer quis auctor elit sed vulputate mi. Elementum facilisis leo vel fringilla est. Varius duis at consectetur lorem donec. Vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Diam in arcu cursus euismod quis. Ipsum faucibus vitae aliquet nec ullamcorper sit amet. Vitae aliquet nec ullamcorper sit amet risus. At lectus urna duis convallis convallis tellus id interdum. Turpis egestas sed tempus urna. Augue interdum velit euismod in pellentesque massa placerat duis. Fames ac turpis egestas integer eget aliquet nibh praesent. Vestibulum lorem sed risus ultricies tristique.
+    </p>
+        
+
+</main>
+
+<footer class="page__footer">
+    <div class="page__footer-filler"></div>
+</footer>
+
+
+
+<style>
+        
+    /*
+        Set styling for the header element
+    */
+    .page__header {
+        background-color: rgb(154,126,17);
+        height: 3em;
+        border-bottom: 6px solid rgb(226,88,0);
+    }
+
+    /*
+        Set styling for the main element
+    */
+    main {
+        /*flex: 1;*/
+        background-color: rgb(240,230,212);
+        color: rgb(0, 141, 119);
+        overflow-y: scroll;
+    }
+
+    /*
+        Set styling for the footer element
+    */
+    .page__footer {
+        background-color: rgb(154,126,17);
+        height: 3em;
+        border-top: 6px solid rgb(203,105,0);
+    }
+
+    .top-row {
+        background-color: #f7f7f7;
+        border-bottom: 1px solid #d6d5d5;
+        /*justify-content: flex-end;*/
+        height: 3.5rem;
+        /*display: flex;*/
+        /*align-items: center;*/
+    }
+
+    /*.top-row ::deep a, .top-row .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+    }*/
+
+    /*.top-row a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }*/
+
+
+    /*
+        Adjustment for smaller screen sizes
+    */
+    @@media (max-width: 640.98px) 
+    {
+        .top-row:not(.auth) {
+            display: none;
+        }
+
+        .top-row.auth {
+            /*justify-content: space-between;*/
+        }
+
+        .top-row a, .top-row .btn-link {
+            margin-left: 0;
+        }
+    }
+
+
+    /*
+        Adjustments for larger screen sizes
+    */
+    @@media (min-width: 641px) 
+    {
+        .page {
+            /*flex-direction: row;*/
+        }
+
+        /*.sidebar {
+            width: 250px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }*/
+
+        .page__header {
+            /*position: sticky;*/
+            /*top: 0;*/
+            /*z-index: 1;*/
+        }
+
+        .page__footer {
+            /*position: sticky;*/
+            /*bottom: 0;*/
+            /*z-index: 1;*/
+        }
+
+        .page__header,
+        .page__main,
+        .page_footer {
+            /*padding-left: 2rem !important;*/
+            /*padding-right: 1.5rem !important;*/
+        }
+    }
+
+</style>

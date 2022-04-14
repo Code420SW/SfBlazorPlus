@@ -1,0 +1,454 @@
+﻿@namespace Code420.SfBlazorPlus.BaseComponents.TabBase
+
+@using Syncfusion.Blazor.Navigations
+
+<!--
+-->
+
+<SfTab  @ref=@tab
+        AllowDragAndDrop=@AllowDragAndDrop
+        Animation=@tabAnimationSettings
+        DragArea=@DragArea
+        EnablePersistence=@EnablePersistence
+        HeaderPlacement=@HeaderPlacement
+        LoadOn=@LoadOn
+        OverflowMode=@OverflowMode
+        ReorderActiveTab=@ReorderActiveTab
+        ScrollStep=@ScrollStep
+        SelectedItem=@SelectedItem
+        ShowCloseButton=@ShowCloseButton
+
+        SelectedItemChanged=@OnSelectedItemChangedHandler
+        
+        CssClass=@CssClass
+        ID=@CssId
+        HtmlAttributes=@HtmlAttributes
+        Height=@Height
+        Width=@Width
+        >
+
+    @ChildContent
+
+    <TabEvents  Added=@AddedHandler
+                Adding=@AddingHandler
+                Created=@CreatedHandler
+                Destroyed=@DestroyedHandler
+                Dragged=@DraggedHandler
+                OnDragStart=@OnDragStartHandler
+                Removed=@OnRemovedHandler
+                Removing=@OnRemovingHandler
+                Selected=@OnSelectedHandler
+                Selecting=@OnSelectingHandler
+                >
+    </TabEvents>
+
+</SfTab>
+
+<!--
+    To ensure isolation of styling between multiple tab components on a page, prepend the CssClass
+    to each selector (assuming the CssClass is not String.Empty).
+    Need to use CssClass to directly address.
+
+    masterListboxElementCssSelector = .CssClass.e-tab
+
+-->
+
+<style>
+
+    /* ==================== Tab Container Children ====================*/
+    /* 
+        Set the styling for all Tab container children
+    */
+    @(masterCssSelector) * {
+        box-sizing: border-box;
+        --tab-header-extra-margin: @TabHeaderExtraMargin;
+    }
+
+
+
+    /* ==================== Tab Header & Tab Item Borders ====================*/
+    /*
+        Set the padding on the left/right sides of Top/Bottom Tab Header.
+        Set the padding on the top/bottom sides of Left/Right Tab Header.
+
+        Need to add overfow: hidden for the case when the Tab Header is displayed
+        before the Scroll Buttons are injected. The overflow style is not injected
+        in the element DOM until Scoll Buttons are.
+    */
+    @(masterCssSelector) .e-tab-header:not(.e-vertical) {
+        padding-left: var(--tab-header-extra-margin);
+        padding-right: var(--tab-header-extra-margin);
+        border-radius: @TabHeaderBorderRadius;
+        overflow: hidden;
+    }
+
+    @(masterCssSelector) .e-tab-header:is(.e-vertical) {
+        padding-top: var(--tab-header-extra-margin);
+        padding-bottom: var(--tab-header-extra-margin);
+        border-radius: @TabHeaderBorderRadius;
+        overflow: hidden;
+    }
+
+
+    /*
+        Set the top padding for Top Tab Header
+        Set the bottom padding for Bottom Tab Header
+        Set the left padding for Left Tab Header
+        Set the right padding for Right Tab Header
+    */
+    @(masterCssSelector) .e-tab-header:not(.e-vertical):not(.e-horizontal-bottom) {
+        padding-top: calc( var(--tab-header-extra-margin) / 2 );
+    }
+
+    @(masterCssSelector) .e-tab-header:not(.e-vertical):is(.e-horizontal-bottom) {
+        padding-bottom: calc( var(--tab-header-extra-margin) / 2 );
+    }
+
+    @(masterCssSelector) .e-tab-header.e-vertical-left {
+        padding-left: var(--tab-header-extra-margin);
+    }
+
+    @(masterCssSelector) .e-tab-header.e-vertical-right {
+        padding-right: var(--tab-header-extra-margin);
+    }
+    
+
+    
+    /*
+        Set the styling for the border between the Tab Items and the Tab Content. 
+        This is applied to the full width of the Tab Header. 
+        The Tab Items will change the border style for their individual state.
+
+        This sets the border color and style for all HeaderPosition values.
+        The border width is set below based on e-vertical since the side that receives a width changes.
+
+    */
+    @(masterCssSelector) .e-tab-header::before {
+        border-color: @TabHeaderBorderColor;
+        border-style: @TabHeaderBorderStyle;
+        background-color: @TabHeaderBackgroundColor;
+        border-width: @tabHeaderBorderWidth;
+    }
+
+    /*
+        Adjust the margins for the horizontal ::before element so the edge border
+        and background are pushed left/right so the first/last Tab Item borders are
+        not right on the edges.
+    */
+    @(masterCssSelector) .e-tab-header:not(.e-vertical)::before {
+        margin-left: calc( var(--tab-header-extra-margin) * -1 );
+        margin-right: var(--tab-header-extra-margin);
+    }
+
+    /*
+        Fix for HeaderPosition = Bottom
+        The Bootstrap default prevents the ::before background from showing.
+
+        Bootstrap default: bottom: auto;
+    */
+    @(masterCssSelector) .e-tab-header.e-horizontal-bottom::before {
+        bottom: 0;
+    }
+
+    /*
+        Fix for HeaderPosition = Bottom
+        The Bootstrap default sets to top border that needs to be quashed.
+
+        Bootstrap default: border-top: 1px solid #ddd;
+    */
+    @(masterCssSelector) .e-tab-header.e-horizontal-bottom[style*="overflow: hidden"] .e-toolbar-items {
+        border-bottom: 0;
+        border-top: 0;
+    }
+
+    /*
+        Fix for HeaderPosition = Bottom
+        The Bootstrap default sets to margin so that a stray horizontal line is displayed.
+
+        Bootstrap default: margin-top: -1px;
+    */
+    @(masterCssSelector) .e-tab-header.e-horizontal-bottom .e-hscroll-bar {
+        margin-top: 0;
+    }
+
+    /*
+        Fix for HeaderPosition = Right
+        The Bootstrap default prevents the ::before background from showing
+
+        Bootstrap default: right: auto;
+    */
+    @(masterCssSelector) .e-tab-header.e-vertical-right::before {
+        right: 0;
+    }
+
+
+
+    /*
+        Set the styling for the borders around the active Tab Item
+        Aggregates the border-width, border-style and border-color applied to e-tab-header
+        Adds the appropriate border-radius which is constructed based on HeaderPosition
+
+        Bootstrap defaults:
+            border: 1px solid #dee2e6
+            border-radius: 4px 4px 0 0 (HeaderPosition = Top)
+            border-radius: 0 0 4px 4px; (HeaderPosition = Bottom
+            border-radius: 4px 0 0 4px; (HeaderPosition = Left)
+    */
+    @(masterCssSelector) .e-tab-header .e-toolbar-item.e-active {
+        border: @activeTabBorder;
+        border-radius: @activeTabBorderRadius;
+    }
+
+    /*
+        Set the styling for the edge border for the active Tab Item and is applicable for all HeaderPosition values
+        Overrides the border styling set above by forcing the edge border color to the TabItemActiveBottomBorderColor parameter.
+        The TabHeaderBorderWidth and TabHeaderBorderStyle parameters are maintained.
+
+        Bootstrap defaults: border-bottom: 1px solid #fff
+
+        Selectors:
+            not(.e-verical) & not(.e-horizontal-bottom) for Top
+            not(.e-verical) & is(.e-horizontal-bottom) for Bottom
+            .e-vertical-left for Left
+            .e-vertical-right for Right
+    */
+    @(masterCssSelector) .e-tab-header:not(.e-vertical):not(.e-horizontal-bottom) .e-toolbar-item.e-active {
+        border-bottom: @activeTabBottomBorder;
+    }
+    @(masterCssSelector) .e-tab-header:not(.e-vertical):is(.e-horizontal-bottom) .e-toolbar-item.e-active {
+        border-top: @activeTabBottomBorder;
+    }
+    @(masterCssSelector) .e-tab-header.e-vertical-left .e-toolbar-item.e-active {
+        border-right: @activeTabBottomBorder;
+    }
+    @(masterCssSelector) .e-tab-header.e-vertical-right .e-toolbar-item.e-active {
+        border-left: @activeTabBottomBorder;
+    }
+
+    /*
+        Set the styling for the border of individual Tab Items in the inactive, hovered state.
+        This sets the border width for the three non-edge borders and is applicable to all HeaderPosition values
+
+        The styling for the edge border is overridden to prevent text shift due to change in border size
+
+        Bootstrap defaults:
+            background: transparent;
+            border: 1px solid #e9ecef;
+            border-radius: 4px 4px 0 0;
+
+        Selectors:
+            not(.e-vertical for Top & Bottom (set left and right borders)
+            not(.e-verical) & not(.e-horizontal-bottom) for Top
+            not(.e-verical) & is(.e-horizontal-bottom) for Bottom
+
+            is(.e-vertical) for Left and Right (set top and bottom borders)
+            is(e-vertical-left) for Left 
+            is(e-vertical-right) for Right
+    */
+    @(masterCssSelector) .e-tab-header:not(.e-vertical) .e-toolbar-item:not(.e-active) .e-tab-wrap:hover {
+        border-left: @inactiveTabBorderHoveredBorders;
+        border-right: @inactiveTabBorderHoveredBorders;
+        border-radius: @activeTabBorderRadius;
+    }
+    @(masterCssSelector) .e-tab-header:not(.e-vertical):not(.e-horizontal-bottom) .e-toolbar-item:not(.e-active) .e-tab-wrap:hover {
+        border-top: @inactiveTabBorderHoveredBorders;
+        border-bottom-color: transparent;                   /* Use this to prevent text shift due to change in border size */
+    }
+    @(masterCssSelector) .e-tab-header:not(.e-vertical):is(.e-horizontal-bottom) .e-toolbar-item:not(.e-active) .e-tab-wrap:hover {
+        border-bottom: @inactiveTabBorderHoveredBorders;
+        border-top-color: transparent;                      /* Use this to prevent text shift due to change in border size */
+    }
+
+    @(masterCssSelector) .e-tab-header:is(.e-vertical) .e-toolbar-item:not(.e-active) .e-tab-wrap:hover {
+        border-top: @inactiveTabBorderHoveredBorders;
+        border-bottom: @inactiveTabBorderHoveredBorders;
+        border-radius: @activeTabBorderRadius;
+    }
+    @(masterCssSelector) .e-tab-header:is(.e-vertical-left) .e-toolbar-item:not(.e-active) .e-tab-wrap:hover {
+        border-left: @inactiveTabBorderHoveredBorders;
+        border-right-color: transparent;                    /* Use this to prevent text shift due to change in border size */
+    }
+    @(masterCssSelector) .e-tab-header:is(.e-vertical-right) .e-toolbar-item:not(.e-active) .e-tab-wrap:hover {
+        border-right: @inactiveTabBorderHoveredBorders;
+        border-left-color: transparent;                     /* Use this to prevent text shift due to change in border size */
+    }
+    
+
+
+    /* ==================== Tab Item-to-Tab Item Spacing ====================*/
+    /*
+        Set the styling for the borders around the active Tab Item
+        Aggregates the border-width, border-style and border-color applied to e-tab-header
+
+        Adds the appropriate border-radius which is constructed based on HeaderPosition
+
+        Bootstrap defaults:
+            margin: 0 2px 0 0;  (HeaderPosition = Top/Bottom)
+    */
+    @(masterCssSelector) .e-tab-header .e-toolbar-item:not(.e-separator) {
+        margin: @tabItemMargin;
+    }
+
+    
+    /* ==================== Tab Item Height ====================*/
+    /*
+        Set the height for the Tab Items
+        This requires a couple steps. 
+        The first overrides the Bootstrap min-height (in case the desired height is smaller than the default min-height).
+        The second step is to set the desired height.
+
+        Bootstrap defaults:
+            height: 32px;
+            min-height: 32px;
+    */
+    @(masterCssSelector) .e-tab-header:not(.e-vertical),
+    @(masterCssSelector) .e-tab-header:not(.e-vertical) .e-toolbar-items,
+    @(masterCssSelector) .e-tab-header:not(.e-vertical) .e-scroll-nav,
+    @(masterCssSelector) .e-tab-header .e-toolbar-item:not(.e-separator) {
+      min-height: @TabItemHeight;
+    }
+
+    @(masterCssSelector) .e-tab-header:not(.e-vertical) .e-toolbar-items,
+    @(masterCssSelector) .e-tab-header:not(.e-vertical) .e-scroll-nav,
+    @(masterCssSelector) .e-tab-header .e-toolbar-item:not(.e-separator),
+    @(masterCssSelector) .e-tab-header .e-toolbar-item .e-tab-wrap,
+    @(masterCssSelector) .e-tab-header .e-toolbar-item .e-tab-wrap .e-text-wrap  {
+      height: @TabItemHeight;
+    }
+
+
+
+    /* ==================== Tab Item Font Styling ====================*/
+    /*
+        Set the styling for the inactive Tab Item text.
+
+        Bootstrap defaults:
+            font-size: 14px;
+            font-weight: 400;
+            color: #007BFF;
+    */
+    @(masterCssSelector) .e-tab-header .e-toolbar-item .e-tab-wrap {
+        font-size: @TabTextInactiveFontSize;
+        font-weight: @TabTextInactiveFontWeight;
+        color: @TabTextInactiveFontColor;
+    }
+
+    /*
+        Set the styling for the active Tab Item text
+
+        Bootstrap defaults:
+            font-size: 14px;
+            font-weight: 400;
+            color: #777;
+    */
+    @(masterCssSelector) .e-tab-header .e-toolbar-item.e-active .e-tab-wrap .e-tab-text {
+        font-size: @TabTextActiveFontSize;
+        font-weight: @TabTextActiveFontWeight;
+        color: @TabTextActiveFontColor;
+    }
+
+    /*
+        Set the styling for the inactive Tab Item text when hovered.
+
+        Bootstrap defaults:
+            color: #0056b3;
+            font-size: 14px;
+            font-weight: 400;
+    */
+    @(masterCssSelector) .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-text {
+        font-size: @TabTextInactiveHoveredFontSize;
+        font-weight: @TabTextInactiveHoveredFontWeight;
+        color: @TabTextInactiveHoveredFontColor;
+    }
+
+    /*
+        Set the styling for the active Tab Item text when hovered
+
+        Bootstrap defaults:
+            font-size: 14px;
+            font-weight: 400;
+            color: #495057;
+    */
+    @(masterCssSelector) .e-tab-header .e-toolbar-item.e-active .e-tab-wrap:hover .e-tab-text {
+        font-size: @TabTextActiveHoveredFontSize;
+        font-weight: @TabTextActiveHoveredFontWeight;
+        color: @TabTextActiveHoveredFontColor;
+    }
+
+
+
+    /* ==================== Scroll Bar Button Styling ====================*/
+
+    /*
+        Set the styling for the scroll bar buttons
+
+        Bootstrap defaults: color: #212529;                 color of icon
+                            background      (not defined)   can set color for non-hovered state
+                            border-radius   (not defined)   can set
+                            font-size: 10px;                ignore?
+                            height: 32px;                   height of button
+                            line-height: 32px;              same as height of button, must override
+                            width: 32px;                    width of button
+    */
+    @(masterCssSelector) .e-tab-header .e-toolbar-items.e-hscroll .e-scroll-nav {
+        background: @ScrollButtonNormalBackground;
+        border-radius: @ScrollButtonBorderRadius;
+        width: @TabItemHeight;
+    }
+
+    @(masterCssSelector) .e-tab-header .e-scroll-nav .e-nav-arrow {
+        height: @TabItemHeight;
+        line-height: @TabItemHeight;
+        width: @TabItemHeight;
+    }
+
+    @(masterCssSelector) .e-tab-header .e-hscroll:not(.e-scroll-device) .e-scroll-nav .e-nav-arrow {
+        color: @ScrollButtonNormalFontColor;
+    }
+
+
+
+    /*
+        Fix for HeaderPosition = Top/Bottom
+        The Bootstrap default sets the padding for the Scroll Buttons to 32px which needs to be overridden.
+
+        Bootstrap default: padding: 0 32px;
+    */
+    @(masterCssSelector) .e-hscroll:not(.e-scroll-device) {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-right: @TabItemHeight;
+        padding-left: @TabItemHeight;
+    }
+
+
+
+    /*
+        Set the styling for the scroll bar button's icon
+
+        Bootstrap defaults: 
+            font-size: 10px;        set size of icon
+            line-height: 32px;      set to the height of the button to vertically center the icon
+    */
+    @(masterCssSelector) .e-tab-header .e-scroll-nav .e-nav-left-arrow::before, 
+    @(masterCssSelector) .e-tab-header .e-scroll-nav .e-nav-right-arrow::before {
+        font-size: @ScrollButtonFontSize;
+        line-height: @TabItemHeight;
+    }
+
+
+
+    /*
+        Set the styling for the scroll bar button's icon when hovered
+
+        Bootstrap defaults: 
+            background: #5a6268;
+            color: #fff;
+    */
+    @(masterCssSelector) .e-tab-header .e-scroll-nav .e-nav-arrow:hover, 
+    @(masterCssSelector) .e-tab-header .e-hscroll:not(.e-scroll-device) .e-scroll-nav .e-nav-arrow:hover {
+        background: @ScrollButtonHoveredBackground;
+        color: @ScrollButtonHoveredFontColor;
+    }
+    
+</style>

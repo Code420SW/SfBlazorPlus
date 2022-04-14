@@ -3,17 +3,29 @@
 <PageTitle>SfBlazorPlus</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    @Body
 </div>
+
+<style>
+
+    /*
+        Set styling for the page container
+    */
+    .page {
+        position: relative;
+        /*display: flex;*/
+        /*flex-direction: column;*/
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+        column-gap: 0px;
+        row-gap: 0px;
+
+        height: 100vh;
+        font-size: 14px;
+        color: #FFF;
+    }
+
+</style>
+
