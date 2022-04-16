@@ -587,6 +587,16 @@ namespace Code420.SfBlazorPlus.BaseComponents.MenuBase
         [Parameter]
         public string MenuPopupBoxShadow { get; set; } = "none";
 
+        /// <summary>
+        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left">margin-left</see> value 
+        /// applied to the Menu popup container.
+        /// The margin-left CSS property sets the margin area on the left side of an element.
+        /// This will shift the left side of the popup menu. Use a negative value to move the popup closer to the menu.
+        /// Default value is 0px.
+        /// </summary>
+        [Parameter]
+        public string MenuPopupLeftMargin { get; set; } = "0px";
+
         #endregion
 
         #endregion

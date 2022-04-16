@@ -1,0 +1,100 @@
+﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
+
+@using Code420.SfBlazorPlus.BaseComponents.MenuBase
+@using Code420.SfBlazorPlus.Pages.Orchestrator
+@using Code420.SfBlazorPlus.Code.Models.Menus
+@using Syncfusion.Blazor.Navigations
+@using System.Diagnostics
+
+
+<!--
+    
+    
+-->
+
+
+<MenuBase   @ref=@menubase
+            TValue=@SidebarMenu
+            EnableScrolling=false
+            HamburgerMode=false
+            Items=@OrchestratorRef.GetSidebarMenu() 
+            Orientation=Orientation.Vertical
+            ShowItemOnClick=false
+            Target=".page__main-sidebar"
+            Title="Menu Title"
+
+            Closed=@MyClosedHandler
+            Created=@MyCreatedHandler
+            ItemSelected=@MyItemSelectedHandler
+            OnClose=@MyOnCloseHandler
+            OnItemRender=@MyOnItemRenderHandler
+            OnOpen=@MyOnOpenHandler
+            Opened=@MyOpenedHandler
+
+            CssClass="page__main-sidebar-menu"
+
+            MenuBorder="none"
+            MenuBorderRadius="4px"
+            MenuFontColor="#007BFF"
+            MenuFontSize="14px"
+            MenuFontWeight="normal"
+            MenuTextAlign="left"
+            MenuBackgroundColor="transparent"
+            MenuMinimumWidth="120px"
+            MenuMargin="0px"
+            MenuPadding="0px"
+
+            MenuItemHeight="30px"
+            MenuItemLineHeight="30px"
+            MenuItemPadding="0px 12px"
+
+            MenuItemSelectedFontColor="#FFF"
+            MenuItemSelectedBackgroundColor="#007BFF"
+
+            MenuIconFontColor="inherit"
+            MenuIconFontSize="14px"
+            MenuIconHeight="auto"
+            MenuIconLineHeight="30px"
+            MenuIconWidth="1em"
+            MenuIconTextAlign="center"
+            MenuIconRightMargin="8px"
+            MenuIconVerticalAlign="middle"
+
+            MenuCaretFontColor="inherit"
+            MenuCaretFontSize="9px"
+            MenuCaretHeight="auto"
+            MenuCaretLineHeight="30px"
+            MenuCaretWidth="auto"
+            MenuCaretRight="12px"
+            MenuCaretTop="0px"
+
+            SeparatorBorder="1px solid #E9ECEF"
+            SeparatorHeight="auto"
+            SeparatorLineHeight="normal"
+            SeparatorMargin="6px 0px"
+            
+            MenuPopupBorder="1px solid rgba(0,0,0,0.15)"
+            MenuPopupBorderRadius="4px"
+            MenuPopupFontColor="#007BFF"
+            MenuPopupFontSize="14px"
+            MenuPopupFontWeight="normal"
+            MenuPopupTextAlign="left"
+            MenuPopupBackgroundColor="#FFF"
+            MenuPopupBoxShadow="none"
+            MenuPopupLeftMargin="-4px"
+            >
+
+    <MenuFieldSettings  Text=@nameof(SidebarMenu.Data)
+                        Children=@nameof(SidebarMenu.SubMenu)
+                        IconCss=@nameof(SidebarMenu.IconCss)
+                        ItemId=@nameof(SidebarMenu.ItemId)
+                        ParentId=@nameof(SidebarMenu.ParentId)
+                        Disabled=@nameof(SidebarMenu.Disabled)
+                        Hidden=@nameof(SidebarMenu.Hidden)
+                        Separator=@nameof(SidebarMenu.Separator)
+                        Url=@nameof(SidebarMenu.Url)
+                        HtmlAttributes=@nameof(SidebarMenu.HtmlAttributes)
+                        >
+    </MenuFieldSettings>
+
+</MenuBase>

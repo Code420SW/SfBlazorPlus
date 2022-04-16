@@ -1,10 +1,14 @@
-﻿using Code420.SfBlazorPlus.Code.Models.Menus;
-using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar;
+﻿using Code420.SfBlazorPlus.BaseComponents.SidebarBase;
+using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu;
+using Code420.SfBlazorPlus.Pages.Orchestrator;
 using Microsoft.AspNetCore.Components;
+using System.Diagnostics;
+using ChangeEventArgs = Syncfusion.Blazor.Navigations.ChangeEventArgs;
+using EventArgs = Syncfusion.Blazor.Navigations.EventArgs;
 
-namespace Code420.SfBlazorPlus.Pages.Orchestrator
+namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
 {
-    public partial class Orchestrator : ComponentBase
+    public partial class OrchestratorSidebar : ComponentBase
     {
 
         #region Component Parameters
@@ -15,7 +19,12 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         // Base Parameters
         // ==================================================
 
-        
+        /// <summary>
+        /// Contains the reference to the <see cref="Orchestrator"/> parent.
+        /// Used to subscribe to event handlers provided by the parent.
+        /// </summary>
+        [Parameter] 
+        public Orchestrator OrchestratorRef { get; set; }
 
         #endregion
 
@@ -49,6 +58,36 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         // Methods used as Callback Events from the underlying component(s)
         // ==================================================
 
+        public async Task MyChangedHandler(ChangeEventArgs args)
+        {
+            Debug.WriteLine("MyChangedHandler method invoked.");
+        }
+
+        private async Task MyCreatedHandler(object args)
+        {
+            Debug.WriteLine("MyCreatedHandler method invoked.");
+        }
+
+        private async Task MyDestroyedHandler(object args)
+        {
+            Debug.WriteLine("MyDestroyedHandler method invoked.");
+        }
+
+        private async Task MyIsOpenChangedHandler(bool state)
+        {
+            Debug.WriteLine("MyIsOpenChangedHandler method invoked.");
+            isOpen = state;
+        }
+
+        private async Task MyOnCloseHandler(EventArgs args)
+        {
+            Debug.WriteLine("MyOnCloseHandler method invoked.");
+        }
+
+        private async Task MyOnOpenHandler(EventArgs args)
+        {
+            Debug.WriteLine("MyOnOpenHandler method invoked.");
+        }
 
         #endregion
 
@@ -60,9 +99,11 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         // Instance variables
         // ==================================================
 
-        private OrchestratorSidebar sidebar;                        // Reference to the Sidebar component
+        private SidebarBase sidebarbase;                                                        // Reference to the SidebarBase component
+        private OrchestratorMenu.OrchestratorMenu menu;                                         // Reference to the OrchestratorMenu component
 
-        private List<SidebarMenu> sidebarMenuItems;                 // Contains the menu its displayed in the Sidebar
+        private bool isOpen = true;                                                             // Indicates if the Sidebar is opened/closed
+        private Dictionary<string, object> myHtmlAttributes = new();       // Discionary passed to SidebarBase
 
         #endregion
 
@@ -113,9 +154,6 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         {
             await base.OnInitializedAsync();
 
-            // Initialize the Sidebar menu items
-            InitializeSidebarMenu();
-
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -155,124 +193,19 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         // Public Methods providing access to the underlying component to the consumer
         // ==================================================
 
-        public void TabChanged()
-        {
-        }
-
         /// <summary>
-        /// Returns the menu items displayed in the sidebar menu.
+        /// Opens/Closes the sidebar.
         /// </summary>
-        /// <returns><see cref="List{T}"/> where T is <see cref="SidebarMenu"/> containing the menu items.</returns>
-        public List<SidebarMenu> GetSidebarMenu() => sidebarMenuItems;
+        public void ToggleSidebar()
+        {
+            isOpen = !isOpen;
+        }
 
         #endregion
 
 
 
         #region Private Methods for Internal Use Only
-
-        // Build the list of menu items displayed in the Sidebar.
-        private void InitializeSidebarMenu()
-        {
-            sidebarMenuItems = new List<SidebarMenu>()
-            {
-                new SidebarMenu
-                {
-                    Data = "Company",
-                    Disabled = false,
-                    Hidden = false,
-                    IconCss = "oi oi-aperture",
-                    ItemId = "1000",
-                    ParentId = null,
-                    SubMenu = new List<SidebarMenu>
-                    {
-                        new SidebarMenu
-                        {
-                            Data= "Overview",
-                            Disabled = false,
-                            Hidden = false,
-                            IconCss = "oi oi-badge",
-                            ItemId = "1101",
-                            ParentId = "1000",
-                            SubMenu = new List<SidebarMenu>
-                            {
-                                new SidebarMenu{ Data = "Hardware", ItemId = "1201", ParentId = "1101" },
-                                new SidebarMenu{ Data = "Software", ItemId = "1202", ParentId = "1101" }
-                            }
-                        },
-
-                        new SidebarMenu
-                        {
-                            Data= "Careers",
-                            Disabled = false,
-                            Hidden = false,
-                            IconCss = "oi oi-basket",
-                            ItemId = "1102",
-                            ParentId = "1000"
-                        },
-
-                        new SidebarMenu
-                        {
-                            ItemId = "1199",
-                            ParentId = "1000",
-                            Separator = true
-                        },
-
-                        new SidebarMenu
-                        {
-                            Data= "About",
-                            Disabled = false,
-                            Hidden = false,
-                            IconCss = "oi oi-ban",
-                            ItemId = "1103",
-                            ParentId = "1000"
-                        }
-                    }
-                },
-
-                new SidebarMenu
-                {
-                    Data = "Services",
-                    Disabled = false,
-                    Hidden = false,
-                    IconCss = "oi oi-book",
-                    ItemId = "2000",
-                    ParentId = null,
-                    SubMenu = new List<SidebarMenu>
-                    {
-                        new SidebarMenu{ Data= "Consulting", ParentId = "2000" },
-                        new SidebarMenu{ Data= "Education", ParentId = "2000" },
-                        new SidebarMenu{ Data= "Health", ParentId = "2000" }
-                    }
-                },
-
-                new SidebarMenu
-                {
-                    Data = "Products",
-                    Disabled = false,
-                    Hidden = false,
-                    IconCss = "oi oi-bookmark",
-                    ItemId = "3000",
-                    ParentId = null,
-                    SubMenu = new List<SidebarMenu>
-                    {
-                        new SidebarMenu{ Data = "Hardware", ParentId = "3000" },
-                        new SidebarMenu{ Data = "Software", ParentId = "3000" }
-                    }
-                },
-
-                new SidebarMenu
-                {
-                    Data = "Contact Us",
-                    Disabled = false ,
-                    Hidden = false,
-                    IconCss = "oi oi-bug",
-                    ItemId = "4000",
-                    ParentId = null
-                }
-            };
-        }
-
         #endregion
 
     }
