@@ -3,14 +3,28 @@
 @using Syncfusion.Blazor.Navigations
 
 <!--
--->
+    Breaking the DRY rules here...
 
-<SfTab  @ref=@tab
+    SfTab allows TabItems to be defined in the Items parameter
+    or through ChildContent and, if the Items parameter is used
+    below it will take precidence over ChildContent. If the 
+    TabItems parameter is not defined (is null), this will result
+    in no Tabs being defined.
+
+    Need to duplicate the deployment of SfTab below to handle this
+    situation. The first deployment includes the Items=@TabItems line
+    where as the second does not.
+
+-->
+@if (TabItems is not null)
+{
+    <SfTab  @ref=@tab
         AllowDragAndDrop=@AllowDragAndDrop
         Animation=@tabAnimationSettings
         DragArea=@DragArea
         EnablePersistence=@EnablePersistence
         HeaderPlacement=@HeaderPlacement
+        Items=@TabItems
         LoadOn=@LoadOn
         OverflowMode=@OverflowMode
         ReorderActiveTab=@ReorderActiveTab
@@ -19,7 +33,7 @@
         ShowCloseButton=@ShowCloseButton
 
         SelectedItemChanged=@OnSelectedItemChangedHandler
-        
+
         CssClass=@CssClass
         ID=@CssId
         HtmlAttributes=@HtmlAttributes
@@ -27,23 +41,64 @@
         Width=@Width
         >
 
-    @ChildContent
+        @ChildContent
 
-    <TabEvents  Added=@AddedHandler
-                Adding=@AddingHandler
-                Created=@CreatedHandler
-                Destroyed=@DestroyedHandler
-                Dragged=@DraggedHandler
-                OnDragStart=@OnDragStartHandler
-                Removed=@OnRemovedHandler
-                Removing=@OnRemovingHandler
-                Selected=@OnSelectedHandler
-                Selecting=@OnSelectingHandler
-                >
-    </TabEvents>
+        <TabEvents  Added=@AddedHandler
+                    Adding=@AddingHandler
+                    Created=@CreatedHandler
+                    Destroyed=@DestroyedHandler
+                    Dragged=@DraggedHandler
+                    OnDragStart=@OnDragStartHandler
+                    Removed=@OnRemovedHandler
+                    Removing=@OnRemovingHandler
+                    Selected=@OnSelectedHandler
+                    Selecting=@OnSelectingHandler
+                    >
+        </TabEvents>
 
-</SfTab>
+    </SfTab>
+}
+else
+{
+    <SfTab  @ref=@tab
+            AllowDragAndDrop=@AllowDragAndDrop
+            Animation=@tabAnimationSettings
+            DragArea=@DragArea
+            EnablePersistence=@EnablePersistence
+            HeaderPlacement=@HeaderPlacement
+            LoadOn=@LoadOn
+            OverflowMode=@OverflowMode
+            ReorderActiveTab=@ReorderActiveTab
+            ScrollStep=@ScrollStep
+            SelectedItem=@SelectedItem
+            ShowCloseButton=@ShowCloseButton
 
+            SelectedItemChanged=@OnSelectedItemChangedHandler
+        
+            CssClass=@CssClass
+            ID=@CssId
+            HtmlAttributes=@HtmlAttributes
+            Height=@Height
+            Width=@Width
+            >
+
+        @ChildContent
+
+        <TabEvents  Added=@AddedHandler
+                    Adding=@AddingHandler
+                    Created=@CreatedHandler
+                    Destroyed=@DestroyedHandler
+                    Dragged=@DraggedHandler
+                    OnDragStart=@OnDragStartHandler
+                    Removed=@OnRemovedHandler
+                    Removing=@OnRemovingHandler
+                    Selected=@OnSelectedHandler
+                    Selecting=@OnSelectingHandler
+                    >
+        </TabEvents>
+
+    </SfTab>
+}
 <!--
     To ensure isolation of styling between multiple tab components on a page, prepend the CssClass
     to each selector (assuming the CssClass is not String.Empty).

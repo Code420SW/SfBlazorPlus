@@ -168,7 +168,12 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         /// <summary>
         /// Toggles the open/close state of the Sidebar
         /// </summary>
-        public async Task ToggleSidebarAsync() => await sidebar.ToggleSidebarAsync();
+        public async Task ToggleSidebarAsync()
+        {
+            await sidebar.ToggleSidebarAsync();
+            //await tabmanager.RefreshAsync();
+            //await InvokeAsync(StateHasChanged);
+        }
 
         /// <summary>
         /// Returns the menu items displayed in the sidebar menu.

@@ -137,6 +137,7 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         private TabBase tabbase;
         private int selectedItem = 0;
         RenderFragment renderFragment;
+        List<TabItem> tabItem;
 
         #endregion
 
@@ -187,7 +188,96 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         {
             await base.OnInitializedAsync();
 
-            
+            //
+            Type? myComponent1 = ResolveComponent("DummyTab");
+            //string? myComponent2 = typeof(DummyTab).AssemblyQualifiedName;
+
+            if (myComponent1 is not null) renderFragment = RenderComponent(myComponent1);
+
+            //
+            tabItem = new()
+            {
+                new TabItem
+                {
+                    CssClass="tab_dummy-tab-2",
+                    ContentTemplate = renderFragment,
+                    Disabled=false,
+                    Header = new TabHeader() 
+                    { 
+                        IconCss="",
+                        IconPosition="left",
+                        Text = "Dummy Tab2" 
+                    },
+                    Visible=true
+                },
+                new TabItem
+                {
+                    CssClass = "tab_dummy-tab-3",
+                    ContentTemplate = renderFragment,
+                    Disabled = false,
+                    Header = new TabHeader()
+                    {
+                        IconCss = "",
+                        IconPosition = "left",
+                        Text = "Dummy Tab3"
+                    },
+                    Visible = true
+                },
+                new TabItem
+                {
+                    CssClass = "tab_dummy-tab-4",
+                    ContentTemplate = renderFragment,
+                    Disabled = false,
+                    Header = new TabHeader()
+                    {
+                        IconCss = "",
+                        IconPosition = "left",
+                        Text = "Dummy Tab4"
+                    },
+                    Visible = true
+                },
+                new TabItem
+                {
+                    CssClass = "tab_dummy-tab-5",
+                    ContentTemplate = renderFragment,
+                    Disabled = false,
+                    Header = new TabHeader()
+                    {
+                        IconCss = "",
+                        IconPosition = "left",
+                        Text = "Dummy Tab5"
+                    },
+                    Visible = true
+                },
+                new TabItem
+                {
+                    CssClass = "tab_dummy-tab-6",
+                    ContentTemplate = renderFragment,
+                    Disabled = false,
+                    Header = new TabHeader()
+                    {
+                        IconCss = "",
+                        IconPosition = "left",
+                        Text = "Dummy Tab6"
+                    },
+                    Visible = true
+                },
+                new TabItem
+                {
+                    CssClass = "tab_dummy-tab-7",
+                    ContentTemplate = renderFragment,
+                    Disabled = false,
+                    Header = new TabHeader()
+                    {
+                        IconCss = "",
+                        IconPosition = "left",
+                        Text = "Dummy Tab7"
+                    },
+                    Visible = true
+                }
+            };
+
+            //await AddTabAsync(tabItem, 1);
 
         }
 
@@ -217,26 +307,7 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
-            {
-                //
-                Type? myComponent1 = ResolveComponent("DummyTab");
-                string? myComponent2 = typeof(DummyTab).AssemblyQualifiedName;
 
-                if (myComponent1 is not null) renderFragment = RenderComponent(myComponent1);
-
-                //
-                List<TabItem> tabItem = new()
-                {
-                    new TabItem
-                    {
-                        Header = new TabHeader() { Text = "Dummy Tab2" },
-                        ContentTemplate = renderFragment
-                    }
-                };
-
-                await AddTabAsync(tabItem, 1);
-            };
         }
         #endregion
 

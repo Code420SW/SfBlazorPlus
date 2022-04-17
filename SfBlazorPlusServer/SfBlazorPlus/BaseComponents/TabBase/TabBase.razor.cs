@@ -81,12 +81,8 @@ namespace Code420.SfBlazorPlus.BaseComponents.TabBase
         /// <summary>
         /// A read-only <see cref="List{T}"/> where T is a <see cref="TabItem"/> containing a list of items used to configure the Tabs component.
         /// </summary>
-        public List<TabItem> TabItems
-        {
-            get => this.tab.Items;
-
-            private set { }
-        }
+        [Parameter]
+        public List<TabItem> TabItems { get; set; }
 
         /// <summary>
         /// A <see cref="ContentLoad"/> object specifying the loading modes for Tab contents.
