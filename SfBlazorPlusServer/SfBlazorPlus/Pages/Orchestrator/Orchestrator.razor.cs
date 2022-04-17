@@ -1,5 +1,7 @@
 ﻿using Code420.SfBlazorPlus.Code.Models.Menus;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar;
+using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton;
+using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger;
 using Microsoft.AspNetCore.Components;
 
 namespace Code420.SfBlazorPlus.Pages.Orchestrator
@@ -61,8 +63,12 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         // ==================================================
 
         private OrchestratorSidebar sidebar;                        // Reference to the Sidebar component
+        private OrchestratorSidebarButton buttonSidebarToggle;      // Reference to the Sidebar toggle button
+        private OrchestratorTabManager tabmanager;
 
         private List<SidebarMenu> sidebarMenuItems;                 // Contains the menu its displayed in the Sidebar
+
+        private bool initialSidebarIsOpen = true;                   // The initial state of the Sidebar IsOpen parameter
 
         #endregion
 
@@ -160,10 +166,21 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         }
 
         /// <summary>
+        /// Toggles the open/close state of the Sidebar
+        /// </summary>
+        public async Task ToggleSidebarAsync() => await sidebar.ToggleSidebarAsync();
+
+        /// <summary>
         /// Returns the menu items displayed in the sidebar menu.
         /// </summary>
         /// <returns><see cref="List{T}"/> where T is <see cref="SidebarMenu"/> containing the menu items.</returns>
         public List<SidebarMenu> GetSidebarMenu() => sidebarMenuItems;
+
+        /// <summary>
+        /// Retrieves the current value of the Sidebar IsOpen parameter.
+        /// </summary>
+        /// <returns>Boolean value indicating if the Sidebar is open.</returns>
+        public bool IsSidebarOpen() => (sidebar is not null) ? sidebar.GetSidebarState() : initialSidebarIsOpen;
 
         #endregion
 

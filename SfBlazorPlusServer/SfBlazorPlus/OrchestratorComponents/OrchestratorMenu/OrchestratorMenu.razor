@@ -31,7 +31,7 @@
             OnOpen=@MyOnOpenHandler
             Opened=@MyOpenedHandler
 
-            CssClass="page__main-sidebar-menu"
+            CssClass=@menuCssClass
 
             MenuBorder="none"
             MenuBorderRadius="4px"
@@ -98,3 +98,31 @@
     </MenuFieldSettings>
 
 </MenuBase>
+
+<style>
+    /*
+        Set styling for the Menu when the Sidebar is in docked (closed) state.
+    */
+    @(masterCssSelector) ul .e-menu-item {
+        width: @DockedMenuWidth;
+        line-height: 1.5;
+    }
+
+    /*
+        Set styling for Menu Icons when the Sidebar is in the docked (closed) state.
+    */
+    @(masterCssSelector) ul .e-menu-item .e-menu-icon {
+        font-size: @DockedIconFontSize;
+        padding-left: 3px;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    @(masterCssSelector) ul .e-menu-item .e-caret {
+        display: none;
+    }
+    @(masterCssSelector) ul.e-menu.e-menu-parent.e-vertical {
+        font-size: 0px;
+    }
+
+</style>

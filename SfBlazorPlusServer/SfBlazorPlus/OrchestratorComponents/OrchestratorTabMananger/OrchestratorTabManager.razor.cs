@@ -1,13 +1,13 @@
-﻿using Code420.SfBlazorPlus.Pages.Orchestrator;
+﻿using Microsoft.AspNetCore.Components;
+using Code420.SfBlazorPlus.BaseComponents.TabBase;
 using Syncfusion.Blazor.Navigations;
-using Microsoft.AspNetCore.Components;
 using System.Diagnostics;
-using Code420.SfBlazorPlus.BaseComponents.MenuBase;
-using Code420.SfBlazorPlus.Code.Models.Menus;
+using Code420.SfBlazorPlus.Pages.Orchestrator;
+using Syncfusion.Blazor;
 
-namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
+namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 {
-    public partial class OrchestratorMenu : ComponentBase
+    public partial class OrchestratorTabManager : ComponentBase
     {
 
         #region Component Parameters
@@ -24,33 +24,6 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         /// </summary>
         [Parameter]
         public Orchestrator OrchestratorRef { get; set; }
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">font-size</see> value 
-        /// used for the menu icons when the Sidebar is in the docked (closed) state.
-        /// The font-size CSS property sets the size of the font.
-        /// Default value is 28px.
-        /// </summary>
-        [Parameter]
-        public string DockedIconFontSize { get; set; } = "28px";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/width">width</see> value 
-        /// used for the menu when the Sidebar is in the docked (closed) state.
-        /// The width CSS property sets an element's width.
-        /// This parameter is needed so that the popup sub-menus are displated next to their menu item.
-        /// Default value is 50px.
-        /// </summary>
-        [Parameter]
-        public string DockedMenuWidth { get; set; } = "50px";
-
-        /// <summary>
-        /// String value containing CSS class  of the Sidebar container.
-        /// Used to build the master CSS selector needed to handle menu customizations.
-        /// Default value is string.Empty.
-        /// </summary>
-        [Parameter]
-        public string SidebarCssClass { get; set; } = string.Empty;
 
         #endregion
 
@@ -84,40 +57,70 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         // Methods used as Callback Events from the underlying component(s)
         // ==================================================
 
-        private void MyClosedHandler(OpenCloseMenuEventArgs<SidebarMenu> args)
+        private void MyAddedHandler(AddEventArgs args)
         {
-            Debug.WriteLine("MyClosedeHandler method invoked");
+            Debug.WriteLine("MyAddedHandler method invoked.");
+        }
+
+        private void MyAddingHandler(AddEventArgs args)
+        {
+            Debug.WriteLine("MyAddingHandler method invoked.");
         }
 
         private void MyCreatedHandler(object args)
         {
-            Debug.WriteLine("MyCreatedHandler method invoked");
+            Debug.WriteLine("MyCreatedHandler method invoked.");
+            Debug.WriteLine($"ChildContent: { this.tabbase.ChildContent }");
         }
 
-        private void MyItemSelectedHandler(MenuEventArgs<SidebarMenu> args)
+        private void MyDestroyedHandler(object args)
         {
-            Debug.WriteLine("MyItemSelectedHandler method invoked");
+            Debug.WriteLine("MyDestroyedHandler method invoked.");
         }
 
-        private void MyOnCloseHandler(BeforeOpenCloseMenuEventArgs<SidebarMenu> args)
+        private void MyDraggedHandler(DragEventArgs args)
         {
-            Debug.WriteLine("MyOnCloseHandler method invoked");
+            Debug.WriteLine("MyDraggedHandler method invoked.");
         }
 
-        private void MyOnItemRenderHandler(MenuEventArgs<SidebarMenu> args)
+        private void MyOnDragStartHandler(DragEventArgs args)
         {
-            Debug.WriteLine("MyOnItemRenderHandler method invoked");
+            Debug.WriteLine("MyOnDragStartHandler method invoked.");
         }
 
-        private void MyOnOpenHandler(BeforeOpenCloseMenuEventArgs<SidebarMenu> args)
+        private void MyOnRemovedHandler(RemoveEventArgs args)
         {
-            Debug.WriteLine("MyOnOpenHandler method invoked");
+            Debug.WriteLine("MyOnRemovedHandler method invoked.");
         }
 
-        private void MyOpenedHandler(OpenCloseMenuEventArgs<SidebarMenu> args)
+        private void MyOnRemovingHandler(RemoveEventArgs args)
         {
-            Debug.WriteLine("MyOpenedHandler method invoked");
+            Debug.WriteLine("MyOnRemovingHandler method invoked.");
         }
+
+        private void MyOnSelectedHandler(SelectEventArgs args)
+        {
+            Debug.WriteLine($"MyOnSelectedHandler method invoked. Index = { selectedItem }");
+            //var junk = await this.TabObj.GetTabContentAsync(selectedItem);
+            //string[] tempString = { "my_dummy_class" };
+            //await junk.AddClass(tempString);
+            //StateHasChanged();
+            //var classList = await junk.GetClassList();
+            //Debug.WriteLine($"Content = { classList }");
+        }
+
+        private void MyOnSelectingHandler(SelectingEventArgs args)
+        {
+            Debug.WriteLine("MyOnSelectingHandler method invoked.");
+        }
+
+        private void MyOnSelectedItemChangedHandler(int index)
+        {
+            selectedItem = index;
+            Debug.WriteLine($"MyOnSelectedItemChangedHandler method invoked. Index = { index }");
+        }
+
+
 
         #endregion
 
@@ -129,13 +132,8 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         // Instance variables
         // ==================================================
 
-        private const string menuCssClass = "page__main-sidebar-menu";
-
-        private MenuBase<SidebarMenu> menubase;
-        //private bool isOpen = true;
-        private Dictionary<string, object> myHtmlAttributes = new();
-        private string masterCssSelector;
-
+        private TabBase tabbase;
+        private int selectedItem = 0;
 
         #endregion
 
@@ -185,11 +183,6 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-
-            // Build the master selectors
-            masterCssSelector = (SidebarCssClass == string.Empty) ?
-                $".e-close .{ menuCssClass }.e-menu-container" : 
-                $".{ SidebarCssClass }.e-close .{ menuCssClass }.e-menu-container";
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -218,7 +211,6 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         {
             await base.OnAfterRenderAsync(firstRender);
         }
-
         #endregion
 
 
@@ -229,7 +221,71 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         // Public Methods providing access to the underlying component to the consumer
         // ==================================================
 
+        /// <summary>
+        /// Adds a list of Tab items to the Tab.
+        /// </summary>
+        /// <param name="items">List of <see cref="TabItem"/> to add to the Tab.</param>
+        /// <param name="index">Index value that determines where the items to be added</param>
+        public async Task AddTabAsync(List<TabItem> items, int index) => await this.tabbase.AddTabAsync(items, index);
 
+        /// <summary>
+        /// Disables/enables the Tab component.
+        /// </summary>
+        /// <param name="disable">Boolean value specifying is the Tab component is disabled (true) or enabled.</param>
+        public async Task DisableAsync(bool disable) => await this.tabbase.DisableAsync(disable);
+
+        /// <summary>
+        /// Enables or disables a specific tab item.
+        /// </summary>
+        /// <param name="index">Integer value specifying the index of the tab.</param>
+        /// <param name="isEnable">Boolean value specifying is the tab is enabled (true) or disabled.</param>
+        /// <returns></returns>
+        public async Task EnableTabAsync(int index, bool isEnable = true) => await this.tabbase.EnableTabAsync(index, isEnable);
+
+        /// <summary>
+        /// Returns the content element of the tab with the specified index.
+        /// </summary>
+        /// <param name="index">Integer value specifying the index of the tab whose content is to returned.</param>
+        /// <returns>A <see cref="DOM"/> object containg the contents of the tab.</returns>
+        public async Task<DOM> GetTabContentAsync(int index)
+        {
+            return await this.tabbase.GetTabContentAsync(index);
+        }
+
+        /// <summary>
+        /// Returns the header element of the tab with the specified index.
+        /// </summary>
+        /// <param name="index">Integer value specifying the index of the tab whose content is to returned.</param>
+        /// <returns>A <see cref="DOM"/> object containg the header element of the tab.</returns>
+        public async Task<DOM> GetTabItemAsync(int index)
+        {
+            return await this.tabbase.GetTabItemAsync(index);
+        }
+
+        /// <summary>
+        /// Show/hides a tab based on the specified index.
+        /// </summary>
+        /// <param name="index">Integer value spefifying the index of the tab to show/hide.</param>
+        /// <param name="show">Boolean value specifying if the tab is shown (true) or hidden.</param>
+        /// <returns></returns>
+        public async Task HideTabAsync(int index, bool show) => await this.tabbase.HideTabAsync(index, show);
+
+        /// <summary>
+        /// Refresh the entire Tab component.
+        /// </summary>
+        public async Task RefreshAsync() => await this.tabbase.RefreshAsync();
+
+        /// <summary>
+        /// Removes an entire tab from the collection of tabs.
+        /// </summary>
+        /// <param name="index">Integer value spefifying the index of the tab to remove.</param>
+        public async Task RemoveTabAsync(int index) => await this.tabbase.RemoveTabAsync(index);
+
+        /// <summary>
+        /// Activates a tab based on the specified index.
+        /// </summary>
+        /// <param name="index">Integer value spefifying the index of the tab to activate.</param>
+        public async Task SelectAsync(int index) => await this.tabbase.SelectAsync(index);
 
         #endregion
 
@@ -239,5 +295,4 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         #endregion
 
     }
-
 }

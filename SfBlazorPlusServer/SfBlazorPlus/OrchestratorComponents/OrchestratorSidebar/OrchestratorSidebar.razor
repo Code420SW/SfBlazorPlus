@@ -26,7 +26,7 @@
 
                 BackdropBackgroundColor="#d2b48c"
                 BackdropOpacity="0.5"
-                CssClass="page__main-sidebar"
+                CssClass=@sidebarCssClass
                 CssId="orchestrator-sidebar"
                 DockSize="50px"
                 HtmlAttributes=@myHtmlAttributes
@@ -34,7 +34,7 @@
                 SidebarBorderWidth="2px"
                 SidebarBorderStyle="solid"
                 SidebarBorderColor="darkgreen"
-                SidebarCloseTransition="width ,2s ease, visibility 500ms"
+                SidebarCloseTransition="width ,.5s ease, visibility 500ms"
                 SidebarOpenTransition="transform .5s ease"
                 Target=".page__main"
                 
@@ -49,7 +49,12 @@
                 >
 
     <ChildContent>
-        <OrchestratorMenu @ref=@menu OrchestratorRef=@OrchestratorRef />
+        <OrchestratorMenu   @ref=@menu 
+                            OrchestratorRef=@OrchestratorRef 
+                            DockedIconFontSize="18px"
+                            DockedMenuWidth="50px"
+                            SidebarCssClass=@sidebarCssClass
+                            />
     </ChildContent>
 
 </SidebarBase>

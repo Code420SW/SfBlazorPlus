@@ -1,0 +1,42 @@
+﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton
+
+@using Code420.SfBlazorPlus.BaseComponents.IconButtonBase
+@using Syncfusion.Blazor.Buttons
+@using Code.Enums
+
+<!--
+    Normal background-color = rgb(108, 117, 125)
+    Hover background-color = rgb(90, 98, 104)
+    Active background-color = rgb(84, 91, 98)
+-->
+<IconButtonBase @ref=@iconButton
+                IsDisabled=false
+                IsPrimary=false
+                IsToggle=false
+                IconPosition=@IconPosition.Left
+                IconButtonStyle=@IconButtonStyle.Default
+
+                CssClass="button__sidebar-toggle"
+                IconCss=@currentIconCss
+                IconFontSize="1em"
+                IconFontColor="white"
+                IconFontTextAlign="center"
+                IconFontLineHeight="1.0"
+                IconFontVerticalAlign="middle"
+                ButtonNormalBackgroundColor="rgb(108, 117, 125)"
+                ButtonNormalBorder="1px solid #000"
+                ButtonHoverBackgroundColor="rgb(90, 98, 104)"
+                ButtonHoverBorder="1px solid #000"
+                ButtonActiveBackgroundColor="rgb(84, 91, 98)"
+                ButtonActiveBorderColor="#000"
+                ButtonDisabledOpacity=".65"
+                ButtonHeight="24px"
+                ButtonWidth="24px"
+                HoverScale=1.0m
+                Margin="0px"
+                Padding="0px"
+
+                OnClick=@MyButtonClickHandler
+                >
+
+</IconButtonBase>

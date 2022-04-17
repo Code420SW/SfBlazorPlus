@@ -1,13 +1,11 @@
-﻿using Code420.SfBlazorPlus.Pages.Orchestrator;
-using Syncfusion.Blazor.Navigations;
+﻿using Code420.SfBlazorPlus.BaseComponents.IconButtonBase;
+using Code420.SfBlazorPlus.Pages.Orchestrator;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics;
-using Code420.SfBlazorPlus.BaseComponents.MenuBase;
-using Code420.SfBlazorPlus.Code.Models.Menus;
 
-namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
+namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton
 {
-    public partial class OrchestratorMenu : ComponentBase
+    public partial class OrchestratorSidebarButton : ComponentBase
     {
 
         #region Component Parameters
@@ -24,33 +22,6 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         /// </summary>
         [Parameter]
         public Orchestrator OrchestratorRef { get; set; }
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">font-size</see> value 
-        /// used for the menu icons when the Sidebar is in the docked (closed) state.
-        /// The font-size CSS property sets the size of the font.
-        /// Default value is 28px.
-        /// </summary>
-        [Parameter]
-        public string DockedIconFontSize { get; set; } = "28px";
-
-        /// <summary>
-        /// String value that specifies the CSS <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/width">width</see> value 
-        /// used for the menu when the Sidebar is in the docked (closed) state.
-        /// The width CSS property sets an element's width.
-        /// This parameter is needed so that the popup sub-menus are displated next to their menu item.
-        /// Default value is 50px.
-        /// </summary>
-        [Parameter]
-        public string DockedMenuWidth { get; set; } = "50px";
-
-        /// <summary>
-        /// String value containing CSS class  of the Sidebar container.
-        /// Used to build the master CSS selector needed to handle menu customizations.
-        /// Default value is string.Empty.
-        /// </summary>
-        [Parameter]
-        public string SidebarCssClass { get; set; } = string.Empty;
 
         #endregion
 
@@ -84,40 +55,18 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         // Methods used as Callback Events from the underlying component(s)
         // ==================================================
 
-        private void MyClosedHandler(OpenCloseMenuEventArgs<SidebarMenu> args)
+        private async void  MyButtonClickHandler()
         {
-            Debug.WriteLine("MyClosedeHandler method invoked");
+            //Debug.WriteLine("MyButtonClickHandler method invoked");
+
+            // Toggle the state of the Sidebar
+            await OrchestratorRef.ToggleSidebarAsync();
+
+            // Set the button's icon
+            currentIconCss = (OrchestratorRef.IsSidebarOpen()) ? iconCssClose : iconCssOpen;
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void MyCreatedHandler(object args)
-        {
-            Debug.WriteLine("MyCreatedHandler method invoked");
-        }
-
-        private void MyItemSelectedHandler(MenuEventArgs<SidebarMenu> args)
-        {
-            Debug.WriteLine("MyItemSelectedHandler method invoked");
-        }
-
-        private void MyOnCloseHandler(BeforeOpenCloseMenuEventArgs<SidebarMenu> args)
-        {
-            Debug.WriteLine("MyOnCloseHandler method invoked");
-        }
-
-        private void MyOnItemRenderHandler(MenuEventArgs<SidebarMenu> args)
-        {
-            Debug.WriteLine("MyOnItemRenderHandler method invoked");
-        }
-
-        private void MyOnOpenHandler(BeforeOpenCloseMenuEventArgs<SidebarMenu> args)
-        {
-            Debug.WriteLine("MyOnOpenHandler method invoked");
-        }
-
-        private void MyOpenedHandler(OpenCloseMenuEventArgs<SidebarMenu> args)
-        {
-            Debug.WriteLine("MyOpenedHandler method invoked");
-        }
 
         #endregion
 
@@ -129,12 +78,12 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         // Instance variables
         // ==================================================
 
-        private const string menuCssClass = "page__main-sidebar-menu";
+        private const string iconCssOpen = "oi oi-expand-left";
+        private const string iconCssClose = "oi oi-expand-right";
 
-        private MenuBase<SidebarMenu> menubase;
-        //private bool isOpen = true;
-        private Dictionary<string, object> myHtmlAttributes = new();
-        private string masterCssSelector;
+        private IconButtonBase iconButton;
+
+        private string currentIconCss;
 
 
         #endregion
@@ -186,10 +135,8 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         {
             await base.OnInitializedAsync();
 
-            // Build the master selectors
-            masterCssSelector = (SidebarCssClass == string.Empty) ?
-                $".e-close .{ menuCssClass }.e-menu-container" : 
-                $".{ SidebarCssClass }.e-close .{ menuCssClass }.e-menu-container";
+            // Set the button's icon
+            currentIconCss = (OrchestratorRef.IsSidebarOpen()) ? iconCssClose : iconCssOpen;
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -218,7 +165,6 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         {
             await base.OnAfterRenderAsync(firstRender);
         }
-
         #endregion
 
 
@@ -229,7 +175,13 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         // Public Methods providing access to the underlying component to the consumer
         // ==================================================
 
-
+        /// <summary>
+        /// Opens/Closes the sidebar.
+        /// </summary>
+        //public void ToggleSidebar()
+        //{
+        //    isOpen = !isOpen;
+        //}
 
         #endregion
 
@@ -239,5 +191,4 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         #endregion
 
     }
-
 }

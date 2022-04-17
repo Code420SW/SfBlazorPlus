@@ -26,6 +26,12 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
         [Parameter] 
         public Orchestrator OrchestratorRef { get; set; }
 
+        /// <summary>
+        /// Boolean value setting the initial state of the IsOpen parameter.
+        /// </summary>
+        [Parameter]
+        public bool InitialSidebarIsOpen { get; set; }
+
         #endregion
 
 
@@ -99,10 +105,11 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
         // Instance variables
         // ==================================================
 
+        private const string sidebarCssClass = "page__main-sidebar";
         private SidebarBase sidebarbase;                                                        // Reference to the SidebarBase component
         private OrchestratorMenu.OrchestratorMenu menu;                                         // Reference to the OrchestratorMenu component
 
-        private bool isOpen = true;                                                             // Indicates if the Sidebar is opened/closed
+        private bool isOpen;                                                                    // Indicates if the Sidebar is opened/closed
         private Dictionary<string, object> myHtmlAttributes = new();       // Discionary passed to SidebarBase
 
         #endregion
@@ -154,6 +161,8 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
         {
             await base.OnInitializedAsync();
 
+            // Set the initial state of the IsOpen parameter
+            isOpen = InitialSidebarIsOpen;
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -196,10 +205,13 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
         /// <summary>
         /// Opens/Closes the sidebar.
         /// </summary>
-        public void ToggleSidebar()
+        public async Task ToggleSidebarAsync()
         {
             isOpen = !isOpen;
+            await InvokeAsync(StateHasChanged);
         }
+
+        public bool GetSidebarState() => isOpen;
 
         #endregion
 
