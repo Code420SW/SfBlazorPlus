@@ -4,8 +4,8 @@
 
 @using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
 @using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton
-@using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabs.DummyTab
 @using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
+@using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab
 
 <!--
 
@@ -45,6 +45,15 @@
 
     2.  The Orchestrator passes callback functions to child components that allow the child to notify
         the Orchestrator that an event has ocurred (user clicked a menu item).
+
+
+
+RenderFragment renderFragment = (builder) => { builder.OpenComponent(0, counter.GetType()); builder.CloseComponent(); };
+Type=@(Type.GetType(childComponents[indexCurrentChild].CType))
+CType=typeof(DynamicComponent2Child1).AssemblyQualifiedName
+https://jonhilton.net/blazor-dynamic-components/
+https://www.telerik.com/blogs/how-to-render-blazor-components-dynamically
+https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-components
 
 -->
 

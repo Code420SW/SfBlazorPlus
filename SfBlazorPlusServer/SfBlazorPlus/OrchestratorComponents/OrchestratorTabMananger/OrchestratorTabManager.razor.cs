@@ -3,6 +3,7 @@ using Code420.SfBlazorPlus.BaseComponents.TabBase;
 using Syncfusion.Blazor.Navigations;
 using System.Diagnostics;
 using Code420.SfBlazorPlus.Pages.Orchestrator;
+using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab;
 using Syncfusion.Blazor;
 
 namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
@@ -132,8 +133,10 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         // Instance variables
         // ==================================================
 
+        private const string appNamespace = "Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs";
         private TabBase tabbase;
         private int selectedItem = 0;
+        RenderFragment renderFragment;
 
         #endregion
 
@@ -183,6 +186,9 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
+
+            
+
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -210,6 +216,27 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                //
+                Type? myComponent1 = ResolveComponent("DummyTab");
+                string? myComponent2 = typeof(DummyTab).AssemblyQualifiedName;
+
+                if (myComponent1 is not null) renderFragment = RenderComponent(myComponent1);
+
+                //
+                List<TabItem> tabItem = new()
+                {
+                    new TabItem
+                    {
+                        Header = new TabHeader() { Text = "Dummy Tab2" },
+                        ContentTemplate = renderFragment
+                    }
+                };
+
+                await AddTabAsync(tabItem, 1);
+            };
         }
         #endregion
 
@@ -292,6 +319,21 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 
 
         #region Private Methods for Internal Use Only
+
+        private Type? ResolveComponent(string componentName)
+        {
+            return string.IsNullOrEmpty(componentName) ? null
+                : Type.GetType($"{appNamespace}.{componentName}.{componentName}");
+        }
+
+        private RenderFragment RenderComponent(Type componentType) => 
+            builder =>
+        {
+            builder.OpenComponent(0, componentType);
+            //builder.AddAttribute(1, "some-parameter", "a value");
+            builder.CloseComponent();
+        };
+
         #endregion
 
     }
