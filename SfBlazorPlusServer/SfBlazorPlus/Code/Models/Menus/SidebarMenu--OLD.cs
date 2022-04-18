@@ -1,6 +1,6 @@
 ﻿namespace Code420.SfBlazorPlus.Code.Models.Menus
 {
-    public class SidebarMenu
+    public class SidebarMenuOLD
     {
         public string Data { get; set; } = default;
         public bool Disabled { get; set; } = false;
@@ -11,6 +11,6 @@
         public string ParentId { get; set; } = default;
         public bool Separator { get; set; } = false;
         public string Url { get; set; } = default;
-        public List<SidebarMenu> SubMenu { get; set; } = default;
+        public List<SidebarMenuOLD> SubMenu { get; set; } = default;
     }
 }

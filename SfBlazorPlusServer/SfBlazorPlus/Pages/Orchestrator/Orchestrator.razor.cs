@@ -1,4 +1,5 @@
 ﻿using Code420.SfBlazorPlus.Code.Models.Menus;
+using Code420.SfBlazorPlus.Code.Models.Orchestrator;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger;
@@ -66,7 +67,7 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         private OrchestratorSidebarButton buttonSidebarToggle;      // Reference to the Sidebar toggle button
         private OrchestratorTabManager tabmanager;
 
-        private List<SidebarMenu> sidebarMenuItems;                 // Contains the menu its displayed in the Sidebar
+        private List<OrchestratorMenuItem> sidebarMenuItems;                 // Contains the menu its displayed in the Sidebar
 
         private bool initialSidebarIsOpen = true;                   // The initial state of the Sidebar IsOpen parameter
 
@@ -179,7 +180,7 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         /// Returns the menu items displayed in the sidebar menu.
         /// </summary>
         /// <returns><see cref="List{T}"/> where T is <see cref="SidebarMenu"/> containing the menu items.</returns>
-        public List<SidebarMenu> GetSidebarMenu() => sidebarMenuItems;
+        public List<OrchestratorMenuItem> GetSidebarMenu() => sidebarMenuItems;
 
         /// <summary>
         /// Retrieves the current value of the Sidebar IsOpen parameter.
@@ -196,55 +197,55 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         // Build the list of menu items displayed in the Sidebar.
         private void InitializeSidebarMenu()
         {
-            sidebarMenuItems = new List<SidebarMenu>()
+            sidebarMenuItems = new List<OrchestratorMenuItem>()
             {
-                new SidebarMenu
+                new OrchestratorMenuItem
                 {
-                    Data = "Company",
-                    Disabled = false,
-                    Hidden = false,
+                    MenuText = "Company",
+                    IsDisabled = false,
+                    IsHidden = false,
                     IconCss = "oi oi-aperture",
                     ItemId = "1000",
                     ParentId = null,
-                    SubMenu = new List<SidebarMenu>
+                    SubMenu = new List<OrchestratorMenuItem>
                     {
-                        new SidebarMenu
+                        new OrchestratorMenuItem
                         {
-                            Data= "Overview",
-                            Disabled = false,
-                            Hidden = false,
+                            MenuText= "Overview",
+                            IsDisabled = false,
+                            IsHidden = false,
                             IconCss = "oi oi-badge",
                             ItemId = "1101",
                             ParentId = "1000",
-                            SubMenu = new List<SidebarMenu>
+                            SubMenu = new List<OrchestratorMenuItem>
                             {
-                                new SidebarMenu{ Data = "Hardware", ItemId = "1201", ParentId = "1101" },
-                                new SidebarMenu{ Data = "Software", ItemId = "1202", ParentId = "1101" }
+                                new OrchestratorMenuItem{ MenuText = "Hardware", ItemId = "1201", ParentId = "1101" },
+                                new OrchestratorMenuItem{ MenuText = "Software", ItemId = "1202", ParentId = "1101" }
                             }
                         },
 
-                        new SidebarMenu
+                        new OrchestratorMenuItem
                         {
-                            Data= "Careers",
-                            Disabled = false,
-                            Hidden = false,
+                            MenuText= "Careers",
+                            IsDisabled = false,
+                            IsHidden = false,
                             IconCss = "oi oi-basket",
                             ItemId = "1102",
                             ParentId = "1000"
                         },
 
-                        new SidebarMenu
+                        new OrchestratorMenuItem
                         {
                             ItemId = "1199",
                             ParentId = "1000",
-                            Separator = true
+                            IsSeparator = true
                         },
 
-                        new SidebarMenu
+                        new OrchestratorMenuItem
                         {
-                            Data= "About",
-                            Disabled = false,
-                            Hidden = false,
+                            MenuText= "About",
+                            IsDisabled = false,
+                            IsHidden = false,
                             IconCss = "oi oi-ban",
                             ItemId = "1103",
                             ParentId = "1000"
@@ -252,42 +253,42 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
                     }
                 },
 
-                new SidebarMenu
+                new OrchestratorMenuItem
                 {
-                    Data = "Services",
-                    Disabled = false,
-                    Hidden = false,
+                    MenuText = "Services",
+                    IsDisabled = false,
+                    IsHidden = false,
                     IconCss = "oi oi-book",
                     ItemId = "2000",
                     ParentId = null,
-                    SubMenu = new List<SidebarMenu>
+                    SubMenu = new List<OrchestratorMenuItem>
                     {
-                        new SidebarMenu{ Data= "Consulting", ParentId = "2000" },
-                        new SidebarMenu{ Data= "Education", ParentId = "2000" },
-                        new SidebarMenu{ Data= "Health", ParentId = "2000" }
+                        new OrchestratorMenuItem{ MenuText= "Consulting", ParentId = "2000" },
+                        new OrchestratorMenuItem{ MenuText= "Education", ParentId = "2000" },
+                        new OrchestratorMenuItem{ MenuText= "Health", ParentId = "2000" }
                     }
                 },
 
-                new SidebarMenu
+                new OrchestratorMenuItem
                 {
-                    Data = "Products",
-                    Disabled = false,
-                    Hidden = false,
+                    MenuText = "Products",
+                    IsDisabled = false,
+                    IsHidden = false,
                     IconCss = "oi oi-bookmark",
                     ItemId = "3000",
                     ParentId = null,
-                    SubMenu = new List<SidebarMenu>
+                    SubMenu = new List<OrchestratorMenuItem>
                     {
-                        new SidebarMenu{ Data = "Hardware", ParentId = "3000" },
-                        new SidebarMenu{ Data = "Software", ParentId = "3000" }
+                        new OrchestratorMenuItem{ MenuText = "Hardware", ParentId = "3000" },
+                        new OrchestratorMenuItem{ MenuText = "Software", ParentId = "3000" }
                     }
                 },
 
-                new SidebarMenu
+                new OrchestratorMenuItem
                 {
-                    Data = "Contact Us",
-                    Disabled = false ,
-                    Hidden = false,
+                    MenuText = "Contact Us",
+                    IsDisabled = false ,
+                    IsHidden = false,
                     IconCss = "oi oi-bug",
                     ItemId = "4000",
                     ParentId = null

@@ -2,7 +2,7 @@
 
 @using Code420.SfBlazorPlus.BaseComponents.MenuBase
 @using Code420.SfBlazorPlus.Pages.Orchestrator
-@using Code420.SfBlazorPlus.Code.Models.Menus
+@using Code420.SfBlazorPlus.Code.Models.Orchestrator
 @using Syncfusion.Blazor.Navigations
 @using System.Diagnostics
 
@@ -14,7 +14,7 @@
 
 
 <MenuBase   @ref=@menubase
-            TValue=@SidebarMenu
+            TValue=@OrchestratorMenuItem
             EnableScrolling=false
             HamburgerMode=false
             Items=@OrchestratorRef.GetSidebarMenu() 
@@ -84,16 +84,16 @@
             MenuPopupLeftMargin="-4px"
             >
 
-    <MenuFieldSettings  Text=@nameof(SidebarMenu.Data)
-                        Children=@nameof(SidebarMenu.SubMenu)
-                        IconCss=@nameof(SidebarMenu.IconCss)
-                        ItemId=@nameof(SidebarMenu.ItemId)
-                        ParentId=@nameof(SidebarMenu.ParentId)
-                        Disabled=@nameof(SidebarMenu.Disabled)
-                        Hidden=@nameof(SidebarMenu.Hidden)
-                        Separator=@nameof(SidebarMenu.Separator)
-                        Url=@nameof(SidebarMenu.Url)
-                        HtmlAttributes=@nameof(SidebarMenu.HtmlAttributes)
+    <MenuFieldSettings  Text=@nameof(OrchestratorMenuItem.MenuText)
+                        Children=@nameof(OrchestratorMenuItem.SubMenu)
+                        IconCss=@nameof(OrchestratorMenuItem.IconCss)
+                        ItemId=@nameof(OrchestratorMenuItem.ItemId)
+                        ParentId=@nameof(OrchestratorMenuItem.ParentId)
+                        Disabled=@nameof(OrchestratorMenuItem.IsDisabled)
+                        Hidden=@nameof(OrchestratorMenuItem.IsHidden)
+                        Separator=@nameof(OrchestratorMenuItem.IsSeparator)
+                        Url=@nameof(OrchestratorMenuItem.Url)
+                        HtmlAttributes=@nameof(OrchestratorMenuItem.HtmlAttributes)
                         >
     </MenuFieldSettings>
 

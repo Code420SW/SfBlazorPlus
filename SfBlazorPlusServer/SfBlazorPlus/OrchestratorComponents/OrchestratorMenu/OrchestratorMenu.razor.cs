@@ -3,7 +3,7 @@ using Syncfusion.Blazor.Navigations;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics;
 using Code420.SfBlazorPlus.BaseComponents.MenuBase;
-using Code420.SfBlazorPlus.Code.Models.Menus;
+using Code420.SfBlazorPlus.Code.Models.Orchestrator;
 
 namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
 {
@@ -84,7 +84,7 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         // Methods used as Callback Events from the underlying component(s)
         // ==================================================
 
-        private void MyClosedHandler(OpenCloseMenuEventArgs<SidebarMenu> args)
+        private void MyClosedHandler(OpenCloseMenuEventArgs<OrchestratorMenuItem> args)
         {
             Debug.WriteLine("MyClosedeHandler method invoked");
         }
@@ -94,27 +94,27 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
             Debug.WriteLine("MyCreatedHandler method invoked");
         }
 
-        private void MyItemSelectedHandler(MenuEventArgs<SidebarMenu> args)
+        private void MyItemSelectedHandler(MenuEventArgs<OrchestratorMenuItem> args)
         {
             Debug.WriteLine("MyItemSelectedHandler method invoked");
         }
 
-        private void MyOnCloseHandler(BeforeOpenCloseMenuEventArgs<SidebarMenu> args)
+        private void MyOnCloseHandler(BeforeOpenCloseMenuEventArgs<OrchestratorMenuItem> args)
         {
             Debug.WriteLine("MyOnCloseHandler method invoked");
         }
 
-        private void MyOnItemRenderHandler(MenuEventArgs<SidebarMenu> args)
+        private void MyOnItemRenderHandler(MenuEventArgs<OrchestratorMenuItem> args)
         {
             Debug.WriteLine("MyOnItemRenderHandler method invoked");
         }
 
-        private void MyOnOpenHandler(BeforeOpenCloseMenuEventArgs<SidebarMenu> args)
+        private void MyOnOpenHandler(BeforeOpenCloseMenuEventArgs<OrchestratorMenuItem> args)
         {
             Debug.WriteLine("MyOnOpenHandler method invoked");
         }
 
-        private void MyOpenedHandler(OpenCloseMenuEventArgs<SidebarMenu> args)
+        private void MyOpenedHandler(OpenCloseMenuEventArgs<OrchestratorMenuItem> args)
         {
             Debug.WriteLine("MyOpenedHandler method invoked");
         }
@@ -131,7 +131,7 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
 
         private const string menuCssClass = "page__main-sidebar-menu";
 
-        private MenuBase<SidebarMenu> menubase;
+        private MenuBase<OrchestratorMenuItem> menubase;
         //private bool isOpen = true;
         private Dictionary<string, object> myHtmlAttributes = new();
         private string masterCssSelector;
