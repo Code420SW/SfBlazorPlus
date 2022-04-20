@@ -100,8 +100,21 @@
 </MenuBase>
 
 <style>
+
+    /*
+        The masterCssSelector is constructed from the SidebarCssClass parameter and adds the
+        e-close class to handl changes needed to the Menu when the Sidebar is in the docked state.
+        
+        e.g.: SidebarCssClass.e-close .menuCssClass.e-menu-container
+
+        When the parent Sidebar component is in the docked (e-close) state, this Menu's ul
+        elements are modified based on the selectors below.
+    */
+
     /*
         Set styling for the Menu when the Sidebar is in docked (closed) state.
+
+        Adjust the width of the ul to match the width of the Sidebar in the docked state.
     */
     @(masterCssSelector) ul .e-menu-item {
         width: @DockedMenuWidth;
@@ -110,6 +123,8 @@
 
     /*
         Set styling for Menu Icons when the Sidebar is in the docked (closed) state.
+
+        Change the size of the icons and adjust padding.
     */
     @(masterCssSelector) ul .e-menu-item .e-menu-icon {
         font-size: @DockedIconFontSize;
@@ -118,10 +133,21 @@
         line-height: 1.5;
     }
 
+    /*
+        Set the styling for the Menu Item's carets when the Sidebar is in the docked (closed) state.
+
+        Turn off display of the carets
+    */
     @(masterCssSelector) ul .e-menu-item .e-caret {
         display: none;
     }
-    @(masterCssSelector) ul.e-menu.e-menu-parent.e-vertical {
+
+    /*
+        Set the styling for the Menu Item's text when the Sidebar is in the docked (closed) state.
+
+        Effectively, turn off display of the menu text. Doesn't apply to sub-menus
+    */
+    @(masterCssSelector) ul.e-menu.e-menu-parent.e-vertical li {
         font-size: 0px;
     }
 
