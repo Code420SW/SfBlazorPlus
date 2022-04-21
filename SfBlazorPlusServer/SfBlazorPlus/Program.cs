@@ -1,4 +1,5 @@
 using Code420.SfBlazorPlus.Code.CssUtilities;
+using Code420.SfBlazorPlus.Code.Models.Orchestrator;
 using Code420.SfBlazorPlus.Data;
 using Syncfusion.Blazor;
 
@@ -16,6 +17,7 @@ builder.Services.AddSyncfusionBlazor();
 
 // Our Dependencies
 builder.Services.AddTransient<ICssUtilities, CssUtilities>();
+builder.Services.AddTransient<IOrchestratorParameters, OrchestratorParameters>();
 
 
 

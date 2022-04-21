@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Code420.SfBlazorPlus.Pages.Orchestrator;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab;
 using Syncfusion.Blazor;
+using Code420.SfBlazorPlus.Code.Models.Orchestrator;
 
 namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 {
@@ -25,6 +26,15 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         /// </summary>
         [Parameter]
         public Orchestrator OrchestratorRef { get; set; }
+
+        /// <summary>
+        /// String value specifying the name of the Orchestrator Tab component loaded when the the
+        /// Tab Manager component is loaded.
+        /// All Orchestrator Tabs must be located in the following namespace:
+        /// Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs
+        /// </summary>
+        [Parameter]
+        public string InitialMenuItemId { get; set; } = default;
 
         #endregion
 
@@ -189,91 +199,35 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
             await base.OnInitializedAsync();
 
             //
-            Type? myComponent1 = ResolveComponent("DummyTab");
-            //string? myComponent2 = typeof(DummyTab).AssemblyQualifiedName;
+            if (string.IsNullOrEmpty(InitialMenuItemId)) return;
 
-            if (myComponent1 is not null) renderFragment = RenderComponent(myComponent1);
+            //
+            //OrchestratorMenuItem defaultMenuItem = OrchestratorRef.SidebarMenuItems.FirstOrDefault(x => x.ItemId == InitialMenuItemId);
+
+            //Type? myComponent1 = ResolveComponent(defaultMenuItem.ComponentName);
+
+            string? componentName;
+            Type? component = null;
+            if (OrchestratorRef.OrchestratorTabs.TryGetValue(InitialMenuItemId, out componentName) is false) return;
+            component = ResolveComponent(componentName);
+            if (component is null) return;
+            renderFragment = RenderComponent(component);
 
             //
             tabItem = new()
             {
                 new TabItem
                 {
-                    CssClass="tab_dummy-tab-2",
+                    CssClass="tab__hardware",
                     ContentTemplate = renderFragment,
                     Disabled=false,
                     Header = new TabHeader() 
                     { 
-                        IconCss="",
-                        IconPosition="left",
-                        Text = "Dummy Tab2" 
+                        IconCss= "",
+                        IconPosition="",
+                        Text = "Default Tab"
                     },
                     Visible=true
-                },
-                new TabItem
-                {
-                    CssClass = "tab_dummy-tab-3",
-                    ContentTemplate = renderFragment,
-                    Disabled = false,
-                    Header = new TabHeader()
-                    {
-                        IconCss = "",
-                        IconPosition = "left",
-                        Text = "Dummy Tab3"
-                    },
-                    Visible = true
-                },
-                new TabItem
-                {
-                    CssClass = "tab_dummy-tab-4",
-                    ContentTemplate = renderFragment,
-                    Disabled = false,
-                    Header = new TabHeader()
-                    {
-                        IconCss = "",
-                        IconPosition = "left",
-                        Text = "Dummy Tab4"
-                    },
-                    Visible = true
-                },
-                new TabItem
-                {
-                    CssClass = "tab_dummy-tab-5",
-                    ContentTemplate = renderFragment,
-                    Disabled = false,
-                    Header = new TabHeader()
-                    {
-                        IconCss = "",
-                        IconPosition = "left",
-                        Text = "Dummy Tab5"
-                    },
-                    Visible = true
-                },
-                new TabItem
-                {
-                    CssClass = "tab_dummy-tab-6",
-                    ContentTemplate = renderFragment,
-                    Disabled = false,
-                    Header = new TabHeader()
-                    {
-                        IconCss = "",
-                        IconPosition = "left",
-                        Text = "Dummy Tab6"
-                    },
-                    Visible = true
-                },
-                new TabItem
-                {
-                    CssClass = "tab_dummy-tab-7",
-                    ContentTemplate = renderFragment,
-                    Disabled = false,
-                    Header = new TabHeader()
-                    {
-                        IconCss = "",
-                        IconPosition = "left",
-                        Text = "Dummy Tab7"
-                    },
-                    Visible = true
                 }
             };
 

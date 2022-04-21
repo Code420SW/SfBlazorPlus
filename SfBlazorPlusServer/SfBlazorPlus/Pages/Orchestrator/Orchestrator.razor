@@ -57,42 +57,44 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
 
 -->
 
-<CascadingValue Value=@this Name="OrchestratorRef" IsFixed=true>
 
-    <header class="page__header">
-        <div class = "page__header-1">
-            <h1 style = "font-size: 1em;">This is the Orchestrator Page</h1>
+<header class="page__header">
+    <div class = "page__header-1">
+        <h1 style = "font-size: 1em;">This is the Orchestrator Page</h1>
+    </div>
+    <div class = "page__header-2">
+        <div class="header2__sidebar-button">
+            <OrchestratorSidebarButton  @ref=@buttonSidebarToggle OrchestratorRef=@this />
         </div>
-        <div class = "page__header-2">
-            <div class="header2__sidebar-button">
-                <OrchestratorSidebarButton  @ref=@buttonSidebarToggle OrchestratorRef=@this />
-            </div>
-            <div class="header2__menu">
+        <div class="header2__menu">
 
-            </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <main class="page__main">
+<main class="page__main">
 
-        <!--
-            The page__main-content div is required so that OrchestratorSidebar 
-            correctly animates page__main when opening/closing. If everything
-            is shoved under page__main, only the first div an animated correctly.
-        -->
-        <div class = "page__main-content">
-            <OrchestratorTabManager @ref=@tabmanager />
-        </div>
+    <!--
+        The page__main-content div is required so that OrchestratorSidebar 
+        correctly animates page__main when opening/closing. If everything
+        is shoved under page__main, only the first div an animated correctly.
+    -->
+    <div class = "page__main-content">
 
-    </main>
+        <OrchestratorTabManager @ref=@tabmanager OrchestratorRef=@this InitialMenuItemId="1201"/>
 
-    <footer class="page__footer">
-        <div class="page__footer-filler"></div>
-    </footer>
+    </div>
 
-    <OrchestratorSidebar @ref=sidebar OrchestratorRef=@this InitialSidebarIsOpen=@initialSidebarIsOpen />
+</main>
 
-</CascadingValue>
+<footer class="page__footer">
+    <div class="page__footer-filler"></div>
+</footer>
+
+
+<OrchestratorSidebar @ref=sidebar OrchestratorRef=@this InitialSidebarIsOpen=@initialSidebarIsOpen />
+
+
 <style>
         
     /*

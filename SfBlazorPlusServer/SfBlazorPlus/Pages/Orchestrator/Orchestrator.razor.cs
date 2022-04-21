@@ -67,9 +67,13 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         private OrchestratorSidebarButton buttonSidebarToggle;      // Reference to the Sidebar toggle button
         private OrchestratorTabManager tabmanager;
 
-        private List<OrchestratorMenuItem> sidebarMenuItems;                 // Contains the menu its displayed in the Sidebar
-
         private bool initialSidebarIsOpen = true;                   // The initial state of the Sidebar IsOpen parameter
+
+
+        public List<OrchestratorMenuItem> SidebarMenuItems { get => this.orchestratorParameters.SidebarMenuItems; }
+        public List<OrchestratorMenuItem> MainMenuItems { get => this.orchestratorParameters.MainMenuItems; }
+        public List<OrchestratorMenuItem> FavoritesMenuItems { get => this.orchestratorParameters.FavoritesMenuItems; }
+        public Dictionary<string, string> OrchestratorTabs { get => this.orchestratorParameters.OrchestratorTabs; }
 
         #endregion
 
@@ -78,11 +82,12 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         #region Injected Dependencies
 
         // Injected Dependencies
-
+        IOrchestratorParameters orchestratorParameters;
 
 
         // Dependency Injection
-
+        [Inject]
+        IOrchestratorParameters _orchestratorParameters { get => orchestratorParameters; set => orchestratorParameters = value; }
 
         #endregion
 
@@ -119,10 +124,6 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-
-            // Initialize the Sidebar menu items
-            InitializeSidebarMenu();
-
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -177,12 +178,6 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         }
 
         /// <summary>
-        /// Returns the menu items displayed in the sidebar menu.
-        /// </summary>
-        /// <returns><see cref="List{T}"/> where T is <see cref="SidebarMenu"/> containing the menu items.</returns>
-        public List<OrchestratorMenuItem> GetSidebarMenu() => sidebarMenuItems;
-
-        /// <summary>
         /// Retrieves the current value of the Sidebar IsOpen parameter.
         /// </summary>
         /// <returns>Boolean value indicating if the Sidebar is open.</returns>
@@ -194,107 +189,6 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
 
         #region Private Methods for Internal Use Only
 
-        // Build the list of menu items displayed in the Sidebar.
-        private void InitializeSidebarMenu()
-        {
-            sidebarMenuItems = new List<OrchestratorMenuItem>()
-            {
-                new OrchestratorMenuItem
-                {
-                    MenuText = "Company",
-                    IsDisabled = false,
-                    IsHidden = false,
-                    IconCss = "oi oi-aperture",
-                    ItemId = "1000",
-                    ParentId = null,
-                    SubMenu = new List<OrchestratorMenuItem>
-                    {
-                        new OrchestratorMenuItem
-                        {
-                            MenuText= "Overview",
-                            IsDisabled = false,
-                            IsHidden = false,
-                            IconCss = "oi oi-badge",
-                            ItemId = "1101",
-                            ParentId = "1000",
-                            SubMenu = new List<OrchestratorMenuItem>
-                            {
-                                new OrchestratorMenuItem{ MenuText = "Hardware", ItemId = "1201", ParentId = "1101" },
-                                new OrchestratorMenuItem{ MenuText = "Software", ItemId = "1202", ParentId = "1101" }
-                            }
-                        },
-
-                        new OrchestratorMenuItem
-                        {
-                            MenuText= "Careers",
-                            IsDisabled = false,
-                            IsHidden = false,
-                            IconCss = "oi oi-basket",
-                            ItemId = "1102",
-                            ParentId = "1000"
-                        },
-
-                        new OrchestratorMenuItem
-                        {
-                            ItemId = "1199",
-                            ParentId = "1000",
-                            IsSeparator = true
-                        },
-
-                        new OrchestratorMenuItem
-                        {
-                            MenuText= "About",
-                            IsDisabled = false,
-                            IsHidden = false,
-                            IconCss = "oi oi-ban",
-                            ItemId = "1103",
-                            ParentId = "1000"
-                        }
-                    }
-                },
-
-                new OrchestratorMenuItem
-                {
-                    MenuText = "Services",
-                    IsDisabled = false,
-                    IsHidden = false,
-                    IconCss = "oi oi-book",
-                    ItemId = "2000",
-                    ParentId = null,
-                    SubMenu = new List<OrchestratorMenuItem>
-                    {
-                        new OrchestratorMenuItem{ MenuText= "Consulting", ParentId = "2000" },
-                        new OrchestratorMenuItem{ MenuText= "Education", ParentId = "2000" },
-                        new OrchestratorMenuItem{ MenuText= "Health", ParentId = "2000" }
-                    }
-                },
-
-                new OrchestratorMenuItem
-                {
-                    MenuText = "Products",
-                    IsDisabled = false,
-                    IsHidden = false,
-                    IconCss = "oi oi-bookmark",
-                    ItemId = "3000",
-                    ParentId = null,
-                    SubMenu = new List<OrchestratorMenuItem>
-                    {
-                        new OrchestratorMenuItem{ MenuText = "Hardware", ParentId = "3000" },
-                        new OrchestratorMenuItem{ MenuText = "Software", ParentId = "3000" }
-                    }
-                },
-
-                new OrchestratorMenuItem
-                {
-                    MenuText = "Contact Us",
-                    IsDisabled = false ,
-                    IsHidden = false,
-                    IconCss = "oi oi-bug",
-                    ItemId = "4000",
-                    ParentId = null
-                }
-            };
-        }
 
         #endregion
 

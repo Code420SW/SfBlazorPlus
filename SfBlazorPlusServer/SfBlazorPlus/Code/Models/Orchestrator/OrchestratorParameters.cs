@@ -1,6 +1,8 @@
-﻿namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
+﻿using System.Diagnostics;
+
+namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 {
-    public class OrchestratorParameters
+    public class OrchestratorParameters : IOrchestratorParameters
     {
         
         //
@@ -13,7 +15,11 @@
         //
         public OrchestratorParameters()
         {
+            BuildOrchestratorTabsDictionary();
             BuildSidebarMenu();
+            BuildMainMenu();
+            BuildFavoritesMenu();
+            Tester();
         }
 
 
@@ -21,7 +27,14 @@
         // Properties
         //
 
-        public List<IOrchestratorMenuItem> SidebarMenuItems { get; private set; }
+        public List<OrchestratorMenuItem> SidebarMenuItems { get; private set; }
+
+        public List<OrchestratorMenuItem> MainMenuItems { get; private set; }
+
+        public List<OrchestratorMenuItem> FavoritesMenuItems { get; private set; }
+
+        public Dictionary<string, string> OrchestratorTabs { get; private set; }
+
 
 
         // 
@@ -33,9 +46,24 @@
         // Private Methods
         //
 
+        private void Tester()
+        {
+            Debug.WriteLine("Tester hit");
+            var temp = SidebarMenuItems[0].GetType();
+        }
+
+        private void BuildOrchestratorTabsDictionary()
+        {
+            OrchestratorTabs = new Dictionary<string, string>()
+            {
+                {"1201", "DummyTab" },
+                {"1202", "DummyTab" }
+            };
+        }
+
         private void BuildSidebarMenu()
         {
-            SidebarMenuItems = new List<IOrchestratorMenuItem>()
+            SidebarMenuItems = new List<OrchestratorMenuItem>()
             {
                 new OrchestratorMenuItem
                 {
@@ -57,8 +85,25 @@
                             ParentId = "1000",
                             SubMenu = new List<OrchestratorMenuItem>
                             {
-                                new OrchestratorMenuItem{ MenuText = "Hardware", ItemId = "1201", ParentId = "1101" },
-                                new OrchestratorMenuItem{ MenuText = "Software", ItemId = "1202", ParentId = "1101" }
+                                new OrchestratorMenuItem()
+                                { 
+                                    MenuText = "Hardware", 
+                                    ItemId = "1201", 
+                                    ParentId = "1101",
+                                    ComponentName="DummyTab",
+                                    ComponentCssClass="tab__hardware",
+                                    ComponentDisabled=false,
+                                    ComponentVisible=true,
+                                    ComponentTabHeaderIconCss="",
+                                    ComponentTabHeaderIconPosition="",
+                                    ComponentTabHeaderText="Default Tab"
+                                },
+                                new OrchestratorMenuItem() 
+                                { 
+                                    MenuText = "Software", 
+                                    ItemId = "1202", 
+                                    ParentId = "1101" 
+                                }
                             }
                         },
 
@@ -132,6 +177,16 @@
                     ParentId = null
                 }
             };
+        }
+
+        private void BuildMainMenu()
+        {
+            MainMenuItems = new List<OrchestratorMenuItem>();
+        }
+
+        private void BuildFavoritesMenu()
+        {
+            FavoritesMenuItems = new List<OrchestratorMenuItem>();
         }
     }
 }
