@@ -1,5 +1,5 @@
 ﻿
-namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
+namespace Code420.SfBlazorPlus.Code.Models.Menus
 {
     public interface IOrchestratorMenuItem
     {

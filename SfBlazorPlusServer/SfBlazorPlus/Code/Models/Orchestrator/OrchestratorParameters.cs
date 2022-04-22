@@ -1,4 +1,8 @@
 ﻿using System.Diagnostics;
+using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab;
+using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Navigations;
+using Code420.SfBlazorPlus.Code.Models.Menus;
 
 namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 {
@@ -19,7 +23,7 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
             BuildSidebarMenu();
             BuildMainMenu();
             BuildFavoritesMenu();
-            Tester();
+            //Tester();
         }
 
 
@@ -33,7 +37,7 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 
         public List<OrchestratorMenuItem> FavoritesMenuItems { get; private set; }
 
-        public Dictionary<string, string> OrchestratorTabs { get; private set; }
+        public Dictionary<string, TabItem> OrchestratorTabs { get; private set; }
 
 
 
@@ -49,15 +53,45 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
         private void Tester()
         {
             Debug.WriteLine("Tester hit");
-            var temp = SidebarMenuItems[0].GetType();
         }
 
         private void BuildOrchestratorTabsDictionary()
         {
-            OrchestratorTabs = new Dictionary<string, string>()
+            OrchestratorTabs = new Dictionary<string, TabItem>()
             {
-                {"1201", "DummyTab" },
-                {"1202", "DummyTab" }
+                {
+                    "1201", 
+                    new TabItem()
+                    {
+                        CssClass="tab__hardware",
+                        ContentTemplate = RenderComponent(typeof(DummyTab)),
+                        Disabled=false,
+                        Header = new TabHeader()
+                        {
+                            IconCss= "",
+                            IconPosition="",
+                            Text = "Hardware"
+                        },
+                        Visible=true
+                    }
+                },
+
+                {
+                    "1202",
+                    new TabItem()
+                    {
+                        CssClass="tab__software",
+                        ContentTemplate = RenderComponent(typeof(DummyTab)),
+                        Disabled=false,
+                        Header = new TabHeader()
+                        {
+                            IconCss= "",
+                            IconPosition="",
+                            Text = "Software"
+                        },
+                        Visible=true
+                    }
+                }
             };
         }
 
@@ -89,14 +123,7 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
                                 { 
                                     MenuText = "Hardware", 
                                     ItemId = "1201", 
-                                    ParentId = "1101",
-                                    ComponentName="DummyTab",
-                                    ComponentCssClass="tab__hardware",
-                                    ComponentDisabled=false,
-                                    ComponentVisible=true,
-                                    ComponentTabHeaderIconCss="",
-                                    ComponentTabHeaderIconPosition="",
-                                    ComponentTabHeaderText="Default Tab"
+                                    ParentId = "1101"
                                 },
                                 new OrchestratorMenuItem() 
                                 { 
@@ -188,5 +215,12 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
         {
             FavoritesMenuItems = new List<OrchestratorMenuItem>();
         }
+
+        private RenderFragment RenderComponent(Type componentType) =>
+            builder =>
+            {
+                builder.OpenComponent(0, componentType);
+                builder.CloseComponent();
+            };
     }
 }

@@ -3,7 +3,7 @@ using Syncfusion.Blazor.Navigations;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics;
 using Code420.SfBlazorPlus.BaseComponents.MenuBase;
-using Code420.SfBlazorPlus.Code.Models.Orchestrator;
+using Code420.SfBlazorPlus.Code.Models.Menus;
 
 namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
 {

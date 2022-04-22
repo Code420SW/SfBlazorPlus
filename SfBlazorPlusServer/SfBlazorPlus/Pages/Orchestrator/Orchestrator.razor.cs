@@ -4,6 +4,7 @@ using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger;
 using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Navigations;
 
 namespace Code420.SfBlazorPlus.Pages.Orchestrator
 {
@@ -73,7 +74,7 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         public List<OrchestratorMenuItem> SidebarMenuItems { get => this.orchestratorParameters.SidebarMenuItems; }
         public List<OrchestratorMenuItem> MainMenuItems { get => this.orchestratorParameters.MainMenuItems; }
         public List<OrchestratorMenuItem> FavoritesMenuItems { get => this.orchestratorParameters.FavoritesMenuItems; }
-        public Dictionary<string, string> OrchestratorTabs { get => this.orchestratorParameters.OrchestratorTabs; }
+        public Dictionary<string, TabItem> OrchestratorTabs { get => this.orchestratorParameters.OrchestratorTabs; }
 
         #endregion
 

@@ -206,30 +206,32 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 
             //Type? myComponent1 = ResolveComponent(defaultMenuItem.ComponentName);
 
-            string? componentName;
-            Type? component = null;
-            if (OrchestratorRef.OrchestratorTabs.TryGetValue(InitialMenuItemId, out componentName) is false) return;
-            component = ResolveComponent(componentName);
-            if (component is null) return;
-            renderFragment = RenderComponent(component);
+            TabItem? componentTabItem;
+            //Type? component = null;
+            if (OrchestratorRef.OrchestratorTabs.TryGetValue(InitialMenuItemId, out componentTabItem) is false) return;
+
+            tabItem = new List<TabItem>() { componentTabItem };
+            //component = ResolveComponent(componentName);
+            //if (component is null) return;
+            //renderFragment = RenderComponent(typeof(DummyTab));
 
             //
-            tabItem = new()
-            {
-                new TabItem
-                {
-                    CssClass="tab__hardware",
-                    ContentTemplate = renderFragment,
-                    Disabled=false,
-                    Header = new TabHeader() 
-                    { 
-                        IconCss= "",
-                        IconPosition="",
-                        Text = "Default Tab"
-                    },
-                    Visible=true
-                }
-            };
+            //tabItem = new()
+            //{
+            //    new TabItem
+            //    {
+            //        CssClass="tab__hardware",
+            //        ContentTemplate = renderFragment,
+            //        Disabled=false,
+            //        Header = new TabHeader() 
+            //        { 
+            //            IconCss= "",
+            //            IconPosition="",
+            //            Text = "Default Tab"
+            //        },
+            //        Visible=true
+            //    }
+            //};
 
             //await AddTabAsync(tabItem, 1);
 
@@ -260,8 +262,6 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
-
-
         }
         #endregion
 
@@ -345,19 +345,19 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 
         #region Private Methods for Internal Use Only
 
-        private Type? ResolveComponent(string componentName)
-        {
-            return string.IsNullOrEmpty(componentName) ? null
-                : Type.GetType($"{appNamespace}.{componentName}.{componentName}");
-        }
+        //private Type? ResolveComponent(string componentName)
+        //{
+        //    return string.IsNullOrEmpty(componentName) ? null
+        //        : Type.GetType($"{appNamespace}.{componentName}.{componentName}");
+        //}
 
-        private RenderFragment RenderComponent(Type componentType) => 
-            builder =>
-        {
-            builder.OpenComponent(0, componentType);
-            //builder.AddAttribute(1, "some-parameter", "a value");
-            builder.CloseComponent();
-        };
+        //private RenderFragment RenderComponent(Type componentType) => 
+        //    builder =>
+        //{
+        //    builder.OpenComponent(0, componentType);
+        //    //builder.AddAttribute(1, "some-parameter", "a value");
+        //    builder.CloseComponent();
+        //};
 
         #endregion
 
