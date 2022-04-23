@@ -86,38 +86,38 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
 
         private void MyClosedHandler(OpenCloseMenuEventArgs<OrchestratorMenuItem> args)
         {
-            Debug.WriteLine("MyClosedeHandler method invoked");
+            //Debug.WriteLine("MyClosedeHandler method invoked");
         }
 
         private void MyCreatedHandler(object args)
         {
-            Debug.WriteLine("MyCreatedHandler method invoked");
+            //Debug.WriteLine("MyCreatedHandler method invoked");
         }
 
         private void MyItemSelectedHandler(MenuEventArgs<OrchestratorMenuItem> args)
         {
-            Debug.WriteLine("MyItemSelectedHandler method invoked");
+            //Debug.WriteLine("MyItemSelectedHandler method invoked");
             OrchestratorRef.MenuItemSelected(args.Item.ItemId);
         }
 
         private void MyOnCloseHandler(BeforeOpenCloseMenuEventArgs<OrchestratorMenuItem> args)
         {
-            Debug.WriteLine("MyOnCloseHandler method invoked");
+            //Debug.WriteLine("MyOnCloseHandler method invoked");
         }
 
         private void MyOnItemRenderHandler(MenuEventArgs<OrchestratorMenuItem> args)
         {
-            Debug.WriteLine("MyOnItemRenderHandler method invoked");
+            //Debug.WriteLine("MyOnItemRenderHandler method invoked");
         }
 
         private void MyOnOpenHandler(BeforeOpenCloseMenuEventArgs<OrchestratorMenuItem> args)
         {
-            Debug.WriteLine("MyOnOpenHandler method invoked");
+            //Debug.WriteLine("MyOnOpenHandler method invoked");
         }
 
         private void MyOpenedHandler(OpenCloseMenuEventArgs<OrchestratorMenuItem> args)
         {
-            Debug.WriteLine("MyOpenedHandler method invoked");
+            //Debug.WriteLine("MyOpenedHandler method invoked");
         }
 
         #endregion
@@ -130,12 +130,10 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         // Instance variables
         // ==================================================
 
-        private const string menuCssClass = "page__main-sidebar-menu";
+        private const string menuCssClass = "page__main-sidebar-menu";                      // CSS class assigned to the MenuBase component, used to build masterCssSelector
 
-        private MenuBase<OrchestratorMenuItem> menubase;
-        //private bool isOpen = true;
-        private Dictionary<string, object> myHtmlAttributes = new();
-        private string masterCssSelector;
+        private MenuBase<OrchestratorMenuItem> menubase;                                    // Reference to MenuBase component
+        private string masterCssSelector;                                                   // Master CSS selector prefix for styling
 
 
         #endregion

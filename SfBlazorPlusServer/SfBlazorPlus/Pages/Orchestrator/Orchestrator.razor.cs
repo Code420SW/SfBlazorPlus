@@ -171,6 +171,9 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
 
         public void MenuItemSelected(string itemId)
         {
+            Debug.WriteLine($"MenuItemSelected method invoked: itemId = { itemId }");
+
+            // Get the index of the itemId record in the OrchestratorTabs list
 
             // Determine if the Tab Item associated with the itemId is already one of the Items()
 
@@ -180,7 +183,6 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
 
             // Otherwise, have the Tab Manager add the Tab Item
 
-            Debug.WriteLine($"MenuItemSelected method invoked: itemId = { itemId }");
         }
 
         /// <summary>
@@ -193,6 +195,14 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         /// </summary>
         /// <returns>Boolean value indicating if the Sidebar is open.</returns>
         public bool IsSidebarOpen() => (sidebar is not null) ? sidebar.GetSidebarState() : initialSidebarIsOpen;
+
+        /// <summary>
+        /// Finds the index of the menuItemId record in the OrchestratorTabs list.
+        /// </summary>
+        /// <param name="menuItemId">The id of the menu item to be found.</param>
+        /// <returns>The index of the record, or -1 if not found.</returns>
+        public int FindOrchestratorTabIndex(string menuItemId) =>
+            OrchestratorTabs.FindIndex(x => x.MenuItemId == menuItemId);
 
         #endregion
 

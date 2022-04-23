@@ -22,16 +22,12 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 
         /// <summary>
         /// Contains the reference to the <see cref="Orchestrator"/> parent.
-        /// Used to subscribe to event handlers provided by the parent.
         /// </summary>
         [Parameter]
         public Orchestrator OrchestratorRef { get; set; }
 
         /// <summary>
-        /// String value specifying the name of the Orchestrator Tab component loaded when the the
-        /// Tab Manager component is loaded.
-        /// All Orchestrator Tabs must be located in the following namespace:
-        /// Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs
+        /// String value specifying the name of the Orchestrator Tab component loaded when the the Tab Manager component is loaded.
         /// </summary>
         [Parameter]
         public string InitialMenuItemId { get; set; } = default;
@@ -102,11 +98,12 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         {
             //Debug.WriteLine("MyOnRemovedHandler method invoked.");
 
+            //  Get the index of the record in OrchestratorTabs for the Tab Item being closed
+            //  If we found the record, Reset the TabIndex and IsLoaded fields for the record
             int index = OrchestratorRef.OrchestratorTabs.FindIndex(x => x.TabIndex == args.RemovedIndex);
             if (index == -1) return;
-            OrchestratorRef.OrchestratorTabs[index].TabIndex= -1;
+            OrchestratorRef.OrchestratorTabs[index].TabIndex = -1;
             OrchestratorRef.OrchestratorTabs[index].IsLoaded = false;
-            Debug.WriteLine($"MyOnRemovedHandler method invoked: Item Count = { tabbase.TabItems.Count }");
         }
 
         private void MyOnRemovingHandler(RemoveEventArgs args)
@@ -126,6 +123,7 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 
         private void MyOnSelectedItemChangedHandler(int index)
         {
+            // Update the active tab index tracker
             selectedItem = index;
             //Debug.WriteLine($"MyOnSelectedItemChangedHandler method invoked. Index = { index }");
         }
@@ -142,11 +140,10 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         // Instance variables
         // ==================================================
 
-        private const string appNamespace = "Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs";
-        private TabBase tabbase;
-        private int selectedItem = 0;
-        RenderFragment renderFragment;
-        List<TabItem> tabItem;
+        private TabBase tabbase;                        // Reference to the TabBase component
+        private List<TabItem> tabItem;                  // List of Orchestrator Tabs initially loaded by the TabeBase component
+        private int selectedItem = 0;                   // Tracks the index (in tabbase.TabItems) of the active tab
+        private int initialMenuItemIndex = -1;          // Contains index on OrchetratorTabs list for the InitialMenuItemId Orchestrator Tab
 
         #endregion
 
@@ -197,15 +194,18 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         {
             await base.OnInitializedAsync();
 
-            // Load the Tab Item associated with the passed Menu ItemId
-            //  Handle the case where the ItemId is null
-            //  Find the ItemId entry in the OrchestratorTabs dictionary and handle errors
-            //  Build the tabItem list which is passed though the TabItems parameter to TabBase
-            //if (string.IsNullOrEmpty(InitialMenuItemId)) return;
-            int index = FindOrchestratorTabIndex(InitialMenuItemId);
-            if (index == -1) return;
-            tabItem = new List<TabItem>() { OrchestratorRef.OrchestratorTabs[index].TabDefinition };
-            OrchestratorRef.OrchestratorTabs[index].IsLoaded = true;
+            //
+            //  Get the index of the InitialMenuItemId element from the OrchestratorTabs list
+            //  If the element was found, build the tabItem list (used to initialize the TabBase component)
+            //  Set the IsLoaded field for the element's record in OrchestratorTabs
+            //
+            //  NOTE: In OnAfterRenderAsync the index of the InitialMenuItemId Orchestrator Tab in the tabbase.TabItems list
+            //          will be discovered and tied back to the corresponding OrchestratorTab.TabIndex field.
+            //
+            initialMenuItemIndex = OrchestratorRef.FindOrchestratorTabIndex(InitialMenuItemId);
+            if (initialMenuItemIndex == -1) return;
+            tabItem = new List<TabItem>() { OrchestratorRef.OrchestratorTabs[initialMenuItemIndex].TabDefinition };
+            OrchestratorRef.OrchestratorTabs[initialMenuItemIndex].IsLoaded = true;
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -234,9 +234,14 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            int index = FindOrchestratorTabIndex(InitialMenuItemId);
-            if (index == -1) return;
-            OrchestratorRef.OrchestratorTabs[index].TabIndex = GetTabItemIndex(InitialMenuItemId);
+            // Only on first render...
+            //  If the index of the InitialMenuItemId element from the OrchestratorTabs list was found (in OnInitializedAsync)...
+            //      Set its TabIndex field to the index in the tabbase.TabItems list for the InitialMenuItemId.
+            if (firstRender)
+            {
+                if (initialMenuItemIndex == -1) return;
+                OrchestratorRef.OrchestratorTabs[initialMenuItemIndex].TabIndex = GetTabItemIndex(InitialMenuItemId);
+            }
         }
         #endregion
 
@@ -314,17 +319,23 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         /// <param name="index">Integer value spefifying the index of the tab to activate.</param>
         public async Task SelectAsync(int index) => await this.tabbase.SelectAsync(index);
 
+        /// <summary>
+        /// Gets the index of the last item in the TabItems list.
+        /// </summary>
+        /// <returns>Integer value representing the highest index of the TabItems list, or -1 if there are no items.</returns>
+        public int GetLastTabItemsIndex() => tabbase.TabItems.Count - 1;
+
         #endregion
 
 
 
         #region Private Methods for Internal Use Only
 
+        //
+        // Get the index of the passed Orchestrator Tab in the tabbase.TabItems list.
+        //
         private int GetTabItemIndex(string menuItemId) => 
             tabbase.TabItems.FindIndex(X => X.CssClass == menuItemId);
-
-        private int FindOrchestratorTabIndex(string menuItemId) => 
-            OrchestratorRef.OrchestratorTabs.FindIndex(x => x.MenuItemId == menuItemId);
 
         #endregion
 
