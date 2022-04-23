@@ -19,7 +19,7 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
         //
         public OrchestratorParameters()
         {
-            BuildOrchestratorTabsDictionary();
+            BuildOrchestratorTabs();
             BuildSidebarMenu();
             BuildMainMenu();
             BuildFavoritesMenu();
@@ -37,7 +37,8 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 
         public List<OrchestratorMenuItem> FavoritesMenuItems { get; private set; }
 
-        public Dictionary<string, TabItem> OrchestratorTabs { get; private set; }
+        public List<OrchestratorTabDefinition> OrchestratorTabs { get; private set; }
+
 
 
 
@@ -55,18 +56,21 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
             Debug.WriteLine("Tester hit");
         }
 
-        private void BuildOrchestratorTabsDictionary()
+        private void BuildOrchestratorTabs()
         {
-            OrchestratorTabs = new Dictionary<string, TabItem>()
+            OrchestratorTabs = new()
             {
+                new()
                 {
-                    "1201", 
-                    new TabItem()
+                    MenuItemId = "1201", 
+                    IsLoaded = false,
+                    TabIndex = -1,
+                    TabDefinition = new()
                     {
-                        CssClass="tab__hardware",
+                        CssClass="1201",
                         ContentTemplate = RenderComponent(typeof(DummyTab)),
                         Disabled=false,
-                        Header = new TabHeader()
+                        Header = new ()
                         {
                             IconCss= "",
                             IconPosition="",
@@ -76,22 +80,26 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
                     }
                 },
 
+                new()
                 {
-                    "1202",
-                    new TabItem()
+                    MenuItemId = "1202",
+                    IsLoaded = false,
+                    TabIndex = -1,
+                    TabDefinition = new()
                     {
-                        CssClass="tab__software",
+                        CssClass ="1202",
                         ContentTemplate = RenderComponent(typeof(DummyTab)),
-                        Disabled=false,
-                        Header = new TabHeader()
+                        Disabled = false,
+                        Header = new()
                         {
-                            IconCss= "",
-                            IconPosition="",
+                            IconCss = "",
+                            IconPosition = "",
                             Text = "Software"
                         },
-                        Visible=true
+                        Visible = true
                     }
                 }
+
             };
         }
 

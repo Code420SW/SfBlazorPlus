@@ -5,6 +5,7 @@ using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Navigations;
+using System.Diagnostics;
 
 namespace Code420.SfBlazorPlus.Pages.Orchestrator
 {
@@ -74,7 +75,7 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         public List<OrchestratorMenuItem> SidebarMenuItems { get => this.orchestratorParameters.SidebarMenuItems; }
         public List<OrchestratorMenuItem> MainMenuItems { get => this.orchestratorParameters.MainMenuItems; }
         public List<OrchestratorMenuItem> FavoritesMenuItems { get => this.orchestratorParameters.FavoritesMenuItems; }
-        public Dictionary<string, TabItem> OrchestratorTabs { get => this.orchestratorParameters.OrchestratorTabs; }
+        public List<OrchestratorTabDefinition> OrchestratorTabs { get => this.orchestratorParameters.OrchestratorTabs; }
 
         #endregion
 
@@ -168,15 +169,24 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         {
         }
 
+        public void MenuItemSelected(string itemId)
+        {
+
+            // Determine if the Tab Item associated with the itemId is already one of the Items()
+
+            // If so, activate the tab
+
+            // Find the highest index in the Tab Managers Item()
+
+            // Otherwise, have the Tab Manager add the Tab Item
+
+            Debug.WriteLine($"MenuItemSelected method invoked: itemId = { itemId }");
+        }
+
         /// <summary>
         /// Toggles the open/close state of the Sidebar
         /// </summary>
-        public async Task ToggleSidebarAsync()
-        {
-            await sidebar.ToggleSidebarAsync();
-            //await tabmanager.RefreshAsync();
-            //await InvokeAsync(StateHasChanged);
-        }
+        public async Task ToggleSidebarAsync() => await sidebar.ToggleSidebarAsync();
 
         /// <summary>
         /// Retrieves the current value of the Sidebar IsOpen parameter.

@@ -70,65 +70,64 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 
         private void MyAddedHandler(AddEventArgs args)
         {
-            Debug.WriteLine("MyAddedHandler method invoked.");
+            //Debug.WriteLine("MyAddedHandler method invoked.");
         }
 
         private void MyAddingHandler(AddEventArgs args)
         {
-            Debug.WriteLine("MyAddingHandler method invoked.");
+            //Debug.WriteLine("MyAddingHandler method invoked.");
         }
 
         private void MyCreatedHandler(object args)
         {
-            Debug.WriteLine("MyCreatedHandler method invoked.");
-            Debug.WriteLine($"ChildContent: { this.tabbase.ChildContent }");
+            //Debug.WriteLine("MyCreatedHandler method invoked.");
         }
 
         private void MyDestroyedHandler(object args)
         {
-            Debug.WriteLine("MyDestroyedHandler method invoked.");
+            //Debug.WriteLine("MyDestroyedHandler method invoked.");
         }
 
         private void MyDraggedHandler(DragEventArgs args)
         {
-            Debug.WriteLine("MyDraggedHandler method invoked.");
+            //Debug.WriteLine("MyDraggedHandler method invoked.");
         }
 
         private void MyOnDragStartHandler(DragEventArgs args)
         {
-            Debug.WriteLine("MyOnDragStartHandler method invoked.");
+            //Debug.WriteLine("MyOnDragStartHandler method invoked.");
         }
 
         private void MyOnRemovedHandler(RemoveEventArgs args)
         {
-            Debug.WriteLine("MyOnRemovedHandler method invoked.");
+            //Debug.WriteLine("MyOnRemovedHandler method invoked.");
+
+            int index = OrchestratorRef.OrchestratorTabs.FindIndex(x => x.TabIndex == args.RemovedIndex);
+            if (index == -1) return;
+            OrchestratorRef.OrchestratorTabs[index].TabIndex= -1;
+            OrchestratorRef.OrchestratorTabs[index].IsLoaded = false;
+            Debug.WriteLine($"MyOnRemovedHandler method invoked: Item Count = { tabbase.TabItems.Count }");
         }
 
         private void MyOnRemovingHandler(RemoveEventArgs args)
         {
-            Debug.WriteLine("MyOnRemovingHandler method invoked.");
+            //Debug.WriteLine("MyOnRemovingHandler method invoked.");
         }
 
         private void MyOnSelectedHandler(SelectEventArgs args)
         {
-            Debug.WriteLine($"MyOnSelectedHandler method invoked. Index = { selectedItem }");
-            //var junk = await this.TabObj.GetTabContentAsync(selectedItem);
-            //string[] tempString = { "my_dummy_class" };
-            //await junk.AddClass(tempString);
-            //StateHasChanged();
-            //var classList = await junk.GetClassList();
-            //Debug.WriteLine($"Content = { classList }");
+            //Debug.WriteLine($"MyOnSelectedHandler method invoked. Index = { selectedItem }");
         }
 
         private void MyOnSelectingHandler(SelectingEventArgs args)
         {
-            Debug.WriteLine("MyOnSelectingHandler method invoked.");
+            //Debug.WriteLine("MyOnSelectingHandler method invoked.");
         }
 
         private void MyOnSelectedItemChangedHandler(int index)
         {
             selectedItem = index;
-            Debug.WriteLine($"MyOnSelectedItemChangedHandler method invoked. Index = { index }");
+            //Debug.WriteLine($"MyOnSelectedItemChangedHandler method invoked. Index = { index }");
         }
 
 
@@ -198,43 +197,15 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         {
             await base.OnInitializedAsync();
 
-            //
-            if (string.IsNullOrEmpty(InitialMenuItemId)) return;
-
-            //
-            //OrchestratorMenuItem defaultMenuItem = OrchestratorRef.SidebarMenuItems.FirstOrDefault(x => x.ItemId == InitialMenuItemId);
-
-            //Type? myComponent1 = ResolveComponent(defaultMenuItem.ComponentName);
-
-            TabItem? componentTabItem;
-            //Type? component = null;
-            if (OrchestratorRef.OrchestratorTabs.TryGetValue(InitialMenuItemId, out componentTabItem) is false) return;
-
-            tabItem = new List<TabItem>() { componentTabItem };
-            //component = ResolveComponent(componentName);
-            //if (component is null) return;
-            //renderFragment = RenderComponent(typeof(DummyTab));
-
-            //
-            //tabItem = new()
-            //{
-            //    new TabItem
-            //    {
-            //        CssClass="tab__hardware",
-            //        ContentTemplate = renderFragment,
-            //        Disabled=false,
-            //        Header = new TabHeader() 
-            //        { 
-            //            IconCss= "",
-            //            IconPosition="",
-            //            Text = "Default Tab"
-            //        },
-            //        Visible=true
-            //    }
-            //};
-
-            //await AddTabAsync(tabItem, 1);
-
+            // Load the Tab Item associated with the passed Menu ItemId
+            //  Handle the case where the ItemId is null
+            //  Find the ItemId entry in the OrchestratorTabs dictionary and handle errors
+            //  Build the tabItem list which is passed though the TabItems parameter to TabBase
+            //if (string.IsNullOrEmpty(InitialMenuItemId)) return;
+            int index = FindOrchestratorTabIndex(InitialMenuItemId);
+            if (index == -1) return;
+            tabItem = new List<TabItem>() { OrchestratorRef.OrchestratorTabs[index].TabDefinition };
+            OrchestratorRef.OrchestratorTabs[index].IsLoaded = true;
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -262,6 +233,10 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
+
+            int index = FindOrchestratorTabIndex(InitialMenuItemId);
+            if (index == -1) return;
+            OrchestratorRef.OrchestratorTabs[index].TabIndex = GetTabItemIndex(InitialMenuItemId);
         }
         #endregion
 
@@ -345,19 +320,11 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 
         #region Private Methods for Internal Use Only
 
-        //private Type? ResolveComponent(string componentName)
-        //{
-        //    return string.IsNullOrEmpty(componentName) ? null
-        //        : Type.GetType($"{appNamespace}.{componentName}.{componentName}");
-        //}
+        private int GetTabItemIndex(string menuItemId) => 
+            tabbase.TabItems.FindIndex(X => X.CssClass == menuItemId);
 
-        //private RenderFragment RenderComponent(Type componentType) => 
-        //    builder =>
-        //{
-        //    builder.OpenComponent(0, componentType);
-        //    //builder.AddAttribute(1, "some-parameter", "a value");
-        //    builder.CloseComponent();
-        //};
+        private int FindOrchestratorTabIndex(string menuItemId) => 
+            OrchestratorRef.OrchestratorTabs.FindIndex(x => x.MenuItemId == menuItemId);
 
         #endregion
 

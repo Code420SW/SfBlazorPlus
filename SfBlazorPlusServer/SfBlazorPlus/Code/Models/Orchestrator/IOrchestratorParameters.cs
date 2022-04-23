@@ -8,6 +8,6 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
         List<OrchestratorMenuItem> SidebarMenuItems { get; }
         List<OrchestratorMenuItem> MainMenuItems { get; }
         List<OrchestratorMenuItem> FavoritesMenuItems { get; }
-        Dictionary<string, TabItem> OrchestratorTabs { get; }
+        List<OrchestratorTabDefinition> OrchestratorTabs { get; }
     }
 }
