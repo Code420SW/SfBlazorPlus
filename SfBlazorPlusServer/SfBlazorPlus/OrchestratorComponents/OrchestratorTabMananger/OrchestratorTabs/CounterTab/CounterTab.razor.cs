@@ -1,64 +1,23 @@
-﻿using Code420.SfBlazorPlus.BaseComponents.SidebarBase;
-using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu;
-using Code420.SfBlazorPlus.Pages.Orchestrator;
+﻿using Code420.SfBlazorPlus.BaseComponents.ButtonBase;
+using Code420.SfBlazorPlus.BaseComponents.LabelBase;
+using Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp;
 using Microsoft.AspNetCore.Components;
-using System.Diagnostics;
-using ChangeEventArgs = Syncfusion.Blazor.Navigations.ChangeEventArgs;
-using EventArgs = Syncfusion.Blazor.Navigations.EventArgs;
 
-namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
+namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger.OrchestratorTabs.CounterTab
 {
     /// <summary>
-    /// Provides a container for the OrchestratorMenu component.
-    /// Responds to events from the OrchestratorSidebarButton (via the Orchestrator) to
-    /// change the state (opened/closed) of the Sidebar.
-    /// Provides a public method the return the current state of the Sidebar.
+    /// This SPA is a revised version of the Blazor OOB SPA that has been
+    /// customized to conform to the preferred structure and demonstrate
+    /// use of the Help System component CounterHelp as well as the
+    /// LabelBase and ButtonBase components.
     /// </summary>
-    public partial class OrchestratorSidebar : ComponentBase
+    public partial class CounterTab : ComponentBase
     {
 
         #region Component Parameters
-
-        #region Base Parameters
-
-        // ==================================================
-        // Base Parameters
-        // ==================================================
-
-        /// <summary>
-        /// Contains the reference to the <see cref="Orchestrator"/> parent.
-        /// Used to subscribe to event handlers provided by the parent.
-        /// </summary>
-        [Parameter] 
-        public Orchestrator OrchestratorRef { get; set; }
-
-        /// <summary>
-        /// Boolean value setting the initial state of the IsOpen parameter.
-        /// </summary>
-        [Parameter]
-        public bool InitialSidebarIsOpen { get; set; }
-
-        #endregion
-
-
-        #region Event Callback Parameters
-
-        // ==================================================
-        // Event Callback Parameters
-        // ==================================================
-
-
-        #endregion
-
-
-        #region CSS Parameters
-
-        // ==================================================
-        // CSS Styling Parameters
-        // ==================================================
-
-
-        #endregion
+        //
+        // Parameters
+        //
 
         #endregion
 
@@ -70,36 +29,11 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
         // Methods used as Callback Events from the underlying component(s)
         // ==================================================
 
-        public async Task MyChangedHandler(ChangeEventArgs args)
-        {
-            Debug.WriteLine("MyChangedHandler method invoked.");
-        }
-
-        private async Task MyCreatedHandler(object args)
-        {
-            Debug.WriteLine("MyCreatedHandler method invoked.");
-        }
-
-        private async Task MyDestroyedHandler(object args)
-        {
-            Debug.WriteLine("MyDestroyedHandler method invoked.");
-        }
-
-        private async Task MyIsOpenChangedHandler(bool state)
-        {
-            Debug.WriteLine("MyIsOpenChangedHandler method invoked.");
-            isOpen = state;
-        }
-
-        private async Task MyOnCloseHandler(EventArgs args)
-        {
-            Debug.WriteLine("MyOnCloseHandler method invoked.");
-        }
-
-        private async Task MyOnOpenHandler(EventArgs args)
-        {
-            Debug.WriteLine("MyOnOpenHandler method invoked.");
-        }
+        /// <summary>
+        /// An <see cref="EventCallback"/> cast as an <see cref="Action"/> that encapsulated
+        /// consumer's method called when the button is clicked.
+        /// </summary>
+        //public void Click() => OnClick.Invoke();
 
         #endregion
 
@@ -111,12 +45,12 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
         // Instance variables
         // ==================================================
 
-        private const string sidebarCssClass = "page__main-sidebar";
-        private SidebarBase sidebarbase;                                                        // Reference to the SidebarBase component
-        private OrchestratorMenu.OrchestratorMenu menu;                                         // Reference to the OrchestratorMenu component
-
-        private bool isOpen;                                                                    // Indicates if the Sidebar is opened/closed
-        private Dictionary<string, object> myHtmlAttributes = new();       // Discionary passed to SidebarBase
+        private int currentCount = 0;
+        private CounterHelp helpCounter;
+        private LabelBase labelPageHeader;
+        private LabelBase labelCounterDisplay;
+        private LabelBase labelCurrentCount;
+        private ButtonBase buttonCounter;
 
         #endregion
 
@@ -132,7 +66,6 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
 
 
         #endregion
-
 
 
         #region Constructors
@@ -152,23 +85,22 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             await base.SetParametersAsync(parameters);
+
         }
 
         // Once the state from the ParameterCollection has been assigned to the component’s
-        //  [Parameter] properties, these methods are executed. This is useful in the same way
+        //  [Parameter] properties, this method is executed. This is useful in the same way
         //  as SetParametersAsync, except it is possible to use the component’s state.
-        // This method is only executed once when the component is first created.If the parent
+        // This method is only executed once when the component is first created. If the parent
         //  changes the component’s parameters at a later time, this method is skipped.
         // When the component is a @page, and our Blazor app navigates to a new URL that renders
-        //  the same page, Blazor will reuse the current object instance for that page.Because the
+        //  the same page, Blazor will reuse the current object instance for that page. Because the
         //  object is the same instance, Blazor does not call IDisposable.Dispose on the object,
         //  nor does it execute its OnInitialized method again.
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
 
-            // Set the initial state of the IsOpen parameter
-            isOpen = InitialSidebarIsOpen;
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -201,29 +133,24 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar
         #endregion
 
 
-
         #region Public Methods Providing Access to the Underlying Components to the Consumer
 
         // ==================================================
         // Public Methods providing access to the underlying component to the consumer
         // ==================================================
 
-        /// <summary>
-        /// Opens/Closes the sidebar.
-        /// </summary>
-        public async Task ToggleSidebarAsync()
-        {
-            isOpen = !isOpen;
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public bool GetSidebarState() => isOpen;
-
         #endregion
 
 
 
         #region Private Methods for Internal Use Only
+
+        private void IncrementCount()
+        {
+            currentCount++;
+            this.labelCurrentCount.SetLabelText(currentCount.ToString());
+        }
+
         #endregion
 
     }

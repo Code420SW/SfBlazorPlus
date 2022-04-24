@@ -7,6 +7,16 @@ using Code420.SfBlazorPlus.Code.Models.Menus;
 
 namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
 {
+    /// <summary>
+    /// Provides the menuing system used by the Orchestrator and containerized the MenuBase component.
+    /// Handles events (menu selections) by passing the events to the Orchestrator.
+    /// The menu is tied to the OrchestratorSidebar in that its SidebarCssClass is used to
+    /// generate its masterCssSelector so that the menu popups are adjusted based on the
+    /// state (opened/closed) of the Sidebar.
+    /// 
+    /// Need to work on decoupling this linkage to OrchestratorSidebar to this component
+    /// can be used in other situations (e.g., horizontal menu in the header).
+    /// </summary>
     public partial class OrchestratorMenu : ComponentBase
     {
 

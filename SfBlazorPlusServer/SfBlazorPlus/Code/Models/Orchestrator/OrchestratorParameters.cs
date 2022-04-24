@@ -1,22 +1,38 @@
 ﻿using System.Diagnostics;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab;
+using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger.OrchestratorTabs.CounterTab;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Navigations;
 using Code420.SfBlazorPlus.Code.Models.Menus;
 
 namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 {
+    /// <summary>
+    /// Containerizes all the data structures used by the Orchestrator.
+    /// Responsible for initializing the data structures by the constructor.
+    /// Injected into the Orchestrator component through an AddScoped DI definition.
+    /// 
+    /// NOTES: 
+    ///     1.  Since the components used in the Tab Items are defined in BuildOrchestratorTabs(), 
+    ///         make sure the using statements are correct.
+    ///     2.  The linake between a Menu Item and the Tab Item loaded is through the Menu Item's
+    ///         ItemId field and the Tab Item's CssClass field. These two must match for things to work.
+    /// </summary>
     public class OrchestratorParameters : IOrchestratorParameters
     {
-        
-        //
+
+        #region Instance Variables
+
+        // ==================================================
         // Instance variables
-        //
+        // ==================================================
+
+        #endregion
 
 
-        // 
-        // Constructor
-        //
+
+        #region Constructors
+
         public OrchestratorParameters()
         {
             BuildOrchestratorTabs();
@@ -26,10 +42,11 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
             //Tester();
         }
 
+        #endregion
 
-        // 
-        // Properties
-        //
+
+
+        #region Public Properties
 
         public List<OrchestratorMenuItem> SidebarMenuItems { get; private set; }
 
@@ -39,17 +56,21 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 
         public List<OrchestratorTabDefinition> OrchestratorTabs { get; private set; }
 
+        #endregion
 
 
 
-        // 
-        // Public Methods
-        //
+        #region Public Methods Providing Access to the Underlying Components to the Consumer
+
+        // ==================================================
+        // Public Methods providing access to the underlying component to the consumer
+        // ==================================================
+
+        #endregion
 
 
-        //
-        // Private Methods
-        //
+
+        #region Private Methods for Internal Use Only
 
         private void Tester()
         {
@@ -62,19 +83,19 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
             {
                 new()
                 {
-                    MenuItemId = "1201", 
+                    MenuItemId = "4000", 
                     IsLoaded = false,
                     TabIndex = -1,
                     TabDefinition = new()
                     {
-                        CssClass="1201",
+                        CssClass="4000",
                         ContentTemplate = RenderComponent(typeof(DummyTab)),
                         Disabled=false,
                         Header = new ()
                         {
                             IconCss= "",
                             IconPosition="",
-                            Text = "Hardware"
+                            Text = "Dummy Tab"
                         },
                         Visible=true
                     }
@@ -88,13 +109,13 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
                     TabDefinition = new()
                     {
                         CssClass ="1202",
-                        ContentTemplate = RenderComponent(typeof(DummyTab)),
+                        ContentTemplate = RenderComponent(typeof(CounterTab)),
                         Disabled = false,
                         Header = new()
                         {
                             IconCss = "",
                             IconPosition = "",
-                            Text = "Software"
+                            Text = "Counter"
                         },
                         Visible = true
                     }
@@ -135,7 +156,7 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
                                 },
                                 new OrchestratorMenuItem() 
                                 { 
-                                    MenuText = "Software", 
+                                    MenuText = "Counter", 
                                     ItemId = "1202", 
                                     ParentId = "1101" 
                                 }
@@ -204,7 +225,7 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 
                 new OrchestratorMenuItem
                 {
-                    MenuText = "Contact Us",
+                    MenuText = "Dummy Tab",
                     IsDisabled = false ,
                     IsHidden = false,
                     IconCss = "oi oi-bug",
@@ -230,5 +251,7 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
                 builder.OpenComponent(0, componentType);
                 builder.CloseComponent();
             };
+
+        #endregion
     }
 }

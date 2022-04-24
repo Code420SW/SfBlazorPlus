@@ -1,0 +1,125 @@
+﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger.OrchestratorTabs.CounterTab
+
+@using Code420.SfBlazorPlus.BaseComponents.LabelBase
+@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
+@using Code420.SfBlazorPlus.CompositeComponents.HelpSystem.CounterHelp
+
+<PageTitle>Counter</PageTitle>
+
+<!--
+    Simple page layout.
+    Outer div establishes a grid to containerize the page elements.
+    Each row in the grid is a flexbox in which components are placed
+    Use the component's margin parameter to adjust position in the row
+-->
+<!-- START-- Layout Grid -->
+<div id="grid-main" class="grid__main">
+
+    <!-- Page Title -->
+    <div class="flex__row header__page-title">
+
+        <LabelBase  @ref=@labelPageHeader
+                    LabelText="Counter"
+                    FontSize="1.5rem"
+                    FontColor="var(--mydarkgreen)"
+                    FontWeight="600"
+                    FontStyle="normal"
+
+                    TextAlign="left"
+                    TextDecoration="none"
+                    TextTransform="capitalize"
+
+                    CssClass="label__page-header"
+                    LabelBackgroundColor="inherit"
+                    LabelBorder="none"
+                    LabelBorderRadius="0px"
+                    LabelMargin="0px 0px 1.5rem 0px"
+                    LabelPadding="0px 1rem 0px 0px"/>
+            
+        <!-- Inject the custom help system component for the Register Metrc Tag SPA -->
+        <CounterHelp    @ref=helpCounter
+                        HelpButtonDisabled=false>
+        </CounterHelp>
+    </div>
+
+    <div class="flex__row counter-display">
+        <LabelBase  @ref=@labelCounterDisplay
+                    LabelText="Current Count:"
+                    FontSize="1rem"
+                    FontColor="var(--mydarkgreen)"
+                    FontWeight="normal"
+                    FontStyle="normal"
+
+                    TextAlign="left"
+                    TextDecoration="none"
+                    TextTransform="none"
+
+                    CssClass="label__counter-display"
+                    LabelBackgroundColor="inherit"
+                    LabelBorder="none"
+                    LabelBorderRadius="0px"
+                    LabelMargin="0px"
+                    LabelPadding="0px 0px 1em 0px"/>
+
+        <LabelBase  @ref=@labelCurrentCount
+                    LabelText="0"
+                    FontSize="1rem"
+                    FontColor="inherit"
+                    FontWeight="normal"
+                    FontStyle="normal"
+
+                    TextAlign="left"
+                    TextDecoration="none"
+                    TextTransform="none"
+
+                    CssClass="label__current-count"
+                    LabelBackgroundColor="inherit"
+                    LabelBorder="none"
+                    LabelBorderRadius="0px"
+                    LabelMargin="0px"
+                    LabelPadding="0px 0px 0px 5px"/>
+    </div>
+
+    <div class="flex__row counter-button">
+        <ButtonBase @ref=@buttonCounter
+                    IsPrimary=false
+
+                    OnClick=@IncrementCount
+
+                    CssClass="button__click-me"
+                    ButtonNormalBackgroundColor="var(--mydarkbrown)"
+                    ButtonActiveBackgroundColor="var(--mydarkgreen)"
+                    ButtonHoverBackgroundColor="var(--mydarkgreen)"
+                    ButtonActiveBorderColor="var(--mydarkbrown)"
+                    HoverScale=1.1m
+                    Margin=".75em 0px"
+                    Padding="4px 8px"
+                    >
+            <ContentFragment>
+                Press Me
+            </ContentFragment>
+
+        </ButtonBase>
+    </div>
+
+</div>
+        
+        
+
+@*<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>*@
+
+
+<style>
+
+    .grid-main {
+        display: grid;
+    }
+
+    .flex__row {
+        display: flex;
+        flex-direction: row;
+    }
+
+</style>

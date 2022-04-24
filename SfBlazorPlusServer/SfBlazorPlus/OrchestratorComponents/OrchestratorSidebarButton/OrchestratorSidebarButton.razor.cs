@@ -5,6 +5,11 @@ using System.Diagnostics;
 
 namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton
 {
+    /// <summary>
+    /// Provides the mechanism to change the state (opened/closed) of the OrchestratorSidebar.
+    /// Will handle events *button clicks) and make appropriate calls through the Orchestrator to coordinate events.
+    /// All queries regarding the state/status of the Sidebar are made through Orchestrator methods.
+    /// </summary>
     public partial class OrchestratorSidebarButton : ComponentBase
     {
 

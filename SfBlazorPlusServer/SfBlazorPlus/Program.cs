@@ -17,7 +17,7 @@ builder.Services.AddSyncfusionBlazor();
 
 // Our Dependencies
 builder.Services.AddTransient<ICssUtilities, CssUtilities>();
-builder.Services.AddTransient<IOrchestratorParameters, OrchestratorParameters>();
+builder.Services.AddScoped<IOrchestratorParameters, OrchestratorParameters>();
 
 
 
