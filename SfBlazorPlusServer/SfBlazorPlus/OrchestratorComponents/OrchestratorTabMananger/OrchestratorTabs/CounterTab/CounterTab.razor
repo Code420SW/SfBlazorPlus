@@ -13,10 +13,10 @@
     Use the component's margin parameter to adjust position in the row
 -->
 <!-- START-- Layout Grid -->
-<div id="grid-main" class="grid__main">
+<div id="tab-counter" class="grid__counter-tab">
 
     <!-- Page Title -->
-    <div class="flex__row header__page-title">
+    <div class="flex__row-counter-tab header__page-title">
 
         <LabelBase  @ref=@labelPageHeader
                     LabelText="Counter"
@@ -42,7 +42,7 @@
         </CounterHelp>
     </div>
 
-    <div class="flex__row counter-display">
+    <div class="flex__row-counter-tab counter-display">
         <LabelBase  @ref=@labelCounterDisplay
                     LabelText="Current Count:"
                     FontSize="1rem"
@@ -80,7 +80,7 @@
                     LabelPadding="0px 0px 0px 5px"/>
     </div>
 
-    <div class="flex__row counter-button">
+    <div class="flex__row-counter-tab counter-button">
         <ButtonBase @ref=@buttonCounter
                     IsPrimary=false
 
@@ -113,11 +113,12 @@
 
 <style>
 
-    .grid-main {
+    .grid__counter-tab {
         display: grid;
+        margin: 2em;
     }
 
-    .flex__row {
+    .flex__row-counter-tab {
         display: flex;
         flex-direction: row;
     }

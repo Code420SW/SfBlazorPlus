@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger.OrchestratorTabs.CounterTab;
+using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger.OrchestratorTabs.CounterStateMachineTab;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Navigations;
 using Code420.SfBlazorPlus.Code.Models.Menus;
@@ -103,12 +104,12 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 
                 new()
                 {
-                    MenuItemId = "1202",
+                    MenuItemId = "1001",
                     IsLoaded = false,
                     TabIndex = -1,
                     TabDefinition = new()
                     {
-                        CssClass ="1202",
+                        CssClass ="1001",
                         ContentTemplate = RenderComponent(typeof(CounterTab)),
                         Disabled = false,
                         Header = new()
@@ -116,6 +117,26 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
                             IconCss = "",
                             IconPosition = "",
                             Text = "Counter"
+                        },
+                        Visible = true
+                    }
+                },
+
+                new()
+                {
+                    MenuItemId = "1002",
+                    IsLoaded = false,
+                    TabIndex = -1,
+                    TabDefinition = new()
+                    {
+                        CssClass = "1002",
+                        ContentTemplate = RenderComponent(typeof(CounterStateMachineTab)),
+                        Disabled = false,
+                        Header = new()
+                        {
+                            IconCss = "",
+                            IconPosition = "",
+                            Text = "Counter State Machine"
                         },
                         Visible = true
                     }
@@ -130,7 +151,7 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
             {
                 new OrchestratorMenuItem
                 {
-                    MenuText = "Company",
+                    MenuText = "Counter Tests",
                     IsDisabled = false,
                     IsHidden = false,
                     IconCss = "oi oi-aperture",
@@ -138,55 +159,16 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
                     ParentId = null,
                     SubMenu = new List<OrchestratorMenuItem>
                     {
-                        new OrchestratorMenuItem
+                        new OrchestratorMenuItem()
                         {
-                            MenuText= "Overview",
-                            IsDisabled = false,
-                            IsHidden = false,
-                            IconCss = "oi oi-badge",
-                            ItemId = "1101",
-                            ParentId = "1000",
-                            SubMenu = new List<OrchestratorMenuItem>
-                            {
-                                new OrchestratorMenuItem()
-                                { 
-                                    MenuText = "Hardware", 
-                                    ItemId = "1201", 
-                                    ParentId = "1101"
-                                },
-                                new OrchestratorMenuItem() 
-                                { 
-                                    MenuText = "Counter", 
-                                    ItemId = "1202", 
-                                    ParentId = "1101" 
-                                }
-                            }
-                        },
-
-                        new OrchestratorMenuItem
-                        {
-                            MenuText= "Careers",
-                            IsDisabled = false,
-                            IsHidden = false,
-                            IconCss = "oi oi-basket",
-                            ItemId = "1102",
+                            MenuText = "Counter",
+                            ItemId = "1001",
                             ParentId = "1000"
                         },
-
-                        new OrchestratorMenuItem
+                        new OrchestratorMenuItem()
                         {
-                            ItemId = "1199",
-                            ParentId = "1000",
-                            IsSeparator = true
-                        },
-
-                        new OrchestratorMenuItem
-                        {
-                            MenuText= "About",
-                            IsDisabled = false,
-                            IsHidden = false,
-                            IconCss = "oi oi-ban",
-                            ItemId = "1103",
+                            MenuText = "Counter State Machine",
+                            ItemId = "1002",
                             ParentId = "1000"
                         }
                     }
