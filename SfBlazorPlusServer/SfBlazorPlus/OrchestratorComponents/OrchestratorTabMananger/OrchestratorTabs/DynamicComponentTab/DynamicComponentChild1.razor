@@ -1,0 +1,170 @@
+﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DynamicComponentTab
+
+@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
+@using Code420.SfBlazorPlus.BaseComponents.LabelBase
+@using Code420.SfBlazorPlus.BaseComponents.MaskedTextboxBase
+@using Code420.SfBlazorPlus.Code.Enums
+@using Code420.SfBlazorPlus.Code.Models
+@using Syncfusion.Blazor.Inputs
+
+<!--
+    THIS IS NOT AN EXAMPLE OF PRODUCTION CODE...IT IS A DEMO
+
+    This child component collects the display name for the user and stores it in the
+    DataSource parameter. It is the first in a series of progressive data collection
+    elements.
+
+    A LabelBase displays a simple message.
+
+    A MaskedTextboxBase component is used instead of a textbox. MaskedTextBoxBase offers
+    a few more capabilities than a textbox including the prompts.
+
+    A single ButtonBase offers the user the sole choice of moving forward through
+    the progression.
+-->
+
+<LabelBase  @ref=@labelRef
+            LabelText="You will be asked to select the NFL Super Bowl winner. We will start by getting your name."
+            CssClass="label__ref"
+            FontSize="1em"
+            FontColor="black"
+            LabelPadding="5px 0px 10px 0px"
+            >
+</LabelBase>
+
+<MaskedTextboxBase  @ref=@maskedTextboxBase
+                    Value=@dummyTextboxValue
+                    Enabled=true
+                    Mask=""
+                    FloatLabelType=@textboxFloatLabelType
+                    Placeholder=@textboxPlaceholderPrompt
+                    PromptCharacter="#"
+                    ReadOnly=false
+                    ShowClearButton=true 
+                    TabIndex=1
+                    Width="300px"
+                    Height="29px"
+                                    
+                    Created=@(() => OnTextboxCreatedAsync()) 
+                    ValueChange=@((e) => OnTextboxValueChange(e.Value))
+                    Blur=@((e) => OnTextboxBlurAsync(e.Value))
+                    Focus=@((e) => OnTextboxFocusAsync(e.SelectionStart, e.SelectionEnd, e.Value))
+
+                    CssId="register-tag__beginning" 
+                    CssClass="tag__beginning"
+                    TextboxMargin="2rem 0px 0px 0px"
+
+                    TextboxBackgroundColor="whitesmoke"
+                    TextboxBorderColor="var(--mydarkbrown)"
+                    TextboxActiveBorderColor="var(--mylightbrown)"
+                    TextboxFontColor="var(--mydarkgreen)"
+                    
+                    PlaceholderFontSize="14px"
+                    PlaceholderFontWeight="400"
+                    PlaceholderNormalColor="var(--mylightgreen)"
+                    PlaceholderFloatingFontSize="14px"
+                    PlaceholderFloatingFontWeight="500"
+                    PlaceholderFloatingColor="var(--mydarkgreen)"
+                    >
+</MaskedTextboxBase>
+
+<ButtonBase @ref=@buttonNext
+            IsPrimary=true
+            CssClass="button__next"
+            OnClick=@StepForward
+            Margin="2em 0em 1em 0em"
+            Padding=".25em .5em"
+            TextFontSize="1em"
+            >
+    <ContentFragment>Next Step</ContentFragment>
+</ButtonBase>
+
+@code 
+{
+
+    //
+    // These two parameters establish the callbacks to the parent to
+    // indicate if the user wants to step forward/back through the
+    // progression.
+    //
+    [Parameter]
+    public Action StepForward { get; set; }
+
+    [Parameter]
+    public Action StepBack { get; set; }
+
+    [Parameter]
+    public NflPicks DataSource { get; set; }
+
+
+
+    //
+    // Instance variables
+    //
+    private LabelBase labelRef;                                                                     // I am in the habit of declaring refernce variables for child components
+    private LabelBase labelFooter;
+    private ButtonBase buttonNext;
+    private ButtonBase buttonPrevious;
+    private MaskedTextboxBase maskedTextboxBase;
+
+    private const string textboxPlaceholderPrompt = "Enter your name for display purposes...";      // Placeholder displayed when the textbox is inactive and empty
+    private const string textboxPlaceholderLabel = "Your Display Name:";                            // Label displayed above the textbox when it is active, or inactive and not empty
+    private string dummyTextboxValue;                                                               // Contents of the textbox since it is not a full value when a mask is being used...just the unmasked part
+    private FloatLabelType textboxFloatLabelType = FloatLabelType.Auto;                             // FloatLabelType setting for the textbox
+
+
+
+        
+
+    //
+    // Fired when the Beginning Tag textbox is created
+    //
+    private async Task OnTextboxCreatedAsync()
+    {
+        // Initialize sbCheckedValue
+        dummyTextboxValue = DataSource.DisplayName;
+
+        // Set the focus to the textbox
+        await this.maskedTextboxBase.FocusAsync();
+    }
+
+    //
+    // Fired when there are changes to the textbox contents and focus is lost
+    //
+    private void OnTextboxValueChange(string value)
+    {
+        // Save the value to the instance variable and the BO
+        this.dummyTextboxValue = this.DataSource.DisplayName = value;
+    }
+
+
+    // 
+    // Fired when the textbox loses focus
+    //
+    private async Task OnTextboxBlurAsync(string value)
+    {
+        // Handle the case where the FloatLabelType is Auto...
+        // If the contents is not empty then update the components Placeholder to the const defined for the Placeholder Prompt
+        //  which will be displayed inside the textbox.
+        if (this.textboxFloatLabelType == FloatLabelType.Auto && (this.dummyTextboxValue is null || this.dummyTextboxValue == ""))
+        {
+            await this.maskedTextboxBase.UpdatePlaceholderAsync(textboxPlaceholderPrompt);
+        }
+    }
+
+    //
+    // Fired when the textbox gains focus
+    //
+    private async Task OnTextboxFocusAsync(int start, int end, string value)
+    {
+        // Handle the case where the FloatLabelType is Auto...
+        // Update the components Placeholder to the const defined for the Placeholder Label
+        //  which will be displayed above the textbox.
+        if (this.textboxFloatLabelType == FloatLabelType.Auto)
+        {
+            await this.maskedTextboxBase.UpdatePlaceholderAsync(textboxPlaceholderLabel);
+        }
+
+    }
+
+}

@@ -1,0 +1,234 @@
+﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DynamicComponentTab
+
+@using Code420.SfBlazorPlus.BaseComponents.LabelBase
+@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
+@using Code420.SfBlazorPlus.BaseComponents.SimpleCardBase
+@using Code420.SfBlazorPlus.Code.Enums
+@using Code420.SfBlazorPlus.Code.Models
+@using Code420.SfBlazorPlus.CustomComponents.StepProgressIndicator
+@using System.Diagnostics
+
+<!--
+    THIS IS NOT AN EXAMPLE OF PRODUCTION CODE...IT IS A DEMO
+
+    This is a composite component that allows the user to move through a progression of 
+    related data collection step. The user can move forward and backwards through the
+    progression.
+
+    The SimpleCardBase component encapsulates the static and dynamic child components.
+
+    The header section of the card renders the StepProgressIndicator component which
+    displays a series of dots. Each dot represents a step in the progression with the
+    dot representing the current (active) progression step rendered in a different color
+    that the rest of the (inactive) dots. As the user moves forward/backwards through the
+    progression, the callbacl methods invoked by the child components (details below)
+    invokes the StepProgressIndicator's SetActiveIndicator() method.
+
+    The body section of the card does nothing but render a Dynamic Component. The code-behind
+    builds a list of ChildComponent containing the series of child components in the
+    data collection progression. The list is build in the OnInitializedAsync() constructor.
+
+    Each ChildComponent contains the identifier for a child component and a dictionary of
+    parameters passed to the child. For this demonstration each child accepts the same set
+    of parameters: StepForward (all but last child), StepBack (all but first child) and DataSource. 
+
+    The StepForward and StepBack parameters are callbacks to the OnStepForwardClick() and
+    OnStepBackClick() methods in the code-behind.
+
+    The last child receives the OnDoneClick method instead of StepForward since it will change
+    the parent Page State Machine to the Error state. OnDoneClick is a local method which
+    invokes the method passed in through the ChangePageState parameter.
+
+    The DataSource parameter passes a class instatiated in the parent and passed in through 
+    the DataSource parameter. It is passed to the child  components. The data elements collected 
+    in the child components are stored in the class.
+
+    The footer section of the card contains a LabelBase component with nothing significant.
+-->
+
+<SimpleCardBase @ref=@cardContainer
+
+                CardBorderRadius="4px"
+                CardBorder="2px solid #ccc"
+                CardMargin="50px auto"
+                CardPadding="0px"
+                CardHeight="auto"
+                CardWidth="400px"
+                CardFontSize="14px"
+
+                HeaderBackground="whitesmoke"
+                HeaderMinimumHeight="auto"
+                HeaderPadding="5px"
+
+                HeaderSeparatorBottomBorder="1px solid var(--mydarkgreen)"
+
+                ContentBackground="var(--mybeige)"
+                ContentPadding="20px 10px 10px 10px"
+                ContentMinimumHeight="170px"
+
+                FooterBackground="whitesmoke"
+
+                FooterSeparatorTopBorder="1px solid var(--mydarkgreen)"
+
+                CssClass="card__dynamic-component"
+                >
+
+    <HeaderContent>
+        <StepProgressIndicator  @ref=@stepIndicator
+                                CssClass="container__indicators"
+                                IndicatorCount=3
+                                ActiveIndicator=1
+                                IndicatorHeight="1em"
+                                ContainerHeight="auto"
+                                ContainerBottomBorder="none"
+                                ActiveIndicatorBackground="var(--mydarkgreen)"
+                                InactiveIndicatorBackground="var(--mydarkbrown)"
+                                >
+        </StepProgressIndicator>
+    </HeaderContent>
+
+    <BodyContent>
+        <DynamicComponent   Type=@(Type.GetType(childComponents[indexCurrentChild].CType))
+                            Parameters=@childComponents[indexCurrentChild].Params
+                            >
+        </DynamicComponent>
+    </BodyContent>
+
+    <FooterContent>
+        <LabelBase  @ref=@labelFooter
+                    LabelText="This is a SimpleCardBase providing Header, Body and Footer content. All are optional.
+                                This page demonstrates using the StepProgressIndicator component in the Header and 
+                                using a series of Dynamic Components in the Body."
+                    CssClass="label__footer"
+                    FontSize=".8em"
+                    FontColor="var(--mydarkgreen)"
+                    LabelPadding=".75em"
+                    >
+        </LabelBase>
+    </FooterContent>
+
+</SimpleCardBase>
+
+
+
+@code 
+{
+    //
+    // This parameter needed to callback to the parent SPA deploying the
+    // PageStateManager so, as needed, this component can signal changes in
+    // the Page State Machine.
+    //
+    [Parameter]
+    public Action<PageState> ChangePageState { get; set; }
+
+
+    //
+    // These two parameters contain the PageState indicating the next/previous
+    // Page State Machine states and are passed by the parent SPA. Based on the
+    // logic in this component, these parameters can be sent back to the parent
+    // SPA to invoke changes in the Page State Machine. There aren't many use
+    // cases for the PreviousPageState but is included for completness.
+    [Parameter]
+    public PageState PreviousPageState { get; set; }
+
+    [Parameter]
+    public PageState NextPageState { get; set; }
+
+    [Parameter]
+    public NflPicks DataSource { get; set; }
+
+
+    //
+    // Instance variables
+    //
+    private SimpleCardBase cardContainer;                       // I am in the habit of declaring refernce variables for child components
+    private StepProgressIndicator stepIndicator;
+    private LabelBase labelFooter;
+
+    private List<ChildComponent> childComponents;               // The list of child components to be dynamically rendered
+    private int indexCurrentChild;                              // Index into childComponents list
+
+
+    //
+    // Constructor
+    //
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        // Initialize the childComponents list
+        childComponents = new()
+            {
+                new()
+                {
+                    CType=typeof(DynamicComponentChild1).AssemblyQualifiedName,
+                    Params = new Dictionary<string, object>() 
+                    { 
+                        { "StepForward", OnStepForwardClick },                      // Next button moves to Child #2
+                        { "DataSource", DataSource }                                // Pass around the nflPicks class for data entry
+                    }
+                },
+                new()
+                {
+                    CType=typeof(DynamicComponentChild2).AssemblyQualifiedName,
+                    Params = new Dictionary<string, object>() 
+                    { 
+                        { "StepForward", OnStepForwardClick },                      // Next button moves to Child #3
+                        { "StepBack", OnStepBackClick },                            // Previous button moves to Child #1
+                        { "DataSource", DataSource }                                // Pass around the nflPicks class for data entry
+                    }
+                },
+                new()
+                {
+                    CType=typeof(DynamicComponentChild3).AssemblyQualifiedName,
+                    Params = new Dictionary<string, object>() 
+                    { 
+                        { "StepForward", OnDoneClick },                             // Next button moves Error State
+                        { "StepBack", OnStepBackClick },                            // Previous button moves to Child #2
+                        { "DataSource", DataSource }                                // Pass around the nflPicks class for data entry
+                    }
+                }
+            };
+
+        // Initialize the current child index
+        indexCurrentChild = 0;
+    }
+
+
+    //
+    // These callbacks are provided to child components to allow them
+    // to signal the need to step forward/back through the progression.
+    // These will cause a change in the <DynamicComponent> that is rendered
+    //
+    public void OnStepForwardClick()
+    {
+        indexCurrentChild++;
+        stepIndicator.SetActiveIndicator(indexCurrentChild+1);      // Step indicator is one-based reference
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void OnStepBackClick()
+    {
+        indexCurrentChild--;
+        stepIndicator.SetActiveIndicator(indexCurrentChild+1);      // Step indicator is one-based reference
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnDoneClick()
+    {
+        ChangePageState(NextPageState);
+    }
+
+
+
+    //
+    // This class encapsulates the info for the child components passed to <DynamicComponent>
+    //
+    public class ChildComponent
+    {
+        public string CType { get; set; }
+        public Dictionary<string, object> Params { get; set; }
+
+    }
+
+}

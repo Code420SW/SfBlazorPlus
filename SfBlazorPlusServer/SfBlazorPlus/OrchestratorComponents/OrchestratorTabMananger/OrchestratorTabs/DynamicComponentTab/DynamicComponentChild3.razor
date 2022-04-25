@@ -1,0 +1,182 @@
+﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DynamicComponentTab
+
+@using Code420.SfBlazorPlus.BaseComponents.ButtonBase
+@using Code420.SfBlazorPlus.BaseComponents.LabelBase
+@using Code420.SfBlazorPlus.BaseComponents.RadioButtonBase
+@using Code420.SfBlazorPlus.Code.Enums
+@using Code420.SfBlazorPlus.Code.Models
+@using Syncfusion.Blazor.Buttons
+
+
+<!--
+    THIS IS NOT AN EXAMPLE OF PRODUCTION CODE...IT IS A DEMO
+
+    This is the last of three child components in which the user is presented
+    with their choice from each of the two sets of radio button in the second
+    child component. They are asked to select one of the teams.
+
+    Two button are rendered that allow the user to move back to the second child
+    component or out of the progression (into the Error state of the parent's
+    Page State Manager).
+-->
+
+
+<div class="container__body">
+
+    <div class="row__label-intro">
+        <LabelBase  @ref=@labelIntro
+                    LabelText=@labelIntroText
+                    CssClass="label__intro"
+                    FontSize="1em"
+                    FontColor="black"
+                    LabelPadding="5px 0px 10px 0px"
+                    >
+        </LabelBase>
+    </div>
+
+    <div class="row__label-teams">
+        <LabelBase  @ref=@labelPickWinner
+                    LabelText="Who will win the Super Bowl?"
+                    CssClass="label__winner"
+                    FontSize="1em"
+                    FontColor="black"
+                    LabelMargin="5px 0px 0px 10px"
+                    >
+        </LabelBase>
+    </div>
+
+     <div class="row__teams1">
+        <RadioButtonBase    @ref=afcTeam1
+                            TChecked="string"
+                            Checked=@sbCheckedValue
+                            Value=@DataSource.AfcTeams.SelectedTeam
+                            Label=@DataSource.AfcTeams.SelectedTeam
+                            LabelPosition=LabelPosition.After
+                            Name="superbowl"
+
+                            ValueChange=@OnValueChange
+
+                            CssClass="radio__afcteam"
+                            RadioButtonMargin="5px 0px 0px 10px"
+                            >
+        </RadioButtonBase>
+    </div>
+
+    <div class="row__teams2">
+        <RadioButtonBase    @ref=nfcTeam1
+                            TChecked="string"
+                            Checked=@sbCheckedValue
+                            Value=@DataSource.NfcTeams.SelectedTeam
+                            Label=@DataSource.NfcTeams.SelectedTeam
+                            LabelPosition=LabelPosition.After
+                            Name="superbowl"
+
+                            ValueChange=@OnValueChange
+
+                            CssClass="radio__nfcteam"
+                            RadioButtonMargin="5px 0px 0px 10px"
+                            >
+        </RadioButtonBase>
+    </div>
+
+
+    <div class="row__buttons">
+
+        <ButtonBase @ref=@buttonPrevious
+                    ButtonStyle=ButtonStyle.Secondary
+                    CssClass="button__previous"
+                    OnClick=@StepBack
+                    Margin="3em 2em 1em 1em"
+                    Padding=".25em .5em"
+                    TextFontSize="1em"
+                    >
+            <ContentFragment>Previous Step</ContentFragment>
+        </ButtonBase>
+
+        <ButtonBase @ref=@buttonPrevious
+                    IsPrimary=true
+                    ButtonStyle=ButtonStyle.Primary
+                    CssClass="button__previous"
+                    OnClick=@StepForward
+                    Margin="3em 2em 1em 1em"
+                    Padding=".25em .5em"
+                    TextFontSize="1em"
+                    >
+            <ContentFragment>Done</ContentFragment>
+        </ButtonBase>
+
+    </div>
+</div>
+
+
+<style>
+    /*
+        Probably easier to use grid instead of flex
+    */
+    .container__body {
+        display: flex;
+        flex-direction: column;
+    }
+
+</style>
+
+
+
+
+@code 
+{
+
+    //
+    // These two parameters establish the callbacks to the parent to
+    // indicate if the user wants to step forward/back through the
+    // progression.
+    //
+    [Parameter]
+    public Action StepForward { get; set; }
+
+    [Parameter]
+    public Action StepBack { get; set; }
+
+    [Parameter]
+    public NflPicks DataSource { get; set; }
+
+
+
+    //
+    // Instance variables
+    //
+    private LabelBase labelIntro;                           // I am in the habit of declaring refernce variables for child components
+    private LabelBase labelPickWinner;
+    private ButtonBase buttonPrevious;
+    private ButtonBase buttonDone;
+    private RadioButtonBase<string> afcTeam1;
+    private RadioButtonBase<string> nfcTeam1;
+
+    private string sbCheckedValue;                          // Contains active radio button
+    private string labelIntroText;                          // Customized label text
+
+
+    //
+    // Constructor
+    //
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        // Initialize sbCheckedValue
+        sbCheckedValue = DataSource.SuperBowlWinner = DataSource.AfcTeams.SelectedTeam;
+
+        // Build the labelIntroText
+        labelIntroText = $"Great choices, { DataSource.DisplayName }.";
+    }
+
+
+    // 
+    // Capture change in radio button
+    //
+    private void OnValueChange(ChangeArgs<string> value)
+    {
+        DataSource.SuperBowlWinner = value.Value;
+    }
+
+}

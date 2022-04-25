@@ -2,6 +2,7 @@
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger.OrchestratorTabs.CounterTab;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger.OrchestratorTabs.CounterStateMachineTab;
+using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DynamicComponentTab;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Navigations;
 using Code420.SfBlazorPlus.Code.Models.Menus;
@@ -140,6 +141,26 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
                         },
                         Visible = true
                     }
+                },
+
+                new()
+                {
+                    MenuItemId = "2000",
+                    IsLoaded = false,
+                    TabIndex = -1,
+                    TabDefinition = new()
+                    {
+                        CssClass = "2000",
+                        ContentTemplate = RenderComponent(typeof(DynamicComponentTab)),
+                        Disabled = false,
+                        Header = new()
+                        {
+                            IconCss = "",
+                            IconPosition = "",
+                            Text = "Dynamic Component"
+                        },
+                        Visible = true
+                    }
                 }
 
             };
@@ -176,33 +197,12 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 
                 new OrchestratorMenuItem
                 {
-                    MenuText = "Services",
+                    MenuText = "Dynamic Component",
                     IsDisabled = false,
                     IsHidden = false,
                     IconCss = "oi oi-book",
                     ItemId = "2000",
                     ParentId = null,
-                    SubMenu = new List<OrchestratorMenuItem>
-                    {
-                        new OrchestratorMenuItem{ MenuText= "Consulting", ParentId = "2000" },
-                        new OrchestratorMenuItem{ MenuText= "Education", ParentId = "2000" },
-                        new OrchestratorMenuItem{ MenuText= "Health", ParentId = "2000" }
-                    }
-                },
-
-                new OrchestratorMenuItem
-                {
-                    MenuText = "Products",
-                    IsDisabled = false,
-                    IsHidden = false,
-                    IconCss = "oi oi-bookmark",
-                    ItemId = "3000",
-                    ParentId = null,
-                    SubMenu = new List<OrchestratorMenuItem>
-                    {
-                        new OrchestratorMenuItem{ MenuText = "Hardware", ParentId = "3000" },
-                        new OrchestratorMenuItem{ MenuText = "Software", ParentId = "3000" }
-                    }
                 },
 
                 new OrchestratorMenuItem
