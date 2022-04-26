@@ -6,6 +6,7 @@
 @using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton
 @using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger
 @using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab
+@using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorHorizontalMenu
 
 <!--
 
@@ -67,7 +68,7 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
             <OrchestratorSidebarButton  @ref=@buttonSidebarToggle OrchestratorRef=@this />
         </div>
         <div class="header2__menu">
-
+            <OrchestratorHorizontalMenu   @ref=@horizontalMenu OrchestratorRef=@this />
         </div>
     </div>
 </header>
@@ -108,7 +109,7 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
         row-gap: 0px;
 
         height: auto;
-        border-bottom: 3px solid rgb(226,88,0);
+        border-bottom: 2px solid rgb(226,88,0);
     }
 
      /*
@@ -117,7 +118,7 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
     .page__header-1 {
         background-color: pink;
         height: auto;
-        display: block;
+        display: none;
         padding: .5em 2em;
     }
 
@@ -130,12 +131,18 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
         the Sidebar is docked (closed).
     */
     .page__header-2 {
-        background-color: limegreen;
+        background-color: rgb(154,126,17);
         height: auto;
         display: flex;
-        align-content: center;
+        align-items: center;
         padding: .5em 12px;
     }
+
+    .header2__sidebar-button,
+    .header2__menu {
+        background-color: inherit;
+    }
+
 
     /*
         Set styling for the main element

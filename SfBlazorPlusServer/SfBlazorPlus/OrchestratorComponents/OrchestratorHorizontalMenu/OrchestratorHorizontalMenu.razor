@@ -1,4 +1,4 @@
-﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
+﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorHorizontalMenu
 
 @using Code420.SfBlazorPlus.BaseComponents.MenuBase
 @using Code420.SfBlazorPlus.Pages.Orchestrator
@@ -15,12 +15,12 @@
 
 <MenuBase   @ref=@menubase
             TValue=@OrchestratorMenuItem
-            EnableScrolling=false
+            EnableScrolling=true
             HamburgerMode=false
-            Items=@OrchestratorRef.SidebarMenuItems
-            Orientation=Orientation.Vertical
+            Items=@OrchestratorRef.MainMenuItems
+            Orientation=Orientation.Horizontal
             ShowItemOnClick=false
-            Target=".page__main-sidebar"
+            Target=".header2__menu"
             Title="Menu Title"
 
             Closed=@MyClosedHandler
@@ -35,18 +35,18 @@
 
             MenuBorder="none"
             MenuBorderRadius="4px"
-            MenuFontColor="#007BFF"
+            MenuFontColor="limegreen"
             MenuFontSize="14px"
             MenuFontWeight="normal"
             MenuTextAlign="left"
-            MenuBackgroundColor="transparent"
-            MenuMinimumWidth="120px"
-            MenuMargin="4px 0px 0px 0px"
-            MenuPadding="0px"
+            MenuBackgroundColor="inherit"
+            MenuMinimumWidth="auto"
+            MenuMargin="0px 12px"
+            MenuPadding="3px 0px 0px 0px"
 
             MenuItemHeight="30px"
             MenuItemLineHeight="30px"
-            MenuItemPadding="0px 12px"
+            MenuItemPadding="0px 30px 0px 12px"
 
             MenuItemSelectedFontColor="#FFF"
             MenuItemSelectedBackgroundColor="#007BFF"
@@ -99,56 +99,3 @@
 
 </MenuBase>
 
-<style>
-
-    /*
-        The masterCssSelector is constructed from the SidebarCssClass parameter and adds the
-        e-close class to handle changes needed to the Menu when the Sidebar is in the docked state.
-        
-        e.g.: SidebarCssClass.e-close .menuCssClass.e-menu-container
-
-        When the parent Sidebar component is in the docked (e-close) state, this Menu's ul
-        elements are modified based on the selectors below.
-    */
-
-    /*
-        Set styling for the Menu when the Sidebar is in docked (closed) state.
-
-        Adjust the width of the ul to match the width of the Sidebar in the docked state.
-    */
-    @(masterCssSelector) ul .e-menu-item {
-        width: @DockedMenuWidth;
-        line-height: 1.5;
-    }
-
-    /*
-        Set styling for Menu Icons when the Sidebar is in the docked (closed) state.
-
-        Change the size of the icons and adjust padding.
-    */
-    @(masterCssSelector) ul .e-menu-item .e-menu-icon {
-        font-size: @DockedIconFontSize;
-        padding-left: 3px;
-        margin: 0;
-        line-height: 1.5;
-    }
-
-    /*
-        Set the styling for the Menu Item's carets when the Sidebar is in the docked (closed) state.
-
-        Turn off display of the carets
-    */
-    @(masterCssSelector) ul .e-menu-item .e-caret {
-        display: none;
-    }
-
-    /*
-        Set the styling for the Menu Item's text when the Sidebar is in the docked (closed) state.
-
-        Effectively, turn off display of the menu text. Doesn't apply to sub-menus
-    */
-    @(masterCssSelector) ul.e-menu.e-menu-parent.e-vertical li {
-        font-size: 0px;
-    }
-
-</style>

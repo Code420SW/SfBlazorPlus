@@ -219,7 +219,50 @@ namespace Code420.SfBlazorPlus.Code.Models.Orchestrator
 
         private void BuildMainMenu()
         {
-            MainMenuItems = new List<OrchestratorMenuItem>();
+            MainMenuItems = new List<OrchestratorMenuItem>()
+                {
+                new OrchestratorMenuItem
+                {
+                    MenuText = "Counter Tests",
+                    IsDisabled = false,
+                    IsHidden = false,
+                    ItemId = "1000",
+                    ParentId = null,
+                    SubMenu = new List<OrchestratorMenuItem>
+                    {
+                        new OrchestratorMenuItem()
+                        {
+                            MenuText = "Counter",
+                            ItemId = "1001",
+                            ParentId = "1000"
+                        },
+                        new OrchestratorMenuItem()
+                        {
+                            MenuText = "Counter State Machine",
+                            ItemId = "1002",
+                            ParentId = "1000"
+                        }
+                    }
+                },
+
+                new OrchestratorMenuItem
+                {
+                    MenuText = "Dynamic Component",
+                    IsDisabled = false,
+                    IsHidden = false,
+                    ItemId = "2000",
+                    ParentId = null,
+                },
+
+                new OrchestratorMenuItem
+                {
+                    MenuText = "Dummy Tab",
+                    IsDisabled = false ,
+                    IsHidden = false,
+                    ItemId = "4000",
+                    ParentId = null
+                }
+            };
         }
 
         private void BuildFavoritesMenu()
