@@ -1,7 +1,4 @@
 ﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab
-@using Code420.SfBlazorPlus.Code.Models.Theme
-
-@inject IThemeManager themeManager
 
 
 <p>
@@ -14,7 +11,7 @@ Tristique et egestas quis ipsum suspendisse ultrices gravida dictum fusce. Eget 
 <style>
 
     p {
-        color: @themeManager.GetThemeItem("fg-color-500");
+        color: var(--fg-color-500);
         padding: 1em;
     }
 

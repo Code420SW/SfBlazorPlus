@@ -1,6 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using Code420.SfBlazorPlus.Code.Models.Theme
+@inject IThemeManager themeManager
 
 <PageTitle>SfBlazorPlus</PageTitle>
+
 
 <div class="page">
     @Body
@@ -12,6 +15,9 @@
         Set styling for the page container
     */
     .page {
+        --fg-color-500: @themeManager.GetThemeItem("fg-color-500");
+        --bg-color-100: @themeManager.GetThemeItem("bg-color-100");
+
         position: relative;
         /*display: flex;*/
         /*flex-direction: column;*/

@@ -97,15 +97,15 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
 
         // Injected Dependencies
         IOrchestratorParameters orchestratorParameters;
-        IThemeManager themeManager;
+        //IThemeManager themeManager;
 
 
         // Dependency Injection
         [Inject]
         IOrchestratorParameters _orchestratorParameters { get => orchestratorParameters; set => orchestratorParameters = value; }
 
-        [Inject]
-        IThemeManager _themeManager { get => themeManager; set => themeManager = value; }
+        //[Inject]
+        //IThemeManager _themeManager { get => themeManager; set => themeManager = value; }
 
         #endregion
 
@@ -143,7 +143,7 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         {
             await base.OnInitializedAsync();
 
-            themeManager.SetThemeType(ThemeType.Light);
+            //themeManager.SetThemeType(ThemeType.Light);
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
