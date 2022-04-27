@@ -97,7 +97,7 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
 
 
 <style>
-        
+
     /*
         Set styling for the header element
     */
@@ -149,8 +149,8 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
     */
     main {
         /*flex: 1;*/
-        background-color: rgb(240,230,212);
-        color: rgb(0, 141, 119);
+        background-color: @themeManager.GetThemeItem("bg-color-100")         /*rgb(240,230,212)*/;
+        color: @themeManager.GetThemeItem("fg-color-500");
         overflow-y: auto;
     }
 
@@ -161,7 +161,8 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
         background-color: rgb(154,126,17);
         height: 3em;
         border-top: 3px solid rgb(203,105,0);
-    
+    }
+
     /*
         Set styling for the Header2 Sidebar toggle button
     */

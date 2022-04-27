@@ -6,6 +6,8 @@ using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Navigations;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorHorizontalMenu;
+using Code420.SfBlazorPlus.Code.Models.Theme;
+using Code420.SfBlazorPlus.Code.Enums;
 
 namespace Code420.SfBlazorPlus.Pages.Orchestrator
 {
@@ -95,11 +97,15 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
 
         // Injected Dependencies
         IOrchestratorParameters orchestratorParameters;
+        IThemeManager themeManager;
 
 
         // Dependency Injection
         [Inject]
         IOrchestratorParameters _orchestratorParameters { get => orchestratorParameters; set => orchestratorParameters = value; }
+
+        [Inject]
+        IThemeManager _themeManager { get => themeManager; set => themeManager = value; }
 
         #endregion
 
@@ -136,6 +142,8 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
+
+            themeManager.SetThemeType(ThemeType.Light);
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -240,6 +248,11 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
 
         #region Private Methods for Internal Use Only
 
+        //private void InitializeTheme()
+        //{
+        //    themeManager = new ThemeManager();
+        //    themeManager.SetThemeType(ThemeType.Light);
+        //}
 
         #endregion
 

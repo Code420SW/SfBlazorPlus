@@ -1,8 +1,21 @@
 ﻿@namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.OrchestratorTabs.DummyTab
+@using Code420.SfBlazorPlus.Code.Models.Theme
 
-<p style="padding: 1em;">
+@inject IThemeManager themeManager
+
+
+<p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ornare massa eget egestas purus viverra accumsan. Luctus accumsan tortor posuere ac ut consequat semper viverra nam. Porttitor massa id neque aliquam vestibulum. Cras adipiscing enim eu turpis egestas pretium aenean pharetra. Eros donec ac odio tempor orci dapibus ultrices in iaculis. Id diam vel quam elementum. Dictum varius duis at consectetur lorem donec massa. Diam vulputate ut pharetra sit amet aliquam id diam. Eget arcu dictum varius duis at consectetur lorem donec massa. Ornare arcu odio ut sem. Arcu dictum varius duis at. Arcu cursus euismod quis viverra nibh. Aenean et tortor at risus viverra adipiscing at in. Facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum. Id leo in vitae turpis massa. Faucibus turpis in eu mi bibendum. Lorem donec massa sapien faucibus et molestie ac.
 </p>
-<p style="padding: 1em;">
+<p>
 Tristique et egestas quis ipsum suspendisse ultrices gravida dictum fusce. Eget mi proin sed libero enim sed. Ut diam quam nulla porttitor. Eu augue ut lectus arcu. Eu lobortis elementum nibh tellus molestie nunc. At in tellus integer feugiat scelerisque varius. Tortor pretium viverra suspendisse potenti nullam ac. Aliquet nibh praesent tristique magna sit amet purus. Egestas purus viverra accumsan in nisl nisi. A arcu cursus vitae congue mauris rhoncus aenean vel elit.
 </p>
+
+<style>
+
+    p {
+        color: @themeManager.GetThemeItem("fg-color-500");
+        padding: 1em;
+    }
+
+</style>
