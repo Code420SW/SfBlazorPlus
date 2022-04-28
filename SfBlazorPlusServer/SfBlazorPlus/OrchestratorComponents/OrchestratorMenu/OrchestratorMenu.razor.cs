@@ -107,7 +107,8 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorMenu
         private void MyItemSelectedHandler(MenuEventArgs<OrchestratorMenuItem> args)
         {
             //Debug.WriteLine("MyItemSelectedHandler method invoked");
-            OrchestratorRef.MenuItemSelected(args.Item.ItemId);
+            //OrchestratorRef.MenuItemSelectedAsync(args.Item.ItemId);
+            if (args.Item.MenuItemCallback is not null) args.Item.MenuItemCallback(args.Item.ItemId);
         }
 
         private void MyOnCloseHandler(BeforeOpenCloseMenuEventArgs<OrchestratorMenuItem> args)

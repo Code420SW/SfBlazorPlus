@@ -3,6 +3,7 @@ namespace Code420.SfBlazorPlus.Code.Models.Menus
 {
     public interface IOrchestratorMenuItem
     {
+        Action<object> MenuItemCallback { get; set; }
         Dictionary<string, object> HtmlAttributes { get; set; }
         string IconCss { get; set; }
         bool IsDisabled { get; set; }

@@ -7,6 +7,9 @@ namespace Code420.SfBlazorPlus.Code.Models.Menus
     /// </summary>
     public class OrchestratorMenuItem : IOrchestratorMenuItem
     {
+        [Description("Callback invoked when the Menu Item is selected")]
+        public Action<object> MenuItemCallback { get; set; } = default;
+
         [Description("The Menu Item's display text")]
         public string MenuText { get; set; } = default;
 
