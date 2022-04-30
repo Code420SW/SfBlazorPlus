@@ -1,5 +1,7 @@
-﻿using Code420.SfBlazorPlus.Code.Models.Menus;
+﻿using Code420.SfBlazorPlus.Code.Enums;
+using Code420.SfBlazorPlus.Code.Models.Menus;
 using Code420.SfBlazorPlus.Code.Models.Orchestrator;
+using Code420.SfBlazorPlus.Code.Models.Theme;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorHorizontalMenu;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebar;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton;
@@ -8,8 +10,10 @@ using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabManager.Orchest
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger.OrchestratorTabs.CounterStateMachineTab;
 using Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorTabMananger.OrchestratorTabs.CounterTab;
+using Code420.SfBlazorPlus.Shared;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Navigations;
+using System.Diagnostics;
 
 namespace Code420.SfBlazorPlus.Pages.Orchestrator
 {
@@ -35,7 +39,6 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         // Base Parameters
         // ==================================================
 
-        
 
         #endregion
 
@@ -110,16 +113,14 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         #region Injected Dependencies
 
         // Injected Dependencies
-        //IOrchestratorParameters orchestratorParameters;
-        //IThemeManager themeManager;
+
+        IThemeManager themeManager;
 
 
         // Dependency Injection
-        //[Inject]
-        //IOrchestratorParameters _orchestratorParameters { get => orchestratorParameters; set => orchestratorParameters = value; }
 
-        //[Inject]
-        //IThemeManager _themeManager { get => themeManager; set => themeManager = value; }
+         [Inject]
+        IThemeManager _themeManager { get => themeManager; set => themeManager = value; }
 
         #endregion
 
@@ -202,10 +203,6 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         // Public Methods providing access to the underlying component to the consumer
         // ==================================================
 
-        public void TabChanged()
-        {
-        }
-
         /// <summary>
         /// Responds to a menu item selected event by loading/activating the tab associated with the passed id.
         /// </summary>
@@ -260,6 +257,18 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         /// <returns>The index of the record, or -1 if not found.</returns>
         public int FindOrchestratorTabIndex(string menuItemId) =>
             orchestratorTabs.FindIndex(x => x.MenuItemId == menuItemId);
+
+        /// <summary>
+        /// Switches the current theme and causes the Orchestrator Manager to re-render.
+        /// </summary>
+        /// <param name="themeType">One of the <see cref="ThemeType"/> enums.</param>
+        /// <returns></returns>
+        public async Task ChangeThemeAsync(ThemeType themeType)
+        {
+            //Debug.WriteLine("ChangeThemeType hit");
+            themeManager.SetThemeType(themeType);
+            await InvokeAsync(StateHasChanged);
+        }
 
         #endregion
 
@@ -458,7 +467,49 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
                     IsHidden = false,
                     ItemId = "4000",
                     ParentId = null
-                }
+                },
+
+                new OrchestratorMenuItem
+                {
+                    MenuText = "Settings",
+                    IsDisabled = false,
+                    IsHidden = false,
+                    ItemId = "5000",
+                    ParentId = null,
+                    SubMenu = new List<OrchestratorMenuItem>
+                    {
+                        new OrchestratorMenuItem()
+                        {
+                            MenuText = "Switch Theme",
+                            ItemId = "5100",
+                            ParentId = "5000",
+                            SubMenu = new List<OrchestratorMenuItem>
+                            {
+                                new OrchestratorMenuItem()
+                                {
+                                    MenuItemCallback = (async (s) => await ChangeThemeAsync(ThemeType.Light)),
+                                    MenuText = "Light",
+                                    ItemId = "5110",
+                                    ParentId = "5100"
+                                },
+                                new OrchestratorMenuItem()
+                                {
+                                    MenuItemCallback = (async (s) => await ChangeThemeAsync(ThemeType.Dark)),
+                                    MenuText = "Dark",
+                                    ItemId = "5120",
+                                    ParentId = "5100"
+                                }
+                            }
+                        },
+                        new OrchestratorMenuItem()
+                        {
+                            MenuItemCallback = (async (s) => await MenuItemSelectedAsync((string) s)),
+                            MenuText = "Do Nothing",
+                            ItemId = "5200",
+                            ParentId = "5000"
+                        }
+                    }
+                },
             };
         }
 

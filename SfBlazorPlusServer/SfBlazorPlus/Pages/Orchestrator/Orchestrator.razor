@@ -99,6 +99,32 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
 <style>
 
     /*
+        Orchestrator Wrapper
+    */
+    :root {
+
+        --header1--bg: @themeManager.GetThemeItem("header1--bg");
+        --header2--bg: @themeManager.GetThemeItem("header2--bg");
+        --footer--bg: @themeManager.GetThemeItem("footer--bg");
+        --border__main--color: @themeManager.GetThemeItem("border__main--color");
+
+        --tab__container--bg: @themeManager.GetThemeItem("tab__container--bg");
+        --tab__container--fg: @themeManager.GetThemeItem("tab__container--fg");
+
+        --tab__header--bg: @themeManager.GetThemeItem("tab__header--bg");
+        --tab__header-active-border--color: @themeManager.GetThemeItem("tab__header-active-border--color");
+        --tab__header-inactive-border--color: @themeManager.GetThemeItem("tab__header-inactive-border--color");
+        --tab__text-active--font-color: @themeManager.GetThemeItem("tab__text-active--font-color");
+        --tab__text-inactive--font-color: @themeManager.GetThemeItem("tab__text-inactive--font-color");
+        --tab__text-active-hover--font-color: @themeManager.GetThemeItem("tab__text-active-hover--font-color");
+        --tab__text-inactive-hover--font-color: @themeManager.GetThemeItem("tab__text-inactive-hover--font-color");
+
+        --sidebar--bg: @themeManager.GetThemeItem("sidebar--bg");
+        --sidebar__border--color: @themeManager.GetThemeItem("sidebar__border--color");
+        --sidebar__backdrop--bg: @themeManager.GetThemeItem("sidebar__backdrop--bg");
+    }
+
+    /*
         Set styling for the header element
     */
     .page__header {
@@ -109,14 +135,14 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
         row-gap: 0px;
 
         height: auto;
-        border-bottom: 2px solid rgb(226,88,0);
+        border-bottom: 2px solid var(--border__main--color);
     }
 
      /*
         Set styling for the header-1 element
     */
     .page__header-1 {
-        background-color: pink;
+        background-color: var(--header1--bg);
         height: auto;
         display: none;
         padding: .5em 2em;
@@ -131,7 +157,7 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
         the Sidebar is docked (closed).
     */
     .page__header-2 {
-        background-color: rgb(154,126,17);
+        background-color: var(--header2--bg);
         height: auto;
         display: flex;
         align-items: center;
@@ -149,8 +175,8 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
     */
     main {
         /*flex: 1;*/
-        background-color: var(--bg-color-100)         /*rgb(240,230,212)*/;
-        color: var(--fg-color-500);
+        background-color: var(--tab__container--bg);
+        color: var(--tab__container--fg);
         overflow-y: auto;
     }
 
@@ -158,9 +184,9 @@ https://docs.devexpress.com/Blazor/401753/common-concepts/customize-and-reuse-co
         Set styling for the footer element
     */
     .page__footer {
-        background-color: rgb(154,126,17);
+        background-color: var(--footer--bg);
         height: 3em;
-        border-top: 3px solid rgb(203,105,0);
+        border-top: 3px solid var(--border__main--color);
     }
 
     /*

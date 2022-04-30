@@ -119,6 +119,16 @@ else
         --tab-header-extra-margin: @TabHeaderExtraMargin;
     }
 
+    /*
+        Set the default styling for a Tab Item
+
+        Inherit the foreground and background colors from the containing HTML elemet
+    */
+    @(masterCssSelector) .e-content .e-item{
+        color: inherit;
+        background-color: inherit;
+    }
+
 
 
     /* ==================== Tab Header & Tab Item Borders ====================*/
