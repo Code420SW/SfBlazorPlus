@@ -265,7 +265,6 @@ namespace Code420.SfBlazorPlus.Pages.Orchestrator
         /// <returns></returns>
         public async Task ChangeThemeAsync(ThemeType themeType)
         {
-            //Debug.WriteLine("ChangeThemeType hit");
             themeManager.SetThemeType(themeType);
             await InvokeAsync(StateHasChanged);
         }

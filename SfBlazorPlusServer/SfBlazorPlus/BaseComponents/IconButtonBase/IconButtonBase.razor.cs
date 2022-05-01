@@ -362,11 +362,9 @@ namespace Code420.SfBlazorPlus.BaseComponents.IconButtonBase
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (!firstRender)
-            {
-                // Pre-calculate the box-shadow RGBA values used when the button is active
-                boxShadowRgba = await _cssUtilities.ConvertToRgba(ButtonActiveBorderColor, 0.25m);
-            }
+            // Calculate the box-shadow RGBA values used when the button is active
+            boxShadowRgba = await _cssUtilities.ConvertToRgba(ButtonActiveBorderColor, 0.25m);
+            await InvokeAsync(StateHasChanged);
         }
 
         #endregion
@@ -403,6 +401,8 @@ namespace Code420.SfBlazorPlus.BaseComponents.IconButtonBase
 
 
         #region Private Methods for Internal Use Only
+
+
         #endregion
 
     }

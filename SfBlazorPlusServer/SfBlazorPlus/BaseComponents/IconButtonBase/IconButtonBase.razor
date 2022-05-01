@@ -124,7 +124,9 @@
         Otherwise, default to the normal background color
     */
     @(masterCssSelector).e-icon-only:active,
-    @(masterCssSelector).e-round:active {
+    @(masterCssSelector).e-icon-only:focus,
+    @(masterCssSelector).e-round:active,
+    @(masterCssSelector).e-round:focus {
         border-color: @ButtonActiveBorderColor;
         box-shadow: 0 0 0 .25rem @boxShadowRgba;
         @((ButtonActiveBackgroundColor != String.Empty) ? $"background-color: { ButtonActiveBackgroundColor };" : $"background-color: { ButtonNormalBackgroundColor };")

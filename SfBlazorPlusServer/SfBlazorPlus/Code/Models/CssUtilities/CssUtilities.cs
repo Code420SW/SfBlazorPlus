@@ -1,5 +1,6 @@
 ﻿using Microsoft.JSInterop;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace Code420.SfBlazorPlus.Code.CssUtilities
 {
@@ -90,17 +91,57 @@ namespace Code420.SfBlazorPlus.Code.CssUtilities
         /// <returns></returns>
         public string GenerateRgba(string backgroundColor, decimal backgroundOpacity)
         {
-            Color color = ColorTranslator.FromHtml(backgroundColor);
-            int r = Convert.ToInt16(color.R);
-            int g = Convert.ToInt16(color.G);
-            int b = Convert.ToInt16(color.B);
-            return string.Format("rgba({0}, {1}, {2}, {3});", r, g, b, backgroundOpacity);
+            //
+            // Remove all white spaces
+            //
+            string cleanString = RemoveWhitespace(backgroundColor);
+            
+            //
+            // Handle hex formatted color code
+            //
+            if (cleanString.StartsWith("#"))
+            {
+                Color color = ColorTranslator.FromHtml(cleanString);
+                int r = Convert.ToInt16(color.R);
+                int g = Convert.ToInt16(color.G);
+                int b = Convert.ToInt16(color.B);
+                return string.Format("rgba({0}, {1}, {2}, {3});", r, g, b, backgroundOpacity);
+            }
+            else if (cleanString.StartsWith("rgb("))
+            {
+                //
+                // Use RegEx to parse the rgb() values
+                //
+                Regex regex = new Regex(@"rgb\((?<r>\d{1,3}),(?<g>\d{1,3}),(?<b>\d{1,3})\)");
+                Match match = regex.Match(cleanString);
+                if (match.Success)
+                {
+                    int r = int.Parse(match.Groups["r"].Value);
+                    int g = int.Parse(match.Groups["g"].Value);
+                    int b = int.Parse(match.Groups["b"].Value);
+
+                    return string.Format("rgba({0}, {1}, {2}, {3});", r, g, b, backgroundOpacity);
+                }
+                else return string.Format("rgba(0, 0, 0, {0});", backgroundOpacity);
+            }
+            else
+            {
+                return string.Format("rgba(0, 0, 0, {0});", backgroundOpacity);
+            }
         }
 
         #endregion
 
 
         #region Private Methods for Internal Use Only
+
+        private string RemoveWhitespace(string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
+
         #endregion
     }
 }

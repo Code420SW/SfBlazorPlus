@@ -180,13 +180,6 @@ namespace Code420.SfBlazorPlus.OrchestratorComponents.OrchestratorSidebarButton
         // Public Methods providing access to the underlying component to the consumer
         // ==================================================
 
-        /// <summary>
-        /// Opens/Closes the sidebar.
-        /// </summary>
-        //public void ToggleSidebar()
-        //{
-        //    isOpen = !isOpen;
-        //}
 
         #endregion
 
