@@ -8,6 +8,7 @@
     Normal background-color = rgb(108, 117, 125)
     Hover background-color = rgb(90, 98, 104)
     Active background-color = rgb(84, 91, 98)
+    
 -->
 <IconButtonBase @ref=@iconButton
                 IsDisabled=false
@@ -19,19 +20,19 @@
                 CssClass="button__sidebar-toggle"
                 IconCss=@currentIconCss
                 IconFontSize="1em"
-                IconFontColor="white"
+                IconFontColor="var(--sidebar-btn__icon-normal--font-color)"
                 IconFontTextAlign="center"
                 IconFontLineHeight="1.0"
                 IconFontVerticalAlign="middle"
-                ButtonNormalBackgroundColor="rgb(108, 117, 125)"
-                ButtonNormalBorder="1px solid green"
-                ButtonHoverBackgroundColor="rgb(90, 98, 104)"
-                ButtonHoverBorder="1px solid limegreen"
-                ButtonActiveBackgroundColor="rgb(84, 91, 98)"
-                ButtonActiveBorderColor="limegreen"
+                ButtonNormalBackgroundColor="var(--sidebar-btn__btn-normal--background-color)"
+                ButtonNormalBorder="2px solid var(--sidebar-btn__btn-normal--border-color)"
+                ButtonHoverBackgroundColor="var(--sidebar-btn__btn-hover--background-color)"
+                ButtonHoverBorder="2px solid var(--sidebar-btn__btn-hover--border-color)"
+                ButtonActiveBackgroundColor="var(--sidebar-btn__btn-active--background-color)"
+                ButtonActiveBorderColor="var(--sidebar-btn__btn-active--border-color)"
                 ButtonDisabledOpacity=".65"
-                ButtonHeight="24px"
-                ButtonWidth="24px"
+                ButtonHeight="30px"
+                ButtonWidth="30px"
                 HoverScale=1.1m
                 Margin="3px auto"
                 Padding="0px"

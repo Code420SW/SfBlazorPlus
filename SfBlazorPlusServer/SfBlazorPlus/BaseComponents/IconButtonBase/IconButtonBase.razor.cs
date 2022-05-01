@@ -303,6 +303,20 @@ namespace Code420.SfBlazorPlus.BaseComponents.IconButtonBase
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             await base.SetParametersAsync(parameters);
+        }
+
+        // Once the state from the ParameterCollection has been assigned to the component’s
+        //  [Parameter] properties, this method is executed. This is useful in the same way
+        //  as SetParametersAsync, except it is possible to use the component’s state.
+        // This method is only executed once when the component is first created. If the parent
+        //  changes the component’s parameters at a later time, this method is skipped.
+        // When the component is a @page, and our Blazor app navigates to a new URL that renders
+        //  the same page, Blazor will reuse the current object instance for that page. Because the
+        //  object is the same instance, Blazor does not call IDisposable.Dispose on the object,
+        //  nor does it execute its OnInitialized method again.
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
 
             // Build the master selector
             masterCssSelector = ((CssClass == String.Empty) ? ".e-btn" : string.Format(".{0}.e-btn", CssClass));
@@ -319,21 +333,7 @@ namespace Code420.SfBlazorPlus.BaseComponents.IconButtonBase
             }
 
             // Pre-calculate the box-shadow RGBA values used when the button is active
-            boxShadowRgba = await _cssUtilities.ConvertToRgba(ButtonActiveBorderColor, 0.25m);
-        }
-
-        // Once the state from the ParameterCollection has been assigned to the component’s
-        //  [Parameter] properties, this method is executed. This is useful in the same way
-        //  as SetParametersAsync, except it is possible to use the component’s state.
-        // This method is only executed once when the component is first created. If the parent
-        //  changes the component’s parameters at a later time, this method is skipped.
-        // When the component is a @page, and our Blazor app navigates to a new URL that renders
-        //  the same page, Blazor will reuse the current object instance for that page. Because the
-        //  object is the same instance, Blazor does not call IDisposable.Dispose on the object,
-        //  nor does it execute its OnInitialized method again.
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
+            //boxShadowRgba = await _cssUtilities.ConvertToRgba(ButtonActiveBorderColor, 0.25m);
         }
 
         // This method will be executed immediately after OnInitializedAsync if this is a new
@@ -361,6 +361,12 @@ namespace Code420.SfBlazorPlus.BaseComponents.IconButtonBase
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
+
+            if (!firstRender)
+            {
+                // Pre-calculate the box-shadow RGBA values used when the button is active
+                boxShadowRgba = await _cssUtilities.ConvertToRgba(ButtonActiveBorderColor, 0.25m);
+            }
         }
 
         #endregion

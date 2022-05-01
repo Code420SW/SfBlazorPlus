@@ -73,10 +73,10 @@ namespace Code420.SfBlazorPlus.Code.Models.Theme
 
         #region Private Methods for Internal Use Only
 
-        private string GetColorPaletteValue(string key)
-        {
-            return ColorPalette[key];
-        }
+        //private string GetColorPaletteValue(string key)
+        //{
+        //    return ColorPalette[key];
+        //}
 
         private void LoadColorPalette()
         {
@@ -116,7 +116,10 @@ namespace Code420.SfBlazorPlus.Code.Models.Theme
                 {"white-700", "rgb(249,249,249)" },
                 {"white-500", "rgb(250,250,250)" },
                 {"white-300", "rgb(252,252,252)" },
-                {"white-100", "rgb(254,254,254)" }
+                {"white-100", "rgb(254,254,254)" },
+
+                {"css-inherit", "inherit" },
+                {"css-transparent", "transparent" }
             };
         }
         private void InitializeThemes()
@@ -143,14 +146,44 @@ namespace Code420.SfBlazorPlus.Code.Models.Theme
             lightTheme["sidebar__border--color"] = ColorPalette["accent1-700"];
             lightTheme["sidebar__backdrop--bg"] = ColorPalette["accent1-300"];
 
+            lightTheme["vmenu__item-normal--font-color"] = ColorPalette["fg-900"];
+            lightTheme["vmenu__item-normal--background-color"] = ColorPalette["css-transparent"];
+            lightTheme["vmenu__item-active--font-color"] = ColorPalette["accent1-900"];
+            lightTheme["vmenu__item-active--background-color"] = ColorPalette["css-inherit"];
+            lightTheme["vmenu__icon--font-color"] = ColorPalette["css-inherit"];
+            lightTheme["vmenu__caret--font-color"] = ColorPalette["css-inherit"];
+            lightTheme["vmenu__separator--border-color"] = ColorPalette["accent1-500"];
+            lightTheme["vmenu__popup--font-color"] = ColorPalette["fg-900"];
+            lightTheme["vmenu__popup--background-color"] = ColorPalette["bg-300"];
+            lightTheme["vmenu__popup--border-color"] = ColorPalette["accent1-700"];
+
+            lightTheme["hmenu__item-normal--font-color"] = ColorPalette["white-700"];
+            lightTheme["hmenu__item-normal--background-color"] = ColorPalette["css-transparent"];
+            lightTheme["hmenu__item-active--font-color"] = ColorPalette["accent1-900"];
+            lightTheme["hmenu__item-active--background-color"] = ColorPalette["css-inherit"];
+            lightTheme["hmenu__icon--font-color"] = ColorPalette["css-inherit"];
+            lightTheme["hmenu__caret--font-color"] = ColorPalette["css-inherit"];
+            lightTheme["hmenu__separator--border-color"] = ColorPalette["accent1-500"];
+            lightTheme["hmenu__popup--font-color"] = ColorPalette["fg-900"];
+            lightTheme["hmenu__popup--background-color"] = ColorPalette["bg-300"];
+            lightTheme["hmenu__popup--border-color"] = ColorPalette["accent1-700"];
+
+            lightTheme["sidebar-btn__btn-normal--background-color"] = ColorPalette["fg-700"];
+            lightTheme["sidebar-btn__btn-normal--border-color"] = ColorPalette["bg-900"];
+            lightTheme["sidebar-btn__btn-hover--background-color"] = ColorPalette["fg-700"];
+            lightTheme["sidebar-btn__btn-hover--border-color"] = ColorPalette["accent1-900"];
+            lightTheme["sidebar-btn__btn-active--background-color"] = ColorPalette["fg-700"];
+            lightTheme["sidebar-btn__btn-active--border-color"] = ColorPalette["accent1-900"];
+            lightTheme["sidebar-btn__icon-normal--font-color"] = ColorPalette["white-500"];
+
 
 
 
             darkTheme = new Dictionary<string, string>();
 
-            darkTheme["header1--bg"] = ColorPalette["black-700"];
-            darkTheme["header2--bg"] = ColorPalette["black-700"];
-            darkTheme["footer--bg"] = ColorPalette["black-700"];
+            darkTheme["header1--bg"] = ColorPalette["black-500"];
+            darkTheme["header2--bg"] = ColorPalette["black-500"];
+            darkTheme["footer--bg"] = ColorPalette["black-500"];
             darkTheme["border__main--color"] = ColorPalette["accent2-700"];
 
             darkTheme["tab__container--bg"] = ColorPalette["black-900"];  //black-900
@@ -167,6 +200,36 @@ namespace Code420.SfBlazorPlus.Code.Models.Theme
             darkTheme["sidebar--bg"] = ColorPalette["black-300"];
             darkTheme["sidebar__border--color"] = ColorPalette["accent2-700"];
             darkTheme["sidebar__backdrop--bg"] = ColorPalette["accent2-300"];
+
+            darkTheme["vmenu__item-normal--font-color"] = ColorPalette["accent2-900"];
+            darkTheme["vmenu__item-normal--background-color"] = ColorPalette["css-transparent"];
+            darkTheme["vmenu__item-active--font-color"] = ColorPalette["white-700"];
+            darkTheme["vmenu__item-active--background-color"] = ColorPalette["css-inherit"];
+            darkTheme["vmenu__icon--font-color"] = ColorPalette["css-inherit"];
+            darkTheme["vmenu__caret--font-color"] = ColorPalette["css-inherit"];
+            darkTheme["vmenu__separator--border-color"] = ColorPalette["accent2-500"];
+            darkTheme["vmenu__popup--font-color"] = ColorPalette["accent2-900"];
+            darkTheme["vmenu__popup--background-color"] = ColorPalette["black-300"];
+            darkTheme["vmenu__popup--border-color"] = ColorPalette["accent2-700"];
+
+            darkTheme["hmenu__item-normal--font-color"] = ColorPalette["white-700"];
+            darkTheme["hmenu__item-normal--background-color"] = ColorPalette["css-transparent"];
+            darkTheme["hmenu__item-active--font-color"] = ColorPalette["accent2-900"];
+            darkTheme["hmenu__item-active--background-color"] = ColorPalette["css-inherit"];
+            darkTheme["hmenu__icon--font-color"] = ColorPalette["css-inherit"];
+            darkTheme["hmenu__caret--font-color"] = ColorPalette["css-inherit"];
+            darkTheme["hmenu__separator--border-color"] = ColorPalette["accent2-500"];
+            darkTheme["hmenu__popup--font-color"] = ColorPalette["white-500"];
+            darkTheme["hmenu__popup--background-color"] = ColorPalette["black-300"];
+            darkTheme["hmenu__popup--border-color"] = ColorPalette["accent2-700"];
+
+            darkTheme["sidebar-btn__btn-normal--background-color"] = ColorPalette["black-300"];
+            darkTheme["sidebar-btn__btn-normal--border-color"] = ColorPalette["accent2-700"];
+            darkTheme["sidebar-btn__btn-hover--background-color"] = ColorPalette["black-700"];
+            darkTheme["sidebar-btn__btn-hover--border-color"] = ColorPalette["accent2-500"];
+            darkTheme["sidebar-btn__btn-active--background-color"] = ColorPalette["black-700"];
+            darkTheme["sidebar-btn__btn-active--border-color"] = ColorPalette["accent2-500"];
+            darkTheme["sidebar-btn__icon-normal--font-color"] = ColorPalette["white-500"];
         }
 
         #endregion
