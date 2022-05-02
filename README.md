@@ -2,6 +2,20 @@
 The goal of this project is to simplify use of the SyncFusion Blazor library for those not well versed in CSS.
 Short- and Long-Terms Goals and an intermediate Roadmap to follow.
 
+## Update Log
+Moved update section to the top.
+
+### May 2, 2022 Update
+#### Quick Project Review
+#### Overview of this update
+#### Goal of this update
+##### Orchestrator
+##### Tab Manager
+##### Orchestrator Sidebar and Orchestrator Menu
+##### Orchestrator Sidebar Button
+##### Orchestrator Horizontal Menu
+##### Orchestrator Tabs
+
 ## Background
 Writing web-bassed applications is great with Blazor and made better when incorporating component libraries. This
 project uses the SyncFusion Blazor library. Why [SyncFusion](https://www.syncfusion.com/blazor-components)? Good capabilities, great support and a [generous community
