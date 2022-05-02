@@ -21,13 +21,24 @@ The roles aspect has not been implemented. Just a notion what is possible.
 Finally, a Theme Manager has been developed that provided skins to the UI. It allows for multiple color combinations to be developed from a color pallete. This aspect is a bit under developed right now.
 
 
-#### Goal of this update
-##### Orchestrator
-##### Tab Manager
-##### Orchestrator Sidebar and Orchestrator Menu
-##### Orchestrator Sidebar Button
-##### Orchestrator Horizontal Menu
-##### Orchestrator Tabs
+#### Orchestrator
+The Orchestrator is the primary--and only URL-addressible--Razor page. It is loaded on startup and is responsible for containerizing the child elements below. It is responsible of containing injected dependencies consumed by one or more children. The Orchestrator is responsibe fir all child-to-child communications. In fact, one child does not know about any other child.
+
+#### Tab Manager
+The Tab Manager exposes a tabbed interface in which all child tabs are contained. It is responsible for managing the state of Orchestrator Tabs maintained by the Orchestrator.
+
+#### Orchestrator Sidebar and Orchestrator Menu
+The Orchestrator Sidebar provides a collapsible sidebar that houses the Orchestrator Menu. The sidebar doesn't do much else. The Orchestrator Menu consumes a list of menu items provided by the Orchestrator and, when a menu item is selected, informs the Orchestrator who is responsible for acting on the event.
+
+#### Orchestrator Sidebar Button
+This is a simple button that, when clicked, open/closes the sidebar through a callback to the Orchestrator.
+
+#### Orchestrator Horizontal Menu
+This is another list of menu items maintained by the Orchestrator and callsback to the Orchestrator when an item is selected.
+
+#### Orchestrator Tabs
+These contain the contents if the tabbed elements managed by the Orchestrator Tab Manager and are (typically) displayed in response to menu selections. These are composite components (not really Razor pages since they are not URL-addressible) encapuslating all the needed display and business logic elements.
+
 
 ## Background
 Writing web-bassed applications is great with Blazor and made better when incorporating component libraries. This
