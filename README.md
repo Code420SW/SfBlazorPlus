@@ -7,7 +7,20 @@ Moved update section to the top.
 
 ### May 2, 2022 Update
 #### Quick Project Review
+As a reminder, the project goal is to simplify use of the Syncfusion Blazor library by encapsulating SF components as Base Components, building Composite Components from two or more Base Components, and deploying one or more Base/Composite Components on a Razor page.
+
+Along with this effort, a Page State Machine was developed allowing for programmatic flow contol for a Razor page lifecycle (Loading, Operating and Error). A demonstration for using Dynamic Components was also developed.
+
 #### Overview of this update
+This updates starts to build the higher level UI construct which includes a orchestrator that acts as the primary application page. The Orchestrator encapsulates a verical menu in a collapsable sidebar element, a horizontal menu element and the primary application area using a tabbed interface.
+
+The tabbed interface displays one or more tabs which can be loaded programmatically or through menu selections. Each tab containerizes an Orchestrator Tab which is like a Razor page with the following exceptions. The Tabs are not URL-addressible which simplfies authorization tasks to a curated menu list. This provides flexability to role in that roles can be assigned to menus (say, in a database) and the roles associated with a menu items can be changed in the database as needed (versus in the codebase). 
+
+The roles aspect has not been implemented. Just a notion what is possible.
+
+Finally, a Theme Manager has been developed that provided skins to the UI. It allows for multiple color combinations to be developed from a color pallete. This aspect is a bit under developed right now.
+
+
 #### Goal of this update
 ##### Orchestrator
 ##### Tab Manager
