@@ -12,9 +12,9 @@ As a reminder, the project goal is to simplify use of the Syncfusion Blazor libr
 Along with this effort, a Page State Machine was developed allowing for programmatic flow contol for a Razor page lifecycle (Loading, Operating and Error). A demonstration for using Dynamic Components was also developed.
 
 #### Overview of this update
-This updates starts to build the higher level UI construct which includes a orchestrator that acts as the primary application page. The Orchestrator encapsulates a verical menu in a collapsable sidebar element, a horizontal menu element and the primary application area using a tabbed interface.
+This update starts to build the higher level UI construct which includes a orchestrator that acts as the primary application page. The Orchestrator encapsulates a verical menu in a collapsable sidebar element, a horizontal menu element and the primary application area using a tabbed interface.
 
-The tabbed interface displays one or more tabs which can be loaded programmatically or through menu selections. Each tab containerizes an Orchestrator Tab which is like a Razor page with the following exceptions. The Tabs are not URL-addressible which simplfies authorization tasks to a curated menu list. This provides flexability to role in that roles can be assigned to menus (say, in a database) and the roles associated with a menu items can be changed in the database as needed (versus in the codebase). 
+The tabbed interface displays one or more tabs which can be loaded programmatically or through menu selections. Each tab containerizes an Orchestrator Tab which is like a Razor page with the following exceptions. The Tabs are not URL-addressible which simplfies authorization tasks to a curated menu list. This provides flexability to role management in that roles can be assigned to menus (say, in a database) and the roles associated with a menu items can be changed in the database as needed (versus in the codebase). 
 
 The roles aspect has not been implemented. Just a notion what is possible.
 
@@ -22,7 +22,7 @@ Finally, a Theme Manager has been developed that provided skins to the UI. It al
 
 
 #### Orchestrator
-The Orchestrator is the primary--and only URL-addressible--Razor page. It is loaded on startup and is responsible for containerizing the child elements below. It is responsible of containing injected dependencies consumed by one or more children. The Orchestrator is responsibe fir all child-to-child communications. In fact, one child does not know about any other child.
+The Orchestrator is the primary--and only URL-addressible--Razor page. It is loaded on startup and is responsible for containerizing the child elements below. It is responsible of containing injected dependencies consumed by one or more children (except as needed by Orchestrator Tab business logic). The Orchestrator is responsibe for all child-to-child communications. In fact, one child does not know about any other children.
 
 #### Tab Manager
 The Tab Manager exposes a tabbed interface in which all child tabs are contained. It is responsible for managing the state of Orchestrator Tabs maintained by the Orchestrator.
@@ -34,10 +34,10 @@ The Orchestrator Sidebar provides a collapsible sidebar that houses the Orchestr
 This is a simple button that, when clicked, open/closes the sidebar through a callback to the Orchestrator.
 
 #### Orchestrator Horizontal Menu
-This is another list of menu items maintained by the Orchestrator and callsback to the Orchestrator when an item is selected.
+This is another list of menu items maintained by the Orchestrator and calls back to the Orchestrator when an item is selected.
 
 #### Orchestrator Tabs
-These contain the contents if the tabbed elements managed by the Orchestrator Tab Manager and are (typically) displayed in response to menu selections. These are composite components (not really Razor pages since they are not URL-addressible) encapuslating all the needed display and business logic elements.
+These are the tabbed elements managed by the Orchestrator Tab Manager and are (typically) displayed in response to menu selections. These are composite components (not really Razor pages since they are not URL-addressible) encapuslating all the needed display and business logic elements.
 
 
 ## Background
